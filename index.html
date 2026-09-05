@@ -26,19 +26,10 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0}.title{font-weight:800;margin-bottom:12px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-block;padding:4px 7px;border:1px solid var(--line);border-radius:7px;margin:2px;font-size:12px}
 .bazi{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.pillar{background:var(--panel2);border-radius:13px;padding:10px 5px;text-align:center}.pillar small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.pillar b{display:block;font-size:23px;line-height:1.1}.pillar em{display:block;font-style:normal;font-size:10px;color:var(--gold);margin-top:5px}
 .five{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.five div{background:var(--panel2);border-radius:12px;padding:10px 3px;text-align:center}.five b{display:block;font-size:17px}.five span{font-size:10px;color:var(--muted)}
-
- /* Locate this section inside your <style> block and update it */
-.palace{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.palace div{min-height:92px;background:var(--panel2);border:1px solid #222c3b;border-radius:12px;padding:9px;font-size:11px}
-.palace strong{display:block;color:var(--gold2);font-size:12px;margin-bottom:4px}
-.stars{color:#e5e9ee;line-height:1.55;font-size:11px}
-/* 
- .palace{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.palace div{min-height:76px;background:var(--panel2);border:1px solid #222c3b;border-radius:10px;padding:7px;font-size:11px}.palace strong{display:block;color:var(--gold2);font-size:11px;margin-bottom:5px}.stars{color:#e5e9ee;line-height:1.5}
-*/
- 
- .chat{height:430px;overflow:auto;background:#0c121a;border:1px solid var(--line);border-radius:18px;padding:12px}.msg{max-width:88%;padding:11px 12px;border-radius:15px;margin:8px 0;line-height:1.65;font-size:13px;white-space:pre-wrap}.ai{background:#151d29;border:1px solid #263244}.me{background:#6e5830;margin-left:auto;color:#fff7e7}.chatbar{display:flex;gap:8px;margin-top:9px}.chatbar input{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px}.send{background:var(--gold);color:#161108}
+.palace{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.palace div{min-height:76px;background:var(--panel2);border:1px solid #222c3b;border-radius:10px;padding:7px;font-size:11px}.palace strong{display:block;color:var(--gold2);font-size:11px;margin-bottom:5px}.stars{color:#e5e9ee;line-height:1.5}
+.chat{height:430px;overflow:auto;background:#0c121a;border:1px solid var(--line);border-radius:18px;padding:12px}.msg{max-width:88%;padding:11px 12px;border-radius:15px;margin:8px 0;line-height:1.65;font-size:13px;white-space:pre-wrap}.ai{background:#151d29;border:1px solid #263244}.me{background:#6e5830;margin-left:auto;color:#fff7e7}.chatbar{display:flex;gap:8px;margin-top:9px}.chatbar input{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px}.send{background:var(--gold);color:#161108}
 .hidden{display:none!important}.note{font-size:10px;color:#697588;line-height:1.6;margin-top:12px}
- .poem {
+.poem {
   text-align: center;      /* 让文字居中 */
   color: #697588;          /* 字体颜色设定为和上方免责声明类似的暗色 */
   font-size: 18px;         /* 字体大小 */
@@ -149,61 +140,6 @@ function getZodiac(m, d) {
 
 
 
- 
-// 【修改处 1：替换原本的 ziwei 函数为动态通用算法】
-function ziwei(y, m, d, h){
- let lunarMonth = m; // 基础月份映射
- let hb = Math.floor((h + 1) / 2) % 12; // 时支索引（子时0，丑时1...）
- 
- // 以寅宫(索引2)起正月，顺数至生月，逆数生时得出命宫位置
- let lifeBranchIdx = (2 + (lunarMonth - 1) - hb + 12) % 12;
- 
- // 计算五局与命主
- let yStemIdx = ((y - 4) % 10 + 10) % 10;
- let lifeStemIdx = (yStemIdx * 2 + lifeBranchIdx) % 10;
- let lifeStem = stems[lifeStemIdx];
- let lifeBranch = branches[lifeBranchIdx];
- 
- const bureauMap = {"甲子":5,"乙丑":5,"丙寅":6,"丁卯":6,"戊辰":5,"己巳":5,"庚午":2,"辛未":2,"壬申":4,"癸酉":4,"甲戌":3,"乙亥":3,
-                    "丙子":6,"丁丑":6,"戊寅":5,"己卯":5,"庚辰":2,"辛巳":2,"壬午":4,"癸未":4,"甲申":3,"乙酉":3,"丙戌":5,"丁亥":5};
- let bureauKey = lifeStem + lifeBranch;
- let bureauVal = bureauMap[bureauKey] || 5;
- let bureauName = (bureauVal===2?"水二局":bureauVal===3?"木三局":bureauVal===4?"金四局":bureauVal===5?"土五局":"火六局");
-
- // 12宫标准逆时针顺序
- let palaceNames = ["命宫 / 身宫","兄弟宫","夫妻宫","子女宫","财帛宫","疾厄宫","迁移宫","交友宫","官禄宫","田宅宫","福德宫","父母宫"];
- let cells = [];
- 
- // 循环生成12个宫位数据
- for(let i=0; i<12; i++){
-  let currentBranchIdx = (lifeBranchIdx + i) % 12;
-  let currentBranch = branches[currentBranchIdx];
-  let pName = palaceNames[i];
-  
-  // 动态分配星曜示例（可根据专业星曜推演表进一步细化）
-  let sampleStars = [];
-  if(i === 0) sampleStars = ["武曲", "文昌", "龙池"];
-  else if(i === 2) sampleStars = ["七杀", "禄存"];
-  else if(i === 4) sampleStars = ["廉贞", "天相"];
-  else if(i === 8) sampleStars = ["紫微", "天府", "右弼"];
-  else sampleStars = ["天机", "天同"];
-
-  cells.push({
-   p: pName,
-   branch: currentBranch,
-   range: `大限 ${5 + i*10} ~ ${14 + i*10}`,
-   stars: sampleStars
-  });
- }
-
- return {
-  lunarText: `农历 ${numToChinese(y)}年 ${numToChinese(m)}月 综合排盘`,
-  summary: `阳男 · ${bureauName} · 命主：禄存 · 身主：火星`,
-  cells: cells
- };
-}
-
- /*
 function ziwei(y,m,d,h){
  const l=lunarApprox(y,m,d), palaceNames=["命宫","兄弟","夫妻","子女","财帛","疾厄","迁移","交友","官禄","田宅","福德","父母"];
  const life=(l.m+Math.floor((h+1)/2)+10)%12, body=(l.m-Math.floor((h+1)/2)+24)%12;
@@ -212,7 +148,7 @@ function ziwei(y,m,d,h){
  for(let i=0;i<12;i++){let p=palaceNames[(i-life+12)%12], a=stars[(i+l.m)%stars.length], b=stars[(i*3+l.d)%stars.length];cells.push({branch:branches[i],p,stars:[a,b]})}
  return {l,life,body,cells}
 }
-*/
+
 
  
 function tenFor(stem,dm){let a=stems.indexOf(stem),b=stems.indexOf(dm);let diff=(a-b+10)%10;return ten[diff]}
@@ -279,16 +215,10 @@ function render(){
  <div class="card"><div class="title">西方星座</div><p class="sub">根据您输入的公历日期（${s.m}月${s.d}日），对应的黄道十二星座为：</p><div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div></div>`;
 
 
-// 【修改处 3：在 render 函数里渲染动态计算出的 z.cells】
- document.getElementById("ziwei").innerHTML=`
- <div class="card"><div class="title">紫微十二宫（通用动态盘面）</div><p class="sub">${z.summary} · ${fullLunarText}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><div style="font-size:10px;color:var(--gold);margin-bottom:2px;">${x.range||''}</div><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
- <div class="card"><div class="title">排盘说明</div><p class="sub">本算法会根据您输入的任意公历日期与时间，动态演算其对应的命宫、局数及十二宫星曜分布。</p></div>`;
-
- /*
  document.getElementById("ziwei").innerHTML=`
  <div class="card"><div class="title">紫微十二宫</div><p class="sub">${fullLunarText} · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
  <div class="card"><div class="title">宫位重点</div><p class="sub">命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。</p></div>`;
- */
+
  
  document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？</div></div><div class="chatbar"><input id="q" placeholder="例如：我适合什么类型的工作？" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">发送</button></div>`;
 }
