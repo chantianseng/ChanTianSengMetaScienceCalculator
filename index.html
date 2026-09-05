@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="玄衡命盘">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon.svg">
-<title>禅天僧算命</title>
+<title>禅天僧命理</title>
 <style>
 :root{--bg:#090d13;--panel:#111722;--panel2:#171e2b;--line:#273244;--text:#edf2f7;--muted:#93a0b3;--gold:#d8b36a;--gold2:#f0d18d;--red:#c96b62;--green:#72b08a}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
@@ -37,19 +37,19 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 <header><div class="brand">禅天僧 <span>·</span> 命理研究所</div><div class="badge">PRO · 测试版</div></header>
 <section class="hero">
 <h1>八字 + 紫微斗数</h1>
-<div class="sub">输入出生资料，生成四柱、五行结构、十神提示与紫微十二宫盘。随后可直接用命理问答助手继续分析。</div>
+<div class="sub">输入出生资料，生成四柱、五行结构、十神提示与紫微十二宫盘。随后可直接询问“禅天僧大师”帮你继续分析。</div>
 <div class="grid">
-<div class="field"><label>出生日期</label><input id="date" type="date"></div>
+<div class="field"><label>出生日期（阳历）</label><input id="date" type="date"></div>
 <div class="field"><label>出生时间</label><input id="time" type="time" value="12:00"></div>
 <div class="field"><label>性别</label><select id="sex"><option value="m">男</option><option value="f">女</option></select></div>
 <div class="field"><label>时区</label><select id="tz"><option value="8">UTC+08:00 · 中国/马来西亚/新加坡</option><option value="9">UTC+09:00 · 日本/韩国</option><option value="7">UTC+07:00 · 泰国/越南</option><option value="0">UTC+00:00</option><option value="-5">UTC-05:00</option><option value="-8">UTC-08:00</option></select></div>
 </div>
 <div class="grid">
 <div class="field"><label>出生地经度（可选，用于真太阳时）</label><input id="lon" type="number" step=".01" placeholder="例如：101.69"></div>
-<div class="field"><label>出生地（显示名称）</label><input id="place" placeholder="例如：Kuala Lumpur"></div>
+<div class="field"><label>出生地（显示名称）</label><input id="place" placeholder="例如：吉隆坡"></div>
 </div>
 <div class="actions"><button class="primary" onclick="generate()">生成专业命盘</button><button class="secondary" onclick="demo()">示例</button></div>
-<div class="note">提示：命理属于传统文化工具。本版本重点提供可离线运行的排盘与结构化解读，不应作为医疗、法律、投资等现实决策的唯一依据。</div>
+<div class="note">提示：命理属于传统文化工具。本禅天僧版本重点提供可离线运行的排盘与结构化解读，不应作为医疗、法律、投资等现实决策的唯一依据。</div>
 </section>
 
 <div id="result" class="hidden">
@@ -77,7 +77,7 @@ function bazi(y,m,d,h,mi){
  let sy=y; if(m<2 || (m===2&&d<4)) sy--;
  let yi=((sy-4)%60+60)%60, ystem=yi%10,ybranch=yi%12;
  let sm=solarMonth(y,m,d); // 0..11, maps month branch 寅..丑
- let mb=(sm+2)%12, mstem=((ystem%5)*2+mb-2+10)%10;
+ let mb=(sm+1)%12, mstem=((ystem%5)*2+mb)%10;
  let jd=dayIndex(y,m,d), di=((jd+49)%60+60)%60, dstem=di%10,dbranch=di%12;
  let hb=Math.floor((h+1)/2)%12;
  let hstem=(dstem%5*2+hb)%10;
