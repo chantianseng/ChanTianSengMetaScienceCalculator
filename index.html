@@ -165,43 +165,6 @@ function todayBazi() {
   document.getElementById("time").value = `${h}:${min}`;
 
 
-
-  // 获取地理位置与经度
-if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(async position => {
-      const lon = position.coords.longitude;
-      const lat = position.coords.latitude;
-      
-      // 填入经度（保留两位小数）
-      document.getElementById("lon").value = lon.toFixed(2);
-
-      try {
-        // 尝试通过公开的 OpenStreetMap API 逆地理编码获取当前城市名称
-        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=zh-CN`);
-        const data = await res.json();
-        const address = data.address || {};
-        const cityName = address.city || address.town || address.district || address.state || "当前定位";
-        document.getElementById("place").value = cityName;
-      } catch (e) {
-        document.getElementById("place").value = "本地";
-      }
-      
-      // 触发生成命盘
-      generate();
-    }, error => {
-      // 如果用户拒绝授权或定位失败，则仅用当前时间生成
-      generate();
-    }, { timeout: 8000 });
-  } else {
-    generate();
-  }
-
-
-
-
-
-
- 
   // 执行生成逻辑
   generate();
 }
