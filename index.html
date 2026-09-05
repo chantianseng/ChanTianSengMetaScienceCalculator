@@ -163,12 +163,11 @@ function todayBazi() {
   // 填入当前系统日期和时间
   document.getElementById("date").value = `${y}-${m}-${d}`;
   document.getElementById("time").value = `${h}:${min}`;
-  
-  // 执行生成逻辑
-  generate();
-}
+
+
+
   // 获取地理位置与经度
- /* if (navigator.geolocation) {
+if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async position => {
       const lon = position.coords.longitude;
       const lat = position.coords.latitude;
@@ -195,7 +194,18 @@ function todayBazi() {
     }, { timeout: 8000 });
   } else {
     generate();
-  }*/
+  }
+
+
+
+
+
+
+ 
+  // 执行生成逻辑
+  generate();
+}
+
 
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 </script>
