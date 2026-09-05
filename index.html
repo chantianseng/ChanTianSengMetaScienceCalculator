@@ -157,7 +157,7 @@ function generate(){
  document.getElementById("result").classList.remove("hidden"); render(); tab("overview",document.querySelector(".tab"));
 }
 function render(){
- const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0];
+const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0], z=s.z;
  let max=Math.max(...Object.values(c)), strongest=Object.keys(c).find(k=>c[k]===max);
  let zodiacName = getZodiac(s.m, s.d);
  document.getElementById("overview").innerHTML=`
