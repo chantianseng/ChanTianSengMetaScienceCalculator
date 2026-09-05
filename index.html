@@ -42,7 +42,7 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 <div class="field"><label>出生日期（阳历）</label><input id="date" type="date"></div>
 <div class="field"><label>出生时间</label><input id="time" type="time" value="12:00"></div>
 <div class="field"><label>性别</label><select id="sex"><option value="m">男</option><option value="f">女</option></select></div>
-<div class="field"><label>时区</label><select id="tz"><option value="8">UTC+08:00 · 中国/马来西亚/新加坡</option><option value="9">UTC+09:00 · 日本/韩国</option><option value="7">UTC+07:00 · 泰国/越南</option><option value="0">UTC+00:00</option><option value="-5">UTC-05:00</option><option value="-8">UTC-08:00</option></select></div>
+<div class="field"><label>时区</label><select id="tz"><option value="8">中国/马来西亚/新加坡 · UTC+08:00 </option><option value="9">日本/韩国 · UTC+09:00 </option><option value="7">泰国/越南 · UTC+07:00 </option><option value="0">UTC+00:00</option><option value="-5">UTC-05:00</option><option value="-8">UTC-08:00</option></select></div>
 </div>
 <div class="grid">
 <div class="field"><label>出生地经度（可选，用于真太阳时）</label><input id="lon" type="number" step=".01" placeholder="例如：101.69"></div>
@@ -131,7 +131,7 @@ function ask(){let q=document.getElementById("q"),txt=q.value.trim();if(!txt||!s
 function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀、财星、食伤以及大运。若你愿意，我可以继续按「事业优势 → 风险 → 适合环境 → 行动建议」四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问“我的关系模式有哪些优点和盲点？”。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
 function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
-function demo(){document.getElementById("date").value="1990-05-18";document.getElementById("time").value="14:30";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
+function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 </script>
 </body>
