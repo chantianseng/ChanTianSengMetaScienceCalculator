@@ -163,33 +163,26 @@ function render(){
  let max=Math.max(...Object.values(c)), strongest=Object.keys(c).find(k=>c[k]===max);
  let zodiacName = getZodiac(s.m, s.d);
 
- // 【新增】：精准解析农历并转换为“庚午年 九月 初九”格式
+ // 【修复后的精准农历解析】直接获取浏览器原生生成的中文农历字符
  let lunarYearStr = p.year.join("") + "年";
  let lunarHourStr = p.hour[1] + "时";
- let lunarMStr = "一月", lunarDStr = "初一";
+ let lunarMStr = "正月", lunarDStr = "初一";
  
  try {
-   const formatter = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', { month: 'numeric', day: 'numeric' });
+   const formatter = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', { month: 'long', day: 'numeric' });
    const parts = formatter.formatToParts(new Date(s.y, s.m - 1, s.d));
-   let mVal = 1, dVal = 1;
    parts.forEach(pt => {
-     if (pt.type === 'month') {
-       let v = parseInt(pt.value.replace(/[^\d]/g, ''));
-       if (!isNaN(v)) mVal = v;
-     }
-     if (pt.type === 'day') {
-       let v = parseInt(pt.value.replace(/[^\d]/g, ''));
-       if (!isNaN(v)) dVal = v;
-     }
+     if (pt.type === 'month') lunarMStr = pt.value; // 直接获取如“九月”或“闰六月”
+     if (pt.type === 'day') lunarDStr = pt.value;   // 直接获取如“初九”
    });
-   
-   const monthNames = ["", "正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"];
-   const dayNames = ["", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
-                     "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
-                     "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
-   
-   lunarMStr = monthNames[mVal] || (mVal + "月");
-   lunarDStr = dayNames[dVal] || (dVal + "日");
+   // 确保日数带“日”或规范化
+   if (/^\d+$/.test(lunarDStr)) {
+     const dayNames = ["", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
+                       "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
+                       "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
+     let dNum = parseInt(lunarDStr, 10);
+     lunarDStr = dayNames[dNum] || (dNum + "日");
+   }
  } catch (e) {
    lunarMStr = z.l.m + "月";
    lunarDStr = z.l.d + "日";
@@ -202,7 +195,6 @@ function render(){
  <div class="card"><div class="title">五行结构</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v} / ${total}</span></div>`).join("")}</div><p class="sub">日主：${dayMasterInfo(dm)}。当前结构中「${strongest}」出现频率最高；仅按显性干支计数，未把藏干、节令旺衰等复杂权重混入。</p></div>
  <div class="card"><div class="title">传统命理提示</div><p class="sub">${advice(dm,c,strongest)}</p></div>
  
- <!-- 新增的农历日期完整格式区块 -->
  <div class="card"><div class="title">农历日期</div><div style="font-size: 15px; font-weight: bold; color: var(--gold2);">${fullLunarText}</div></div>
  
  <div class="card"><div class="title">出生资料</div><span class="pill">${s.y}-${String(s.m).padStart(2,"0")}-${String(s.d).padStart(2,"0")} ${String(s.hh).padStart(2,"0")}:${String(s.mm).padStart(2,"0")}</span><span class="pill">${s.sex==="m"?"男":"女"}</span><span class="pill">${s.place}</span></div>`;
@@ -221,7 +213,6 @@ function render(){
  
  document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？</div></div><div class="chatbar"><input id="q" placeholder="例如：我适合什么类型的工作？" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">发送</button></div>`;
 }
-
 
 /* 
 
