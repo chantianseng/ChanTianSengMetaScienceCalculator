@@ -56,6 +56,10 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 <div class="field"><label>出生地（显示名称）</label><input id="place" placeholder="例如：吉隆坡"></div>
 </div>
 <div class="actions"><button class="primary" onclick="generate()">生成专业命盘</button><button class="secondary" onclick="demo()">询问禅天僧大师</button></div>
+ <!-- 新增：今日八字 按钮 -->
+<div class="actions" style="margin-top: 10px;">
+  <button class="secondary" style="flex: 1; border-color: var(--gold); color: var(--gold);" onclick="todayBazi()">今日八字</button>
+</div>
 <div class="note">免责声明：命理属于传统文化工具。本禅天僧命理推演器重点提供可离线运行的排盘与结构化解读，不应作为医疗、法律、投资等现实决策的唯一依据。杜绝迷信，相信科学。</div>
 <div class="poem">《无明》<br>
   若以慈悲看众生<br>
@@ -145,6 +149,22 @@ function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|�
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
 function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
 function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
+ // 获取当前时间并自动排盘
+function todayBazi() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const h = String(now.getHours()).padStart(2, '0');
+  const min = String(now.getMinutes()).padStart(2, '0');
+
+  // 填入当前系统日期和时间
+  document.getElementById("date").value = `${y}-${m}-${d}`;
+  document.getElementById("time").value = `${h}:${min}`;
+  
+  // 执行生成逻辑
+  generate();
+}
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 </script>
 </body>
