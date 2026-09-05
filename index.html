@@ -148,8 +148,7 @@ function ask(){let q=document.getElementById("q"),txt=q.value.trim();if(!txt||!s
 function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀、财星、食伤以及大运。若你愿意，我可以继续按「事业优势 → 风险 → 适合环境 → 行动建议」四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问“我的关系模式有哪些优点和盲点？”。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
 function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
-function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
- // 获取当前时间并自动排盘
+function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";// 获取当前时间、实时经度及城市名并自动排盘
 function todayBazi() {
   const now = new Date();
   const y = now.getFullYear();
@@ -161,10 +160,38 @@ function todayBazi() {
   // 填入当前系统日期和时间
   document.getElementById("date").value = `${y}-${m}-${d}`;
   document.getElementById("time").value = `${h}:${min}`;
-  
-  // 执行生成逻辑
-  generate();
+
+  // 获取地理位置与经度
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(async position => {
+      const lon = position.coords.longitude;
+      const lat = position.coords.latitude;
+      
+      // 填入经度（保留两位小数）
+      document.getElementById("lon").value = lon.toFixed(2);
+
+      try {
+        // 尝试通过公开的 OpenStreetMap API 逆地理编码获取当前城市名称
+        const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=zh-CN`);
+        const data = await res.json();
+        const address = data.address || {};
+        const cityName = address.city || address.town || address.district || address.state || "当前定位";
+        document.getElementById("place").value = cityName;
+      } catch (e) {
+        document.getElementById("place").value = "本地";
+      }
+      
+      // 触发生成命盘
+      generate();
+    }, error => {
+      // 如果用户拒绝授权或定位失败，则仅用当前时间生成
+      generate();
+    }, { timeout: 8000 });
+  } else {
+    generate();
+  }
 }
+
 if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
 </script>
 </body>
