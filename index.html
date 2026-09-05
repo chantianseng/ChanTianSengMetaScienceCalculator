@@ -175,9 +175,17 @@ document.getElementById("horoscope").innerHTML=`
    <p class="sub">根据您输入的公历日期（${s.m}月${s.d}日），对应的黄道十二星座为：</p>
    <div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div>
  </div>`;
+
  document.getElementById("ziwei").innerHTML=`
  <div class="card"><div class="title">紫微十二宫</div><p class="sub">农历试算：${z.l.m}月 ${z.l.d}日 · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
  <div class="card"><div class="title">宫位重点</div><p class="sub">命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。</p></div>`;
+
+ /*
+ document.getElementById("ziwei").innerHTML=`
+ <div class="card"><div class="title">紫微十二宫</div><p class="sub">农历试算：${z.l.m}月 ${z.l.d}日 · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
+ <div class="card"><div class="title">宫位重点</div><p class="sub">命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。</p></div>`;
+ */
+ 
  document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？</div></div><div class="chatbar"><input id="q" placeholder="例如：我适合什么类型的工作？" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">发送</button></div>`;
 }
 function advice(dm,c,strong){let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`}
