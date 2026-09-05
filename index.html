@@ -158,9 +158,49 @@ function generate(){
 }
 
 
+
+ function render(){
+ const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0], z=s.z;
+ let max=Math.max(...Object.values(c)), strongest=Object.keys(c).find(k=>c[k]===max);
+ let zodiacName = getZodiac(s.m, s.d);
+
+ // 【核心修复】：利用现代浏览器原生 API 提取绝对精准的农历月日
+ let realLunar = "";
+ try {
+   // zh-CN-u-ca-chinese 可以直接换算标准农历，自动处理闰月
+   realLunar = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', { month: 'numeric', day: 'numeric' }).format(new Date(s.y, s.m - 1, s.d));
+ } catch (e) {
+   // 如果极少数老旧浏览器不支持，则退回备用显示
+   realLunar = z.l.m + "月" + z.l.d + "日";
+ }
+
+ document.getElementById("overview").innerHTML=`
+ <div class="card"><div class="title">命盘摘要</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${n}</small><b>${p[["year","month","day","hour"][i]].join("")}</b><em>${i===2?"日主":p[["year","month","day","hour"][i]][1]}</em></div>`).join("")}</div></div>
+ <div class="card"><div class="title">五行结构</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v} / ${total}</span></div>`).join("")}</div><p class="sub">日主：${dayMasterInfo(dm)}。当前结构中「${strongest}」出现频率最高；仅按显性干支计数，未把藏干、节令旺衰等复杂权重混入。</p></div>
+ <div class="card"><div class="title">传统命理提示</div><p class="sub">${advice(dm,c,strongest)}</p></div>
+ 
+ <!-- 这里已经替换为 realLunar 真实农历 -->
+ <div class="card"><div class="title">农历日期</div><span class="pill">${p.year.join("")}年</span><span class="pill">${realLunar}</span><span class="pill">${p.hour[1]}时</span></div>
+ 
+ <div class="card"><div class="title">出生资料</div><span class="pill">${s.y}-${String(s.m).padStart(2,"0")}-${String(s.d).padStart(2,"0")} ${String(s.hh).padStart(2,"0")}:${String(s.mm).padStart(2,"0")}</span><span class="pill">${s.sex==="m"?"男":"女"}</span><span class="pill">${s.place}</span></div>`;
+ 
+ document.getElementById("bazi").innerHTML=`
+ <div class="card"><div class="title">四柱与十神</div><div class="bazi">${["year","month","day","hour"].map((k,i)=>{let q=p[k];return `<div class="pillar"><small>${["年柱","月柱","日柱","时柱"][i]}</small><b>${q[0]}${q[1]}</b><em>${tenFor(q[0],dm)} / ${wux[q[0]]}${wux[q[1]]}</em></div>`}).join("")}</div></div>
+ <div class="card"><div class="title">五行与日主</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v}</span></div>`).join("")}</div><p class="sub">日主 ${dm}（${wux[dm]}）。十神以日干与各柱天干的五行生克、阴阳关系做快速归类。</p></div>
+ <div class="card"><div class="title">分析入口</div><span class="pill">性格结构</span><span class="pill">事业方向</span><span class="pill">财星结构</span><span class="pill">关系模式</span><span class="pill">大运（高级版）</span></div>`;
+ 
+ document.getElementById("horoscope").innerHTML=`
+ <div class="card"><div class="title">西方星座</div><p class="sub">根据您输入的公历日期（${s.m}月${s.d}日），对应的黄道十二星座为：</p><div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div></div>`;
+ 
+ document.getElementById("ziwei").innerHTML=`
+ <div class="card"><div class="title">紫微十二宫</div><p class="sub">农历日期：${realLunar} · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
+ <div class="card"><div class="title">宫位重点</div><p class="sub">命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。</p></div>`;
+ 
+ document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？</div></div><div class="chatbar"><input id="q" placeholder="例如：我适合什么类型的工作？" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">发送</button></div>`;
+}
+
 /* 
 
-*/
 
  function render(){
  const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0], z=s.z;
@@ -190,6 +230,9 @@ function generate(){
  
  document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？</div></div><div class="chatbar"><input id="q" placeholder="例如：我适合什么类型的工作？" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">发送</button></div>`;
 }
+
+ 
+*/
 
  
 function advice(dm,c,strong){let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`}
