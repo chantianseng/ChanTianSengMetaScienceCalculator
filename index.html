@@ -176,12 +176,12 @@ document.getElementById("horoscope").innerHTML=`
    <div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div>
  </div>`;
 
-  /*
+
 document.getElementById("ziwei").innerHTML=`
  <div class="card"><div class="title">紫微十二宫</div><p class="sub">农历试算：${z.l.m}月 ${z.l.d}日 · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
  <div class="card"><div class="title">宫位重点</div><p class="sub">命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。</p></div>`;
 
-  */
+
  
  document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？</div></div><div class="chatbar"><input id="q" placeholder="例如：我适合什么类型的工作？" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">发送</button></div>`;
 }
