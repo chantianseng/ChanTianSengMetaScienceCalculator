@@ -159,7 +159,7 @@ function generate(){
 function render(){
  const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0];
  let max=Math.max(...Object.values(c)), strongest=Object.keys(c).find(k=>c[k]===max);
-  let zodiacName = getZodiac(s.m, s.d);
+ let zodiacName = getZodiac(s.m, s.d);
  document.getElementById("overview").innerHTML=`
  <div class="card"><div class="title">命盘摘要</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${n}</small><b>${p[["year","month","day","hour"][i]].join("")}</b><em>${i===2?"日主":p[["year","month","day","hour"][i]][1]}</em></div>`).join("")}</div></div>
  <div class="card"><div class="title">五行结构</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v} / ${total}</span></div>`).join("")}</div><p class="sub">日主：${dayMasterInfo(dm)}。当前结构中「${strongest}」出现频率最高；仅按显性干支计数，未把藏干、节令旺衰等复杂权重混入。</p></div>
@@ -169,8 +169,12 @@ function render(){
  <div class="card"><div class="title">四柱与十神</div><div class="bazi">${["year","month","day","hour"].map((k,i)=>{let q=p[k];return `<div class="pillar"><small>${["年柱","月柱","日柱","时柱"][i]}</small><b>${q[0]}${q[1]}</b><em>${tenFor(q[0],dm)} / ${wux[q[0]]}${wux[q[1]]}</em></div>`}).join("")}</div></div>
  <div class="card"><div class="title">五行与日主</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v}</span></div>`).join("")}</div><p class="sub">日主 ${dm}（${wux[dm]}）。十神以日干与各柱天干的五行生克、阴阳关系做快速归类。</p></div>
  <div class="card"><div class="title">分析入口</div><span class="pill">性格结构</span><span class="pill">事业方向</span><span class="pill">财星结构</span><span class="pill">关系模式</span><span class="pill">大运（高级版）</span></div>`;
- document.getElementById("horoscope").innerHTML=`
-<div class="card"><div class="title">西方星座</div><p class="sub">根据您输入的公历日期（${s.m}月${s.d}日），对应的黄道十二星座为：</p><div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div></div>`;
+document.getElementById("horoscope").innerHTML=`
+ <div class="card">
+   <div class="title">西方星座</div>
+   <p class="sub">根据您输入的公历日期（${s.m}月${s.d}日），对应的黄道十二星座为：</p>
+   <div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div>
+ </div>`;
  document.getElementById("ziwei").innerHTML=`
  <div class="card"><div class="title">紫微十二宫</div><p class="sub">农历试算：${z.l.m}月 ${z.l.d}日 · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
  <div class="card"><div class="title">宫位重点</div><p class="sub">命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。</p></div>`;
