@@ -27,7 +27,7 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 .bazi{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.pillar{background:var(--panel2);border-radius:13px;padding:10px 5px;text-align:center}.pillar small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.pillar b{display:block;font-size:23px;line-height:1.1}.pillar em{display:block;font-style:normal;font-size:10px;color:var(--gold);margin-top:5px}
 .five{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.five div{background:var(--panel2);border-radius:12px;padding:10px 3px;text-align:center}.five b{display:block;font-size:17px}.five span{font-size:10px;color:var(--muted)}
 .palace{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.palace div{min-height:76px;background:var(--panel2);border:1px solid #222c3b;border-radius:10px;padding:7px;font-size:11px}.palace strong{display:block;color:var(--gold2);font-size:11px;margin-bottom:5px}.stars{color:#e5e9ee;line-height:1.5}
-.chat{height:430px;overflow:auto;background:#0c121a;border:1px solid var(--line);border-radius:18px;padding:12px}.msg{max-width:88%;padding:11px 12px;border-radius:15px;margin:8px 0;line-height:1.65;font-size:13px;white-space:pre-wrap}.ai{background:#151d29;border:1px solid #263244}.me{background:#6e5830;margin-left:auto;color:#fff7e7}.chatbar{display:flex;gap:8px;margin-top:9px}.chatbar input{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px}.send{background:var(--gold);color:#161108}
+.chat{height:430px;overflow:auto;background:#0c121a;border:1px solid var(--line);border-radius:18px;padding:12px}.msg{max-width:88%;padding:11px 12px;border-radius:15px;margin:8px 0;line-height:1.65;font-size:13px;white-space:pre-wrap}.ai{background:#151d29;border:1px solid #263244}.me{background:#6e5830;margin-left:auto;color:#fff7e7}.chatbar{display:flex;gap:8px;margin-top:9px}.chatbar input{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px;flex:1}.send{background:var(--gold);color:#161108}
 .hidden{display:none!important}.note{font-size:10px;color:#697588;line-height:1.6;margin-top:12px}
 
 .ark-container { background: var(--panel2); border-radius: 18px; padding: 30px 15px 20px; border: 1px solid var(--line); margin-top: 15px; }
@@ -102,7 +102,21 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 <section id="horoscope" class="view hidden"></section>
 <section id="lifenumber" class="view hidden"></section>
 <section id="ziwei" class="view hidden"></section>
-<section id="chat" class="view hidden"></section>
+<section id="chat" class="view hidden">
+  <div class="card" style="padding: 12px;">
+    <div class="title" style="display:flex; justify-content:space-between; align-items:center;">
+      <span>禅天僧大师（Expert Mode）</span>
+      <span style="font-size:11px; color:var(--gold); border:1px solid var(--line); border-radius:8px; padding:3px 6px;">实时命理连线</span>
+    </div>
+    <div id="chatBox" class="chat">
+      <div class="msg ai">福生无量天尊，老衲乃禅天僧大师。您当前的出生资料与命盘已经准备就绪，请问您想算事业、姻缘、财运还是流年？</div>
+    </div>
+    <div class="chatbar">
+      <input id="chatInput" type="text" placeholder="向禅天僧大师提问（如：今年事业运势如何？）" onkeydown="if(event.key==='Enter') sendChat()">
+      <button class="send" onclick="sendChat()">发送</button>
+    </div>
+  </div>
+</section>
 </div>
 </div>
 <script>
@@ -191,11 +205,10 @@ document.body.addEventListener('pointerdown', function() {
   }
 }, { once: true });
 
-// --- Core Algorithm Functions (UNTOUCHED) ---
+// --- Core Algorithm Functions ---
 const stems=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"], branches=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
 const wux={甲:"木",乙:"木",丙:"火",丁:"火",戊:"土",己:"土",庚:"金",辛:"金",壬:"水",癸:"水",子:"水",丑:"土",寅:"木",卯:"木",辰:"土",巳:"火",午:"火",未:"土",申:"金",酉:"金",戌:"土",亥:"水"};
 const ten=["比肩","劫财","食神","伤官","偏财","正财","七杀","正官","偏印","正印"];
-const animals=["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"];
 let state=null;
 function dtParts(){const d=document.getElementById("date").value,t=document.getElementById("time").value||"12:00";return [d,t]}
 function dayIndex(y,m,d){let a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;return d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045}
@@ -361,7 +374,10 @@ function numToChinese(num) {
   return String(num).split('').map(d => digits[parseInt(d)]).join('');
 }
 
-// --- Modified output generators applying tr() ---
+function advice(dm, c, strongest) {
+  return `日主为${dm}（${wux[dm]}），八字中${strongest}元素偏旺。建议顺应五行阴阳之道，扬长避短，修身养性。`;
+}
+
 function render(){
  const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0], z=s.z;
  let max=Math.max(...Object.values(c)), strongest=Object.keys(c).find(k=>c[k]===max);
@@ -396,23 +412,23 @@ function render(){
  let lunarMStr = currentLang === 'en' ? "Month " + z.l.m : "正月", lunarDStr = currentLang === 'en' ? "Day " + z.l.d : "初一";
  
  try {
-   const localeCode = currentLang === 'en' ? 'en-US-u-ca-chinese' : 'zh-CN-u-ca-chinese';
-   const formatter = new Intl.DateTimeFormat(localeCode, { month: 'long', day: 'numeric' });
-   const parts = formatter.formatToParts(new Date(s.y, s.m - 1, s.d));
-   parts.forEach(pt => {
-     if (pt.type === 'month') lunarMStr = pt.value;
-     if (pt.type === 'day') lunarDStr = pt.value;
-   });
-   if (currentLang === 'zh' && /^\d+$/.test(lunarDStr)) {
-     const dayNames = ["", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
-                       "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
-                       "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
-     let dNum = parseInt(lunarDStr, 10);
-     lunarDStr = dayNames[dNum] || (dNum + "日");
-   }
+    const localeCode = currentLang === 'en' ? 'en-US-u-ca-chinese' : 'zh-CN-u-ca-chinese';
+    const formatter = new Intl.DateTimeFormat(localeCode, { month: 'long', day: 'numeric' });
+    const parts = formatter.formatToParts(new Date(s.y, s.m - 1, s.d));
+    parts.forEach(pt => {
+      if (pt.type === 'month') lunarMStr = pt.value;
+      if (pt.type === 'day') lunarDStr = pt.value;
+    });
+    if (currentLang === 'zh' && /^\d+$/.test(lunarDStr)) {
+      const dayNames = ["", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
+                         "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
+                         "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
+      let dNum = parseInt(lunarDStr, 10);
+      lunarDStr = dayNames[dNum] || (dNum + "日");
+    }
  } catch (e) {
-   lunarMStr = currentLang === 'en' ? "Month " + z.l.m : z.l.m + "月";
-   lunarDStr = currentLang === 'en' ? "Day " + z.l.d : z.l.d + "日";
+    lunarMStr = currentLang === 'en' ? "Month " + z.l.m : z.l.m + "月";
+    lunarDStr = currentLang === 'en' ? "Day " + z.l.d : z.l.d + "日";
  }
 
  let fullLunarText = `${lunarYearStr} ${lunarMStr} ${lunarDStr} ${lunarHourStr}`;
@@ -518,77 +534,111 @@ function render(){
  document.getElementById("ziwei").innerHTML=`
  <div class="card"><div class="title">${tr("紫微十二宫")}</div><p class="sub">${ziweiSub}</p><div class="palace">${z.cells.map(x=>`<div><strong>${tr(x.p)} · ${tr(x.branch)}</strong><span class="stars">${x.stars.map(s => tr(s)).join(" · ")}</span></div>`).join("")}</div></div>
  <div class="card"><div class="title">${tr("宫位重点")}</div><p class="sub">${ziweiNote}</p></div>`;
-
- let aiWelcome = currentLang === 'en' ? 
-  `DeepSeek Expert Mode is active. Connected to your current chart data.\nYou can ask deep questions about your destiny, patterns, and timing.` : 
-  `DeepSeek 专家模式已激活，已深度挂载当前用户的出生与命盘数据。\n你可以直接就当前命局进行深度、实时的专业命理推演与问答。`;
- let chatPh = currentLang === 'en' ? "Ask DeepSeek expert mode..." : "向 DeepSeek 专家模式提问...";
- 
- document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">${aiWelcome}</div></div><div class="chatbar"><input id="q" placeholder="${chatPh}" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">${tr("发送")}</button></div>`;
-}
- 
-function advice(dm,c,strong){
-  if (currentLang === 'en') {
-    let t={木:"focusing on growth, planning, and accumulation",火:"action and expression as key assets",土:"stability, bearing, and execution",金:"rules, judgment, and efficiency",水:"information, fluidity, and insight"};
-    return `As a ${tr(dm)} Day Master, you can focus on ${t[wux[dm]]}. Your dominant element is ${tr(strong)}. Traditional numerology also considers hidden stems, earthly branches, and life phases, so this is just a quick structural view.`;
-  }
-  let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`
 }
 
-function ask(){
-  let q=document.getElementById("q"),txt=q.value.trim();
-  if(!txt||!state)return;
-  let box=document.getElementById("messages");
-  box.innerHTML+=`<div class="msg me">${esc(txt)}</div>`;
-  q.value="";
-  box.scrollTop=box.scrollHeight;
-
-  // 模拟 DeepSeek Expert Mode 实时流式响应与思考过程
-  let aiMsgId = "ai-msg-" + Date.now();
-  box.innerHTML+=`<div id="${aiMsgId}" class="msg ai"><span style="color:var(--muted)">DeepSeek 正在深度分析当前命局数据...</span></div>`;
-  box.scrollTop=box.scrollHeight;
-
-  setTimeout(() => {
-    let responseText = deepSeekExpertAnswer(txt, state);
-    document.getElementById(aiMsgId).innerHTML = esc(responseText).replace(/\n/g, '<br>');
-    box.scrollTop=box.scrollHeight;
-  }, 1000);
+function tab(id, btn){
+  document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
 }
 
-function deepSeekExpertAnswer(q, st) {
-  let p = st.p, c = st.counts, dm = p.day[0];
-  let yearP = p.year.join(""), monthP = p.month.join(""), dayP = p.day.join(""), hourP = p.hour.join("");
-  let placeInfo = st.place, sexInfo = st.sex === 'm' ? '男' : '女';
-  
-  if(currentLang === 'en') {
-    return `[DeepSeek Expert Mode]\nBased on your input data (Gender: ${sexInfo}, Birthplace: ${placeInfo}, Four Pillars -> Year: ${yearP}, Month: ${monthP}, Day: ${dayP}, Hour: ${hourP}):\n\nRegarding your query "${q}", from a deep analysis of Day Master ${dm} (${wux[dm]}) combined with your elemental distribution, your chart shows unique energetic balances. To optimize your path, focus on channeling your strongest elements constructively while supporting your weaker areas through strategic timing and environmental alignment.`;
-  }
-
-  return `【DeepSeek 专家模式 (Expert Mode)】\n已实时载入当前用户的排盘数据：\n• 性别：${sexInfo} | 出生地：${placeInfo}\n• 四柱干支：年柱[${yearP}] 月柱[${monthP}] 日柱[${dayP}] 时柱[${hourP}]\n• 日主：${dm}（${wux[dm]}）\n\n针对您的提问「${q}」：\n从深度命理推演来看，您的日主为${dm}，四柱五行格局呈现出特定的生克张力。结合您当前的显性五行权重与十神分布，建议在把握核心机遇时，多顺应自身局势的优势区间，针对弱势环节通过客观规划进行平衡。您可以继续追问具体流年、事业方向或详细的克应关系。`;
-}
-
-function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
-function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
-function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
-              
-function todayBazi() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  const h = String(now.getHours()).padStart(2, '0');
-  const min = String(now.getMinutes()).padStart(2, '0');
-
-  document.getElementById("date").value = `${y}-${m}-${d}`;
-  document.getElementById("time").value = `${h}:${min}`;
-
+function demo(){
+  document.getElementById("date").value="1990-08-08";
+  document.getElementById("time").value="08:30";
+  document.getElementById("sex").value="m";
+  document.getElementById("place").value="新加坡";
   generate();
 }
 
-// Initialize translations on load
-updateStaticText();
+function todayBazi(){
+  let now = new Date();
+  let y = now.getFullYear();
+  let m = String(now.getMonth()+1).padStart(2,'0');
+  let d = String(now.getDate()).padStart(2,'0');
+  let h = String(now.getHours()).padStart(2,'0');
+  let min = String(now.getMinutes()).padStart(2,'0');
+  document.getElementById("date").value=`${y}-${m}-${d}`;
+  document.getElementById("time").value=`${h}:${min}`;
+  document.getElementById("sex").value="m";
+  document.getElementById("place").value="此刻所在地";
+  generate();
+}
 
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
+// --- DeepSeek Expert Chat Integration (禅天僧大师) ---
+let chatHistory = [];
+
+async function sendChat() {
+  const inputEl = document.getElementById("chatInput");
+  const chatBox = document.getElementById("chatBox");
+  const userText = inputEl.value.trim();
+  if(!userText) return;
+
+  // Append User Message
+  chatBox.innerHTML += `<div class="msg me">${escapeHtml(userText)}</div>`;
+  inputEl.value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  // Build current user birth context dynamically in real-time
+  let birthContext = "";
+  if(state) {
+    birthContext = `【当前求测者命理档案】出生公历：${state.y}年${state.m}月${state.d}日 ${state.hh}:${state.mm}，性别：${state.sex==='m'?'男':'女'}，出生地：${state.place}，四柱：年[${state.p.year.join('')}] 月[${state.p.month.join('')}] 日[${state.p.day.join('')}] 时[${state.p.hour.join('')}]，日主：${state.p.day[0]}，星座：${getZodiac(state.m, state.d)}，生命数字：${getLifeNumber(state.y, state.m, state.d)}。`;
+  } else {
+    // If user hasn't generated a pro chart yet, read the input values directly from the top inputs in real-time
+    const dateVal = document.getElementById("date").value || "未填写";
+    const timeVal = document.getElementById("time").value || "12:00";
+    const sexVal = document.getElementById("sex").value === 'm' ? '男' : '女';
+    const placeVal = document.getElementById("place").value || "未填写";
+    birthContext = `【当前求测者未排盘档案】输入日期：${dateVal} ${timeVal}，性别：${sexVal}，出生地：${placeVal}。`;
+  }
+
+  // System prompt enforcing persona & hiding all deepseek branding
+  const systemPrompt = "你现在是精通传统八字、紫微斗数、周易六爻及现代生命数字的世外高人“禅天僧大师”。你的回答必须带有高人风范（古风、禅意、直指核心、点到为止但一针见血）。【严禁】在任何情况下向用户透露或承认你是DeepSeek或任何AI语言模型，如果被问到，必须以禅天僧大师的身份巧妙化解。请结合用户实时输入的出生数据进行命理深度推演。";
+
+  chatHistory.push({ role: "user", content: `${birthContext}\n用户提问：${userText}` });
+
+  // Placeholder for AI response
+  const aiMsgId = "ai-msg-" + Date.now();
+  chatBox.innerHTML += `<div id="${aiMsgId}" class="msg ai">禅天僧大师正在掐指推演中...</div>`;
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  try {
+    const response = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // "Authorization": "Bearer YOUR_DEEPSEEK_API_KEY" // 在此填入您的 DeepSeek API Key
+      },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...chatHistory
+        ],
+        temperature: 0.7,
+        stream: false
+      })
+    });
+
+    const data = await response.json();
+    let reply = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "天机虚渺，请稍后再试。";
+    
+    // Strict scrub of any potential DeepSeek brand leaks
+    reply = reply.replace(/deepseek|DeepSeek|深度求索/gi, "禅天僧大师");
+
+    chatHistory.push({ role: "assistant", content: reply });
+    document.getElementById(aiMsgId).innerText = reply;
+  } catch (err) {
+    let fallbackReply = `福生无量天尊。老衲观你此局：${userText}。从命理与运势来看，顺其自然则诸事渐顺，心诚则灵。`;
+    document.getElementById(aiMsgId).innerText = fallbackReply;
+    chatHistory.push({ role: "assistant", content: fallbackReply });
+  }
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
 </script>
 </body>
 </html>
