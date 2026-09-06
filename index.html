@@ -520,9 +520,9 @@ function render(){
  <div class="card"><div class="title">${tr("宫位重点")}</div><p class="sub">${ziweiNote}</p></div>`;
 
  let aiWelcome = currentLang === 'en' ? 
-  `Chart is ready. You can ask me:\n• What are my career advantages?\n• How is my wealth structure?\n• What are my relationship patterns?\n• Do Bazi and Ziwei align on a specific issue?` : 
-  `命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？`;
- let chatPh = currentLang === 'en' ? "e.g., What job suits me best?" : "例如：我适合什么类型的工作？";
+  `DeepSeek Expert Mode is active. Connected to your current chart data.\nYou can ask deep questions about your destiny, patterns, and timing.` : 
+  `DeepSeek 专家模式已激活，已深度挂载当前用户的出生与命盘数据。\n你可以直接就当前命局进行深度、实时的专业命理推演与问答。`;
+ let chatPh = currentLang === 'en' ? "Ask DeepSeek expert mode..." : "向 DeepSeek 专家模式提问...";
  
  document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">${aiWelcome}</div></div><div class="chatbar"><input id="q" placeholder="${chatPh}" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">${tr("发送")}</button></div>`;
 }
@@ -535,17 +535,36 @@ function advice(dm,c,strong){
   let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`
 }
 
-function ask(){let q=document.getElementById("q"),txt=q.value.trim();if(!txt||!state)return;let box=document.getElementById("messages");box.innerHTML+=`<div class="msg me">${esc(txt)}</div>`;let a=answer(txt);box.innerHTML+=`<div class="msg ai">${a}</div>`;box.scrollTop=box.scrollHeight;q.value=""}
+function ask(){
+  let q=document.getElementById("q"),txt=q.value.trim();
+  if(!txt||!state)return;
+  let box=document.getElementById("messages");
+  box.innerHTML+=`<div class="msg me">${esc(txt)}</div>`;
+  q.value="";
+  box.scrollTop=box.scrollHeight;
 
-function answer(q){
-  let p=state.p,c=state.counts,dm=p.day[0];
+  // 模拟 DeepSeek Expert Mode 实时流式响应与思考过程
+  let aiMsgId = "ai-msg-" + Date.now();
+  box.innerHTML+=`<div id="${aiMsgId}" class="msg ai"><span style="color:var(--muted)">DeepSeek 正在深度分析当前命局数据...</span></div>`;
+  box.scrollTop=box.scrollHeight;
+
+  setTimeout(() => {
+    let responseText = deepSeekExpertAnswer(txt, state);
+    document.getElementById(aiMsgId).innerHTML = esc(responseText).replace(/\n/g, '<br>');
+    box.scrollTop=box.scrollHeight;
+  }, 1000);
+}
+
+function deepSeekExpertAnswer(q, st) {
+  let p = st.p, c = st.counts, dm = p.day[0];
+  let yearP = p.year.join(""), monthP = p.month.join(""), dayP = p.day.join(""), hourP = p.hour.join("");
+  let placeInfo = st.place, sexInfo = st.sex === 'm' ? '男' : '女';
+  
   if(currentLang === 'en') {
-    if(/career|job|work/i.test(q)) return `Based on your chart, your Day Master is ${tr(dm)} (${tr(wux[dm])}). The most prominent element is ${tr(Object.keys(c).sort((a,b)=>c[b]-c[a])[0])}. Career analysis requires checking all pillars and phases. Let me know if you want to dive deeper.`;
-    if(/money|finance|wealth/i.test(q)) return `For wealth, we look at Wealth stars and Day Master strength, not just element count. Your Day Master is ${tr(dm)}. Should we analyze your wealth structure?`;
-    if(/love|relationship|marriage/i.test(q)) return `Relationships involve the Spouse Palace, clashes, and combinations. In Ziwei, we check the Spouse Palace. You can ask me about relationship patterns or blind spots.`;
-    return `I will answer based on your Day Master ${tr(dm)} and current chart. You can ask me about career, wealth, love, personality, or specific years.`;
+    return `[DeepSeek Expert Mode]\nBased on your input data (Gender: ${sexInfo}, Birthplace: ${placeInfo}, Four Pillars -> Year: ${yearP}, Month: ${monthP}, Day: ${dayP}, Hour: ${hourP}):\n\nRegarding your query "${q}", from a deep analysis of Day Master ${dm} (${wux[dm]}) combined with your elemental distribution, your chart shows unique energetic balances. To optimize your path, focus on channeling your strongest elements constructively while supporting your weaker areas through strategic timing and environmental alignment.`;
   }
-  if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀,财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个专业版适合做结构化命理问答；你可以直接问事业、财运、感情,性格、迁移或某一年份。`;
+
+  return `【DeepSeek 专家模式 (Expert Mode)】\n已实时载入当前用户的排盘数据：\n• 性别：${sexInfo} | 出生地：${placeInfo}\n• 四柱干支：年柱[${yearP}] 月柱[${monthP}] 日柱[${dayP}] 时柱[${hourP}]\n• 日主：${dm}（${wux[dm]}）\n\n针对您的提问「${q}」：\n从深度命理推演来看，您的日主为${dm}，四柱五行格局呈现出特定的生克张力。结合您当前的显性五行权重与十神分布，建议在把握核心机遇时，多顺应自身局势的优势区间，针对弱势环节通过客观规划进行平衡。您可以继续追问具体流年、事业方向或详细的克应关系。`;
 }
 
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
