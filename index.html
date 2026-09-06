@@ -61,7 +61,7 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
   <div class="brand" data-i18n="brand">禅天僧命理 <span>·</span> 信不信由你</div>
   <div style="display: flex; gap: 10px; align-items: center;">
     <div class="badge" data-i18n="badge">PRO · 测试版</div>
-    <button id="langBtn" class="secondary" style="padding: 5px 10px; font-size: 12px; margin: 0; cursor: pointer;" onclick="toggleLang()">English</button>
+    <button id="langBtn" class="secondary" style="padding: 5px 10px; font-size: 12px; margin: 0; cursor: pointer;" onclick="toggleLang()">EN</button>
   </div>
 </header>
 <section class="hero">
@@ -170,7 +170,7 @@ function updateStaticText() {
 
 function toggleLang() {
   currentLang = currentLang === 'zh' ? 'en' : 'zh';
-  document.getElementById('langBtn').innerText = currentLang === 'zh' ? 'English' : '中文';
+  document.getElementById('langBtn').innerText = currentLang === 'zh' ? 'English' : '中';
   updateStaticText();
   if (state) render(); 
 }
