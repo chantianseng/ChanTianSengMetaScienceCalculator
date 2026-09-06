@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -45,7 +44,6 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 .ark-main { color: var(--gold); font-size: 26px; }
 .ark-outer { font-size: 17px; }
 .ark-base { font-size: 15px; color: var(--text); display: flex; justify-content: center; gap: 20px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; }
-.ark-red-star { color: #d04f4f; font-size: 14px; position: absolute; transform: translate(-50%, -50%); }
 
 .ark-stats { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 18px; }
 .ark-stats b { display: block; font-size: 17px; margin-bottom: 6px; }
@@ -297,21 +295,18 @@ function render(){
          <div style="border-top: 1.5px solid var(--text); padding-top: 4px; display: flex; justify-content: space-between; padding: 4px 6px 0;"><span>${ark.T2}</span><span>${ark.T1}</span></div>
        </div>
 
-       <!-- 主性格与红星 -->
-       <div class="ark-red-star" style="top: 70px; left: 150px;">*</div>
+       <!-- 主性格数字（已删除上方红星） -->
        <div class="ark-num ark-main" style="top: 100px; left: 150px;">${ark.G}</div>
        
        <!-- 中间层数字 -->
        <div class="ark-num" style="top: 147px; left: 125px;">${ark.M1}</div>
        <div class="ark-num" style="top: 147px; left: 175px;">${ark.M2}</div>
        
-       <!-- 底层数字与底角红星 -->
-       <div class="ark-red-star" style="top: 188px; left: 52px;">*</div>
+       <!-- 底层数字（已删除左右两侧底角红星） -->
        <div class="ark-num" style="top: 183px; left: 95px;">${ark.B1}</div>
        <div class="ark-num" style="top: 183px; left: 132px;">${ark.B2}</div>
        <div class="ark-num" style="top: 183px; left: 168px;">${ark.B3}</div>
        <div class="ark-num" style="top: 183px; left: 205px;">${ark.B4}</div>
-       <div class="ark-red-star" style="top: 188px; left: 248px;">*</div>
 
        <!-- 左侧外部 -->
        <div class="ark-num ark-outer" style="top: 100px; left: 60px; white-space: nowrap;">
@@ -363,7 +358,7 @@ function render(){
  
 function advice(dm,c,strong){let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`}
 function ask(){let q=document.getElementById("q"),txt=q.value.trim();if(!txt||!state)return;let box=document.getElementById("messages");box.innerHTML+=`<div class="msg me">${esc(txt)}</div>`;let a=answer(txt);box.innerHTML+=`<div class="msg ai">${a}</div>`;box.scrollTop=box.scrollHeight;q.value=""}
-function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀、财星、食伤以及大运。若你愿意，我可以继续按「事业优势 → 风险 → 适合环境 → 行动建议」四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问“我的关系模式有哪些优点和盲点？”。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
+function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀、财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
 function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
 function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
@@ -386,29 +381,3 @@ if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.ser
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
