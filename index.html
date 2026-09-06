@@ -61,7 +61,7 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
   <div class="brand" data-i18n="brand">禅天僧命理 <span>·</span> 信不信由你</div>
   <div style="display: flex; gap: 10px; align-items: center;">
     <div class="badge" data-i18n="badge">PRO · 测试版</div>
-    <button id="langBtn" class="secondary" style="padding: 5px 10px; font-size: 12px; margin: 0; cursor: pointer;" onclick="toggleLang()">EN</button>
+    <button id="langBtn" class="secondary" style="padding: 5px 10px; font-size: 12px; margin: 0; cursor: pointer;" onclick="toggleLang()">English</button>
   </div>
 </header>
 <section class="hero">
@@ -170,7 +170,7 @@ function updateStaticText() {
 
 function toggleLang() {
   currentLang = currentLang === 'zh' ? 'en' : 'zh';
-  document.getElementById('langBtn').innerText = currentLang === 'zh' ? 'English' : '中';
+  document.getElementById('langBtn').innerText = currentLang === 'zh' ? 'English' : '中文';
   updateStaticText();
   if (state) render(); 
 }
@@ -419,14 +419,14 @@ function render(){
   `日主：${dayMasterInfo(dm)}。当前结构中「${strongest}」出现频率最高；仅按显性干支计数，未把藏干、节令旺衰等复杂权重混入。`;
 
  document.getElementById("overview").innerHTML=`
- <div class="card"><div class="title">${tr("命盘摘要")}</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${tr(n)}</small><b>${tr(p[["year","month","day","hour"][i]][0])}${tr(p[["year","month","day","hour"][i]][1])}</b><em>${i===2?tr("日主"):tr(p[["year","month","day","hour"][i]][1])}</em></div>`).join("")}</div></div>
+ <div class="card"><div class="title">${tr("命盘摘要")}</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${tr(n)}</small><b>${tr(p[["year","month","day","hour"][i]][0])}<br>${tr(p[["year","month","day","hour"][i]][1])}</b><em>${i===2?tr("日主"):tr(p[["year","month","day","hour"][i]][1])}</em></div>`).join("")}</div></div>
  <div class="card"><div class="title">${tr("五行结构")}</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${tr(k)}</b><span>${v} / ${total}</span></div>`).join("")}</div><p class="sub">${fiveSubText}</p></div>
  <div class="card"><div class="title">${tr("传统命理提示")}</div><p class="sub">${advice(dm,c,strongest)}</p></div>
  <div class="card"><div class="title">${tr("农历日期")}</div><div style="font-size: 15px; font-weight: bold; color: var(--gold2);">${fullLunarText}</div></div>
  <div class="card"><div class="title">${tr("出生资料")}</div><span class="pill">${s.y}-${String(s.m).padStart(2,"0")}-${String(s.d).padStart(2,"0")} ${String(s.hh).padStart(2,"0")}:${String(s.mm).padStart(2,"0")}</span><span class="pill">${s.sex==="m"?tr("男"):tr("女")}</span><span class="pill">${s.place}</span></div>`;
  
  document.getElementById("bazi").innerHTML=`
- <div class="card"><div class="title">${tr("四柱与十神")}</div><div class="bazi">${["year","month","day","hour"].map((k,i)=>{let q=p[k];return `<div class="pillar"><small>${tr(["年柱","月柱","日柱","时柱"][i])}</small><b>${tr(q[0])}${tr(q[1])}</b><em>${tr(tenFor(q[0],dm))} / ${tr(wux[q[0]])}${tr(wux[q[1]])}</em></div>`}).join("")}</div></div>
+ <div class="card"><div class="title">${tr("四柱与十神")}</div><div class="bazi">${["year","month","day","hour"].map((k,i)=>{let q=p[k];return `<div class="pillar"><small>${tr(["年柱","月柱","日柱","时柱"][i])}</small><b>${tr(q[0])}<br>${tr(q[1])}</b><em>${tr(tenFor(q[0],dm))} / ${tr(wux[q[0]])}${tr(wux[q[1]])}</em></div>`}).join("")}</div></div>
  <div class="card"><div class="title">${tr("五行与日主")}</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${tr(k)}</b><span>${v}</span></div>`).join("")}</div><p class="sub">${currentLang==='en'?`Day Master ${tr(dm)} (${tr(wux[dm])}). Ten Gods classify relationships based on yin/yang and elements.`:`日主 ${dm}（${wux[dm]}）。十神以日干与各柱天干的五行生克、阴阳关系做快速归类。`}</p></div>
  <div class="card"><div class="title">${tr("分析入口")}</div><span class="pill">${tr("性格结构")}</span><span class="pill">${tr("事业方向")}</span><span class="pill">${tr("财星结构")}</span><span class="pill">${tr("关系模式")}</span><span class="pill">${tr("大运（高级版）")}</span></div>`;
  
