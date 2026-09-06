@@ -202,14 +202,14 @@ function calcHarmonyArk(y, m, d) {
   let outer = arkRoot(L3 + R3 + T3);
   let sub = arkRoot(B1 + B4 + M1 + M2); 
   
-  // 晚年数字准确组合
+  // 晚年数字与三角形右侧外部数字（R1、R2、R3）保持一致
   let late = `${R1}${R2}${R3}`; 
 
   // 根据截图规律完整校准3x4联合数字矩阵
-let joint = [
-    [`${B1}${B2}${M1}`, `${B3}${B4}${M2}`, `${M1}${M2}${G}`, `${B2}${M1}${L2}`],
+  let joint = [
+    [`${B1}${B2}${M1}`, `${B3}${B4}${M2}`, `${M1}${M2}${G}`, `${R1}${R2}${R3}`],
     [`${B1}${M1}${L1}`, `${L1}${L2}${L3}`, `${M2}${B3}${R1}`, `${M1}${G}${T1}`],
-    [`${T2}${T1}${T3}`, `${G}${M2}${T2}`, `${B4}${M2}${R2}`, `${R1}${R2}${R3}`]
+    [`${T1}${T2}${T3}`, `${G}${M2}${T2}`, `${B4}${M2}${R2}`, `${L3}${R3}${T3}`]
   ];
 
   return { B1, B2, B3, B4, M1, M2, G, L1, L2, L3, R1, R2, R3, T1, T2, T3, 
@@ -325,7 +325,7 @@ function render(){
        <div class="ark-num" style="top: 183px; left: 205px;">${ark.B4}</div>
 
        <div class="ark-num ark-outer" style="top: 100px; left: 60px; white-space: nowrap;">
-         ${ark.L3}=${ark.L1} ${ark.L2}
+         ${ark.L1}=${ark.L2} ${ark.L3}
        </div>
        
        <div class="ark-num ark-outer" style="top: 100px; left: 240px; white-space: nowrap;">
