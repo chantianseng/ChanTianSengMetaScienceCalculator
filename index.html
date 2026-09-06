@@ -52,7 +52,6 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 </head>
 <body>
 
-<!-- 新增：背景音乐标签，使用你的 GitHub Raw 链接 -->
 <audio id="bgMusic" loop autoplay>
   <source src="https://raw.githubusercontent.com/chantianseng/ChanTianSengMetaScienceCalculator/main/Pincha.mp3" type="audio/mpeg">
 </audio>
@@ -78,7 +77,6 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
   <button class="secondary" style="flex: 1; border-color: var(--gold); color: var(--gold);" onclick="todayBazi()">此刻黄历八字</button>
 </div>
 <div class="note">免责声明：命理属于传统文化工具。本禅天僧命理推演器重点提供可离线运行的排盘与结构化解读，不应作为医疗、法律、投资等现实决策的唯一依据。杜绝迷信，相信科学。</div>
-
  
 </section>
 
@@ -93,7 +91,6 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 </div>
 </div>
 <script>
-// 新增：监听用户的第一次交互，解锁浏览器自动播放限制并播放音乐
 document.body.addEventListener('pointerdown', function() {
   const bgm = document.getElementById('bgMusic');
   if (bgm && bgm.paused) {
@@ -160,7 +157,6 @@ function getZodiac(m, d) {
  return "未知星座";
 }
 
-// 和谐方舟专用单数归约法
 function arkRoot(n) {
   if (n === 0) return 0;
   let sum = n;
@@ -170,14 +166,12 @@ function arkRoot(n) {
   return sum;
 }
 
-// 计算生命数字核心函数
 function getLifeNumber(y, m, d) {
   let str = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
   let sum = str.split('').reduce((acc, val) => acc + parseInt(val), 0);
   return arkRoot(sum);
 }
 
-// 和谐方舟完整排盘引擎（基于正确对齐规律重构）
 function calcHarmonyArk(y, m, d) {
   let ys = y.toString().padStart(4, '0');
   let ms = m.toString().padStart(2, '0');
@@ -196,7 +190,6 @@ function calcHarmonyArk(y, m, d) {
   let R1 = arkRoot(M2 + B3), R2 = arkRoot(M2 + B4);
   let R3 = arkRoot(R1 + R2);
   
-  // 顶部顶端冠顶数字运算规律调整
   let T1 = arkRoot(G + M1), T2 = arkRoot(G + M2);
   let T3 = arkRoot(T1 + T2);
 
@@ -204,11 +197,9 @@ function calcHarmonyArk(y, m, d) {
   let outer = arkRoot(L3 + R3 + T3);
   let sub = arkRoot(B1 + B4 + M1 + M2); 
   
-  // 晚年数字准确组合
   let late = `${R1}${R2}${R3}`; 
 
-  // 根据截图规律完整校准3x4联合数字矩阵
-let joint = [
+  let joint = [
     [`${B1}${B2}${M1}`, `${B3}${B4}${M2}`, `${M1}${M2}${G}`, `${B2}${M1}${L2}`],
     [`${B1}${M1}${L1}`, `${L1}${L2}${L3}`, `${M2}${G}${T2}`, `${M1}${G}${T1}`],
     [`${T2}${T1}${T3}`, `${B3}${M2}${R1}`, `${B4}${M2}${R2}`, `${R1}${R2}${R3}`]
@@ -218,24 +209,60 @@ let joint = [
            inner, outer, sub, late, joint, ds, ms, y1: ys.substring(0,2), y2: ys.substring(2,4) };
 }
 
-// CORRECTED CODE:
-function ziwei(y,m,d,h){
- const l=lunarApprox(y,m,d), palaceNames=["命宫","兄弟","夫妻","子女","财帛","疾厄","迁移","交友","官禄","田宅","福德","父母"];
- const life=(l.m+Math.floor((h+1)/2)+10)%12, body=(l.m-Math.floor((h+1)/2)+24)%12;
- let stars=["紫微","天机","太阳","武曲","天同","廉贞","天府","太阴","贪狼","巨门","天相","天梁","七杀","破军"];
- let cells=[];
- for(let i=0;i<12;i++){let p=palaceNames[(i-life+12)%12], a=stars[(i+l.m)%stars.length], b=stars[(i*3+l.d)%stars.length];cells.push({branch:branches[i],p,stars:[a,b]})}
- return {l,life,body,cells}; // <-- Added return statement
+// 【已修复】紫微斗数排盘算法：采用确定性双星系相对定位，确保 14 主星合理且不乱码
+function ziwei(y, m, d, h) {
+  const l = lunarApprox(y, m, d);
+  const palaceNames = ["命宫", "兄弟", "夫妻", "子女", "财帛", "疾厄", "迁移", "交友", "官禄", "田宅", "福德", "父母"];
+  const life = (l.m + Math.floor((h + 1) / 2) + 10) % 12;
+  const body = (l.m - Math.floor((h + 1) / 2) + 24) % 12;
+  
+  let palaceStars = Array.from({ length: 12 }, () => []);
+  
+  // 基础定位算式
+  let zPos = (l.d + l.m) % 12;
+  let fPos = (4 - zPos + 12) % 12;
+  
+  let ziweiGroup = [
+    { name: "紫微", pos: zPos },
+    { name: "天机", pos: (zPos - 1 + 12) % 12 },
+    { name: "太阳", pos: (zPos - 3 + 12) % 12 },
+    { name: "武曲", pos: (zPos - 4 + 12) % 12 },
+    { name: "天同", pos: (zPos - 5 + 12) % 12 },
+    { name: "廉贞", pos: (zPos - 8 + 12) % 12 }
+  ];
+  
+  let tianfuGroup = [
+    { name: "天府", pos: fPos },
+    { name: "太阴", pos: (fPos + 1) % 12 },
+    { name: "贪狼", pos: (fPos + 2) % 12 },
+    { name: "巨门", pos: (fPos + 3) % 12 },
+    { name: "天相", pos: (fPos + 4) % 12 },
+    { name: "天梁", pos: (fPos + 5) % 12 },
+    { name: "七杀", pos: (fPos + 6) % 12 },
+    { name: "破军", pos: (fPos + 10) % 12 }
+  ];
+  
+  [...ziweiGroup, ...tianfuGroup].forEach(star => {
+    palaceStars[star.pos].push(star.name);
+  });
+  
+  let cells = [];
+  for (let i = 0; i < 12; i++) {
+    let p = palaceNames[(i - life + 12) % 12];
+    let stars = palaceStars[i].length > 0 ? palaceStars[i] : ["无主星"];
+    cells.push({ branch: branches[i], p, stars });
+  }
+  
+  return { l, life, body, cells };
 }
-
   
 function tenFor(stem,dm){let a=stems.indexOf(stem),b=stems.indexOf(dm);let diff=(a-b+10)%10;return ten[diff]}
 function generate(){
- let [ds,ts]=dtParts(); if(!ds){alert("请选择出生日期");return}
- let [y,m,d]=ds.split("-").map(Number), [hh,mm]=ts.split(":").map(Number);
- let p=bazi(y,m,d,hh,mm), counts=countWu([p.year,p.month,p.day,p.hour]), z=ziwei(y,m,d,hh);
- state={y,m,d,hh,mm,p,counts,z,sex:document.getElementById("sex").value,place:document.getElementById("place").value||"未填写"};
- document.getElementById("result").classList.remove("hidden"); render(); tab("overview",document.querySelector(".tab"));
+  let [ds,ts]=dtParts(); if(!ds){alert("请选择出生日期");return}
+  let [y,m,d]=ds.split("-").map(Number), [hh,mm]=ts.split(":").map(Number);
+  let p=bazi(y,m,d,hh,mm), counts=countWu([p.year,p.month,p.day,p.hour]), z=ziwei(y,m,d,hh);
+  state={y,m,d,hh,mm,p,counts,z,sex:document.getElementById("sex").value,place:document.getElementById("place").value||"未填写"};
+  document.getElementById("result").classList.remove("hidden"); render(); tab("overview",document.querySelector(".tab"));
 }
 
 function numToChinese(num) {
@@ -251,15 +278,15 @@ function render(){
 
  let ln = getLifeNumber(s.y, s.m, s.d);
  const lnDesc = {
-   1: "【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
-   2: "【沟通数】代表合作、平衡、倾听与耐心。你擅长协调与建立关系。",
-   3: "【表达数】代表创意、表达、欢乐与社交。你具有极强的艺术感染力。",
-   4: "【稳定数】代表规律、执行、秩序与务实。你是脚踏实地的建设者。",
-   5: "【自由数】代表自由、冒险、多变与好奇。你向往无拘无束的生活。",
-   6: "【关怀数】代表责任、家庭、大爱与疗愈。你富有同情心与奉献精神。",
-   7: "【真理数】代表探究、直觉、内省与智慧。你是真理的追寻者。",
-   8: "【财富数】代表权力、商业、成就与效率。你具备强大的执行力与商业头脑。",
-   9: "【智慧数】代表大爱、奉献、灵性与完美。你拥有悲天悯人的情怀."
+    1: "【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
+    2: "【沟通数】代表合作、平衡、倾听与耐心。你擅长协调与建立关系。",
+    3: "【表达数】代表创意、表达、欢乐与社交。你具有极强的艺术感染力。",
+    4: "【稳定数】代表规律、执行、秩序与务实。你是脚踏实地的建设者。",
+    5: "【自由数】代表自由、冒险、多变与好奇。你向往无拘无束的生活。",
+    6: "【关怀数】代表责任、家庭、大爱与疗愈。你富有同情心与奉献精神。",
+    7: "【真理数】代表探究、直觉、内省与智慧。你是真理的追寻者。",
+    8: "【财富数】代表权力、商业、成就与效率。你具备强大的执行力与商业头脑。",
+    9: "【智慧数】代表大爱、奉献、灵性与完美。你拥有悲天悯人的情怀."
  };
 
  let lunarYearStr = numToChinese(s.y) + "年";
@@ -275,8 +302,8 @@ function render(){
    });
    if (/^\d+$/.test(lunarDStr)) {
      const dayNames = ["", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
-                        "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
-                        "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
+                       "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
+                       "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
      let dNum = parseInt(lunarDStr, 10);
      lunarDStr = dayNames[dNum] || (dNum + "日");
    }
@@ -380,7 +407,7 @@ function render(){
  
 function advice(dm,c,strong){let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`}
 function ask(){let q=document.getElementById("q"),txt=q.value.trim();if(!txt||!state)return;let box=document.getElementById("messages");box.innerHTML+=`<div class="msg me">${esc(txt)}</div>`;let a=answer(txt);box.innerHTML+=`<div class="msg ai">${a}</div>`;box.scrollTop=box.scrollHeight;q.value=""}
-function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀,财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
+function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀,财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情,性格、迁移或某一年份。`;}
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
 function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
 function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
