@@ -59,6 +59,12 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 </style>
 </head>
 <body>
+
+<!-- 新增：背景音乐标签，使用你的 GitHub Raw 链接 -->
+<audio id="bgMusic" loop autoplay>
+  <source src="https://raw.githubusercontent.com/chantianseng/ChanTianSengMetaScienceCalculator/main/Presence.mp3" type="audio/mpeg">
+</audio>
+
 <div class="app">
 <header><div class="brand">禅天僧命理 <span>·</span> 信不信由你</div><div class="badge">PRO · 测试版</div></header>
 <section class="hero">
@@ -101,6 +107,16 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 </div>
 </div>
 <script>
+// 新增：监听用户的第一次交互，解锁浏览器自动播放限制并播放音乐
+document.body.addEventListener('pointerdown', function() {
+  const bgm = document.getElementById('bgMusic');
+  if (bgm && bgm.paused) {
+    bgm.play().catch(error => {
+      console.log("播放被浏览器拦截:", error);
+    });
+  }
+}, { once: true });
+
 const stems=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"], branches=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
 const wux={甲:"木",乙:"木",丙:"火",丁:"火",戊:"土",己:"土",庚:"金",辛:"金",壬:"水",癸:"水",子:"水",丑:"土",寅:"木",卯:"木",辰:"土",巳:"火",午:"火",未:"土",申:"金",酉:"金",戌:"土",亥:"水"};
 const ten=["比肩","劫财","食神","伤官","偏财","正财","七杀","正官","偏印","正印"];
