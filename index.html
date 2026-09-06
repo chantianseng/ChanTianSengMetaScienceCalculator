@@ -72,10 +72,11 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 </section>
 
 <div id="result" class="hidden">
-<div class="tabs"><button class="tab active" onclick="tab('overview',this)">总览</button><button class="tab" onclick="tab('bazi',this)">八字</button><button class="tab" onclick="tab('horoscope',this)">星座</button><button class="tab" onclick="tab('ziwei',this)">紫微</button><button class="tab" onclick="tab('chat',this)">命理问答</button></div>
+<div class="tabs"><button class="tab active" onclick="tab('overview',this)">总览</button><button class="tab" onclick="tab('bazi',this)">八字</button><button class="tab" onclick="tab('horoscope',this)">星座</button><button class="tab" onclick="tab('lifenumber',this)">生命数字</button><button class="tab" onclick="tab('ziwei',this)">紫微</button><button class="tab" onclick="tab('chat',this)">命理问答</button></div>
 <section id="overview" class="view"></section>
 <section id="bazi" class="view hidden"></section>
 <section id="horoscope" class="view hidden"></section>
+<section id="lifenumber" class="view hidden"></section>
 <section id="ziwei" class="view hidden"></section>
 <section id="chat" class="view hidden"></section>
 </div>
@@ -139,7 +140,14 @@ function getZodiac(m, d) {
 }
 
 
-
+function getLifeNumber(y, m, d) {
+  // 将阳历年月日的数字相加，直到缩减为个位数 (1-9)
+  let str = y.toString() + m.toString() + d.toString();
+  while (str.length > 1) {
+    str = str.split('').reduce((sum, num) => sum + parseInt(num), 0).toString();
+  }
+  return parseInt(str);
+}
 
 
 function ziwei(y,m,d,h){
@@ -172,7 +180,18 @@ function render(){
  const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0], z=s.z;
  let max=Math.max(...Object.values(c)), strongest=Object.keys(c).find(k=>c[k]===max);
  let zodiacName = getZodiac(s.m, s.d);
-
+let ln = getLifeNumber(s.y, s.m, s.d);
+ const lnDesc = {
+   1: "【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
+   2: "【沟通数】代表合作、平衡、倾听与耐心。你擅长协调与建立关系。",
+   3: "【表达数】代表创意、表达、欢乐与社交。你具有极强的艺术感染力。",
+   4: "【稳定数】代表规律、执行、秩序与务实。你是脚踏实地的建设者。",
+   5: "【自由数】代表自由、冒险、多变与好奇。你向往无拘无束的生活。",
+   6: "【关怀数】代表责任、家庭、大爱与疗愈。你富有同情心与奉献精神。",
+   7: "【真理数】代表探究、直觉、内省与智慧。你是真理的追寻者。",
+   8: "【财富数】代表权力、商业、成就与效率。你具备强大的执行力与商业头脑。",
+   9: "【智慧数】代表大爱、奉献、灵性与完美。你拥有悲天悯人的情怀。"
+ };
  // 【修改】：将公历年份转为中文数字（如 1990 -> 一九九零）
  let lunarYearStr = numToChinese(s.y) + "年";
  let lunarHourStr = p.hour[1] + "时";
@@ -216,6 +235,14 @@ function render(){
  document.getElementById("horoscope").innerHTML=`
  <div class="card"><div class="title">西方星座</div><p class="sub">根据您输入的公历日期（${s.m}月${s.d}日），对应的黄道十二星座为：</p><div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div></div>`;
 
+ document.getElementById("lifenumber").innerHTML=`
+ <div class="card">
+   <div class="title">生命密码 / 生命数字</div>
+   <p class="sub">根据您输入的公历出生日期（${s.y}年${s.m}月${s.d}日）计算得出：</p>
+   <div style="font-size: 32px; font-weight: bold; color: var(--gold); text-align: center; margin: 25px 0;">${ln}</div>
+   <p style="text-align: center; font-size: 14px; font-weight: bold; color: var(--gold2);">${lnDesc[ln]}</p>
+   <p class="sub" style="margin-top: 15px; border-top: 1px solid var(--line); padding-top: 12px;">算法说明：将公历年月日的每一个数字相加，直至得出1-9的个位数。它揭示了个人的先天性格、天赋以及人生核心课题。</p>
+ </div>`;
 
  document.getElementById("ziwei").innerHTML=`
  <div class="card"><div class="title">紫微十二宫</div><p class="sub">${fullLunarText} · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
