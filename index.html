@@ -16,7 +16,7 @@
 body{padding-bottom:env(safe-area-inset-bottom)}
 .app{max-width:760px;margin:auto;min-height:100vh;padding:calc(12px + env(safe-area-inset-top)) 16px 28px}
 header{display:flex;justify-content:space-between;align-items:center;padding:10px 2px 16px}
-.brand{font-weight:800;letter-spacing:.08em;font-size:18px;line-height:1.3}.brand span{color:var(--gold)}
+.brand{font-weight:800;letter-spacing:.08em;font-size:20px}.brand span{color:var(--gold)}
 .badge{font-size:11px;color:var(--gold);border:1px solid #6b5834;border-radius:99px;padding:5px 9px}
 .hero{background:linear-gradient(145deg,#151b26,#0f141d);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 16px 45px #0005}
 h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);font-size:13px;line-height:1.7}
@@ -58,7 +58,7 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 
 <div class="app">
 <header>
-  <div class="brand" data-i18n="brand">禅天僧命理  ·<br>信不信由你</div>
+  <div class="brand" data-i18n="brand">禅天僧命理 <span>·</span> 信不信由你</div>
   <div style="display: flex; gap: 10px; align-items: center;">
     <div class="badge" data-i18n="badge">PRO · 测试版</div>
     <button id="langBtn" class="secondary" style="padding: 0; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; margin: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden;" onclick="toggleLang()" title="切换语言 / Switch Language">
@@ -111,7 +111,7 @@ let currentLang = 'zh';
 
 const i18n_static = {
   zh: {
-    brand: "禅天僧命理  ·<br>信不信由你",
+    brand: "禅天僧命理 <span>·</span> 信不信由你",
     badge: "PRO · 测试版",
     title: "八字 · 黄历 · 星座 · 紫微 · 生命数字",
     subtitle: "输入出生资料，点击”生成专业命盘“后会自动生成四柱、五行结构、十神提示等信息。点击“此刻黄历八字”即会显示此时此刻的四柱八字、黄历、星座、生命数字、紫薇斗数信息。",
@@ -123,7 +123,7 @@ const i18n_static = {
     tab_overview: "总览", tab_bazi: "八字", tab_horoscope: "星座", tab_lifenumber: "生命数字", tab_ziwei: "紫微", tab_chat: "命理问答"
   },
   en: {
-    brand: "ChanTianSeng MetaScience  ·<br>Believe it or not",
+    brand: "ChanTianSeng MetaScience <span>·</span> Believe it or not",
     badge: "PRO · Beta",
     title: "Bazi · Almanac · Zodiac · Ziwei · Numerology",
     subtitle: "Enter birth details and click 'Generate Pro Chart' to see the Four Pillars, Five Elements, and Ten Gods. Click 'Current Time Chart' to display the astrology reading for this exact moment.",
@@ -380,15 +380,15 @@ function render(){
     8: "[Achiever] Power, business, efficiency. Strong execution and business acumen.",
     9: "[Humanitarian] Universal love, dedication, spirituality. Compassionate soul."
  } : {
-    1: "【创始数】代表独立,领导,创新与自信。你是天生的开拓者。",
-    2: "【沟通数】代表合作,平衡,倾听与耐心。你擅长协调与建立关系。",
-    3: "【表达数】代表创意,表达,欢乐与社交。你具有极强的艺术感染力。",
-    4: "【稳定数】代表规律,执行,秩序与务实。你是脚踏实地的建设者。",
-    5: "【自由数】代表自由,冒险,多变与好奇。你向往无拘无束的生活。",
-    6: "【关怀数】代表责任,家庭,大爱与疗愈。你富有同情心与奉献精神。",
-    7: "【真理数】代表探究,直觉,内省与智慧。你是真理的追寻者。",
-    8: "【财富数】代表权力,商业,成就与效率。你具备强大的执行力与商业头脑。",
-    9: "【智慧数】代表大爱,奉献,灵性与完美。你拥有悲天悯人的情怀."
+    1: "【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
+    2: "【沟通数】代表合作、平衡、倾听与耐心。你擅长协调与建立关系。",
+    3: "【表达数】代表创意、表达、欢乐与社交。你具有极强的艺术感染力。",
+    4: "【稳定数】代表规律、执行、秩序与务实。你是脚踏实地的建设者。",
+    5: "【自由数】代表自由、冒险、多变与好奇。你向往无拘无束的生活。",
+    6: "【关怀数】代表责任、家庭、大爱与疗愈。你富有同情心与奉献精神。",
+    7: "【真理数】代表探究、直觉、内省与智慧。你是真理的追寻者。",
+    8: "【财富数】代表权力、商业、成就与效率。你具备强大的执行力与商业头脑。",
+    9: "【智慧数】代表大爱、奉献、灵性与完美。你拥有悲天悯人的情怀."
  };
 
  let lunarYearStr = currentLang === 'en' ? s.y + " Year" : numToChinese(s.y) + "年";
@@ -421,7 +421,7 @@ function render(){
   `日主：${dayMasterInfo(dm)}。当前结构中「${strongest}」出现频率最高；仅按显性干支计数，未把藏干、节令旺衰等复杂权重混入。`;
 
  document.getElementById("overview").innerHTML=`
- <div class="card"><div class="title">${tr("命盘摘要")}</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${tr(n)}</small><b>${tr(p[["year","month","day","hour"][i][0])}<br>${tr(p[["year","month","day","hour"][i]][1])}</b><em>${i===2?tr("日主"):tr(p[["year","month","day","hour"][i]][1])}</em></div>`).join("")}</div></div>
+ <div class="card"><div class="title">${tr("命盘摘要")}</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${tr(n)}</small><b>${tr(p[["year","month","day","hour"][i]][0])}<br>${tr(p[["year","month","day","hour"][i]][1])}</b><em>${i===2?tr("日主"):tr(p[["year","month","day","hour"][i]][1])}</em></div>`).join("")}</div></div>
  <div class="card"><div class="title">${tr("五行结构")}</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${tr(k)}</b><span>${v} / ${total}</span></div>`).join("")}</div><p class="sub">${fiveSubText}</p></div>
  <div class="card"><div class="title">${tr("传统命理提示")}</div><p class="sub">${advice(dm,c,strongest)}</p></div>
  <div class="card"><div class="title">${tr("农历日期")}</div><div style="font-size: 15px; font-weight: bold; color: var(--gold2);">${fullLunarText}</div></div>
