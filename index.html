@@ -232,15 +232,17 @@ let joint = [
            inner, outer, sub, late, joint, ds, ms, y1: ys.substring(0,2), y2: ys.substring(2,4) };
 }
 
+// CORRECTED CODE:
 function ziwei(y,m,d,h){
  const l=lunarApprox(y,m,d), palaceNames=["命宫","兄弟","夫妻","子女","财帛","疾厄","迁移","交友","官禄","田宅","福德","父母"];
  const life=(l.m+Math.floor((h+1)/2)+10)%12, body=(l.m-Math.floor((h+1)/2)+24)%12;
  let stars=["紫微","天机","太阳","武曲","天同","廉贞","天府","太阴","贪狼","巨门","天相","天梁","七杀","破军"];
  let cells=[];
  for(let i=0;i<12;i++){let p=palaceNames[(i-life+12)%12], a=stars[(i+l.m)%stars.length], b=stars[(i*3+l.d)%stars.length];cells.push({branch:branches[i],p,stars:[a,b]})}
- {l,life,body,cells}
+ return {l,life,body,cells}; // <-- Added return statement
 }
- 
+
+  
 function tenFor(stem,dm){let a=stems.indexOf(stem),b=stems.indexOf(dm);let diff=(a-b+10)%10;return ten[diff]}
 function generate(){
  let [ds,ts]=dtParts(); if(!ds){alert("请选择出生日期");return}
