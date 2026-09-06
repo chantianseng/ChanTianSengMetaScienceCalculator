@@ -60,7 +60,7 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 <header>
   <div class="brand" data-i18n="brand">禅天僧命理 <span>·</span> 信不信由你</div>
   <div style="display: flex; gap: 10px; align-items: center;">
-    <div class="badge" data-i18n="badge">PRO · 版</div>
+    <div class="badge" data-i18n="badge">PRO ·</div>
     <button id="langBtn" class="secondary" style="padding: 0; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; margin: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; overflow: hidden;" onclick="toggleLang()" title="切换语言 / Switch Language">
       <span id="langIcon">🇬🇧</span>
     </button>
@@ -112,7 +112,7 @@ let currentLang = 'zh';
 const i18n_static = {
   zh: {
     brand: "禅天僧命理 <span>·</span> 信不信由你",
-    badge: "PRO · 版",
+    badge: "PRO ·",
     title: "八字 · 黄历 · 星座 · 紫微 · 生命数字",
     subtitle: "输入出生资料，点击”生成专业命盘“后会自动生成四柱、五行结构、十神提示等信息。点击“此刻黄历八字”即会显示此时此刻的四柱八字、黄历、星座、生命数字、紫薇斗数信息。",
     lbl_date: "出生日期（阳历）", lbl_time: "出生时间", lbl_sex: "性别", opt_m: "男", opt_f: "女", lbl_tz: "时区",
@@ -124,7 +124,7 @@ const i18n_static = {
   },
   en: {
     brand: "ChanTianSeng MetaScience <span>·</span> Believe it or not",
-    badge: "PRO · Beta",
+    badge: "PRO ·",
     title: "Bazi · Almanac · Zodiac · Ziwei · Numerology",
     subtitle: "Enter birth details and click 'Generate Pro Chart' to see the Four Pillars, Five Elements, and Ten Gods. Click 'Current Time Chart' to display the astrology reading for this exact moment.",
     lbl_date: "Birth Date (Gregorian)", lbl_time: "Birth Time", lbl_sex: "Gender", opt_m: "Male", opt_f: "Female", lbl_tz: "Timezone",
@@ -512,8 +512,8 @@ function render(){
   `${fullLunarText} · Life Palace: ${tr(branches[z.life])} · Body Palace: ${tr(branches[z.body])}` : 
   `${fullLunarText} · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}`;
  let ziweiNote = currentLang === 'en' ?
-  `Life Palace: ${tr(branches[z.life])}. This beta version uses a lightweight calendar/star algorithm for demonstration. For precise calculations, use professional ephemeris data.` :
-  `命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。`;
+  `Life Palace: ${tr(branches[z.life])}. This PRO version uses a lightweight calendar/star algorithm for demonstration. For precise calculations, use professional ephemeris data.` :
+  `命宫：${branches[z.life]}。本专业版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。`;
 
  document.getElementById("ziwei").innerHTML=`
  <div class="card"><div class="title">${tr("紫微十二宫")}</div><p class="sub">${ziweiSub}</p><div class="palace">${z.cells.map(x=>`<div><strong>${tr(x.p)} · ${tr(x.branch)}</strong><span class="stars">${x.stars.map(s => tr(s)).join(" · ")}</span></div>`).join("")}</div></div>
@@ -545,7 +545,7 @@ function answer(q){
     if(/love|relationship|marriage/i.test(q)) return `Relationships involve the Spouse Palace, clashes, and combinations. In Ziwei, we check the Spouse Palace. You can ask me about relationship patterns or blind spots.`;
     return `I will answer based on your Day Master ${tr(dm)} and current chart. You can ask me about career, wealth, love, personality, or specific years.`;
   }
-  if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀,财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情,性格、迁移或某一年份。`;
+  if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀,财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个专业版适合做结构化命理问答；你可以直接问事业、财运、感情,性格、迁移或某一年份。`;
 }
 
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
