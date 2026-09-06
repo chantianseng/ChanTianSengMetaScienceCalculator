@@ -29,11 +29,11 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 .chat{height:430px;overflow:auto;background:#0c121a;border:1px solid var(--line);border-radius:18px;padding:12px}.msg{max-width:88%;padding:11px 12px;border-radius:15px;margin:8px 0;line-height:1.65;font-size:13px;white-space:pre-wrap}.ai{background:#151d29;border:1px solid #263244}.me{background:#6e5830;margin-left:auto;color:#fff7e7}.chatbar{display:flex;gap:8px;margin-top:9px}.chatbar input{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px}.send{background:var(--gold);color:#161108}
 .hidden{display:none!important}.note{font-size:10px;color:#697588;line-height:1.6;margin-top:12px}
 .poem {
-  text-align: center;      /* 让文字居中 */
-  color: #697588;          /* 字体颜色设定为和上方免责声明类似的暗色 */
-  font-size: 18px;         /* 字体大小 */
-  line-height: 1.5;        /* 行距 */
-  margin-top: 20px;        /* 距离上方的间距 */
+  text-align: center;
+  color: #697588;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-top: 20px;
 }
 
 /* --- 和谐方舟金字塔排版 CSS --- */
@@ -167,6 +167,13 @@ function arkRoot(n) {
   return sum;
 }
 
+// 计算生命数字核心函数
+function getLifeNumber(y, m, d) {
+  let str = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
+  let sum = str.split('').reduce((acc, val) => acc + parseInt(val), 0);
+  return arkRoot(sum);
+}
+
 // 和谐方舟完整排盘引擎
 function calcHarmonyArk(y, m, d) {
   let ys = y.toString().padStart(4, '0');
@@ -233,6 +240,20 @@ function render(){
  let zodiacName = getZodiac(s.m, s.d);
  let ark = calcHarmonyArk(s.y, s.m, s.d);
 
+ // 新增生命数字计算及描述
+ let ln = getLifeNumber(s.y, s.m, s.d);
+ const lnDesc = {
+   1: "【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
+   2: "【沟通数】代表合作、平衡、倾听与耐心。你擅长协调与建立关系。",
+   3: "【表达数】代表创意、表达、欢乐与社交。你具有极强的艺术感染力。",
+   4: "【稳定数】代表规律、执行、秩序与务实。你是脚踏实地的建设者。",
+   5: "【自由数】代表自由、冒险、多变与好奇。你向往无拘无束的生活。",
+   6: "【关怀数】代表责任、家庭、大爱与疗愈。你富有同情心与奉献精神。",
+   7: "【真理数】代表探究、直觉、内省与智慧。你是真理的追寻者。",
+   8: "【财富数】代表权力、商业、成就与效率。你具备强大的执行力与商业头脑。",
+   9: "【智慧数】代表大爱、奉献、灵性与完美。你拥有悲天悯人的情怀."
+ };
+
  let lunarYearStr = numToChinese(s.y) + "年";
  let lunarHourStr = p.hour[1] + "时";
  let lunarMStr = "正月", lunarDStr = "初一";
@@ -295,14 +316,14 @@ function render(){
          <div style="border-top: 1.5px solid var(--text); padding-top: 4px; display: flex; justify-content: space-between; padding: 4px 6px 0;"><span>${ark.T2}</span><span>${ark.T1}</span></div>
        </div>
 
-       <!-- 主性格数字（已删除上方红星） -->
+       <!-- 主性格数字 -->
        <div class="ark-num ark-main" style="top: 100px; left: 150px;">${ark.G}</div>
        
        <!-- 中间层数字 -->
        <div class="ark-num" style="top: 147px; left: 125px;">${ark.M1}</div>
        <div class="ark-num" style="top: 147px; left: 175px;">${ark.M2}</div>
        
-       <!-- 底层数字（已删除左右两侧底角红星） -->
+       <!-- 底层数字 -->
        <div class="ark-num" style="top: 183px; left: 95px;">${ark.B1}</div>
        <div class="ark-num" style="top: 183px; left: 132px;">${ark.B2}</div>
        <div class="ark-num" style="top: 183px; left: 168px;">${ark.B3}</div>
@@ -347,6 +368,15 @@ function render(){
      </div>
      
    </div>
+ </div>
+
+ <!-- 新增：生命密码 / 主性格说明卡片 -->
+ <div class="card">
+   <div class="title">生命密码 / 生命数字</div>
+   <p class="sub">根据您输入的公历出生日期（${s.y}年${s.m}月${s.d}日）计算得出：</p>
+   <div style="font-size: 32px; font-weight: bold; color: var(--gold); text-align: center; margin: 25px 0;">${ln}</div>
+   <p style="text-align: center; font-size: 14px; font-weight: bold; color: var(--gold2);">${lnDesc[ln]}</p>
+   <p class="sub" style="margin-top: 15px; border-top: 1px solid var(--line); padding-top: 12px;">算法说明：将公历年月日的每一个数字相加，直至得出1-9的个位数。它揭示了个人的先天性格、天赋以及人生核心课题。</p>
  </div>`;
 
  document.getElementById("ziwei").innerHTML=`
@@ -358,7 +388,7 @@ function render(){
  
 function advice(dm,c,strong){let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`}
 function ask(){let q=document.getElementById("q"),txt=q.value.trim();if(!txt||!state)return;let box=document.getElementById("messages");box.innerHTML+=`<div class="msg me">${esc(txt)}</div>`;let a=answer(txt);box.innerHTML+=`<div class="msg ai">${a}</div>`;box.scrollTop=box.scrollHeight;q.value=""}
-function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀、财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
+function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀,财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
 function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
 function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
 function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
