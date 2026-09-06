@@ -11,77 +11,460 @@
 <link rel="apple-touch-icon" href="chantiansengicon.jpg">
 <title>禅天僧命理科学研究所</title>
 <style>
-:root{--bg:#090d13;--panel:#111722;--panel2:#171e2b;--line:#273244;--text:#edf2f7;--muted:#93a0b3;--gold:#d8b36a;--gold2:#f0d18d;--red:#c96b62;--green:#72b08a}
-*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+:root{
+  --bg:#090d13;
+  --panel:#111722;
+  --panel2:#171e2b;
+  --line:#273244;
+  --text:#edf2f7;
+  --muted:#93a0b3;
+  --gold:#d8b36a;
+  --gold2:#f0d18d;
+  --red:#c96b62;
+  --green:#72b08a
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif
+}
 body{padding-bottom:env(safe-area-inset-bottom)}
-.app{max-width:760px;margin:auto;min-height:100vh;padding:calc(12px + env(safe-area-inset-top)) 16px 28px}
-header{display:flex;justify-content:space-between;align-items:center;padding:10px 2px 16px}
-.brand{font-weight:800;letter-spacing:.08em;font-size:20px}.brand span{color:var(--gold)}
-.badge{font-size:11px;color:var(--gold);border:1px solid #6b5834;border-radius:99px;padding:5px 9px}
-.hero{background:linear-gradient(145deg,#151b26,#0f141d);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:0 16px 45px #0005}
-h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);font-size:13px;line-height:1.7}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:16px}.field{background:#0c121b;border:1px solid var(--line);border-radius:14px;padding:10px}.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px}input,select{width:100%;background:transparent;border:0;color:var(--text);font-size:15px;outline:0}input[type=date],input[type=time]{color-scheme:dark}
-.actions{display:flex;gap:10px;margin-top:14px}button{border:0;border-radius:14px;padding:13px 16px;font-size:14px;font-weight:700;cursor:pointer}.primary{background:var(--gold);color:#15110a;flex:1}.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}
-.tabs{display:flex;gap:8px;overflow:auto;margin:16px 0 10px}.tab{white-space:nowrap;padding:9px 13px;border-radius:99px;background:var(--panel);border:1px solid var(--line);color:var(--muted)}.tab.active{color:#1b1408;background:var(--gold);border-color:var(--gold)}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;margin:10px 0}.title{font-weight:800;margin-bottom:12px}.muted{color:var(--muted);font-size:12px}.pill{display:inline-block;padding:4px 7px;border:1px solid var(--line);border-radius:7px;margin:2px;font-size:12px}
-.bazi{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.pillar{background:var(--panel2);border-radius:13px;padding:10px 5px;text-align:center}.pillar small{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.pillar b{display:block;font-size:23px;line-height:1.1}.pillar em{display:block;font-style:normal;font-size:10px;color:var(--gold);margin-top:5px}
-.five{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.five div{background:var(--panel2);border-radius:12px;padding:10px 3px;text-align:center}.five b{display:block;font-size:17px}.five span{font-size:10px;color:var(--muted)}
-.palace{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.palace div{min-height:76px;background:var(--panel2);border:1px solid #222c3b;border-radius:10px;padding:7px;font-size:11px}.palace strong{display:block;color:var(--gold2);font-size:11px;margin-bottom:5px}.stars{color:#e5e9ee;line-height:1.5}
-.chat{height:430px;overflow:auto;background:#0c121a;border:1px solid var(--line);border-radius:18px;padding:12px}.msg{max-width:88%;padding:11px 12px;border-radius:15px;margin:8px 0;line-height:1.65;font-size:13px;white-space:pre-wrap}.ai{background:#151d29;border:1px solid #263244}.me{background:#6e5830;margin-left:auto;color:#fff7e7}.chatbar{display:flex;gap:8px;margin-top:9px}.chatbar input{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:12px}.send{background:var(--gold);color:#161108}
-.hidden{display:none!important}.note{font-size:10px;color:#697588;line-height:1.6;margin-top:12px}
-
-.ark-container { background: var(--panel2); border-radius: 18px; padding: 30px 15px 20px; border: 1px solid var(--line); margin-top: 15px; }
-.ark-triangle { position: relative; width: 100%; max-width: 320px; height: 260px; margin: 0 auto 20px; font-weight: bold; font-size: 19px; }
-.ark-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.ark-num { position: absolute; transform: translate(-50%, -50%); color: var(--text); }
-.ark-main { color: var(--gold); font-size: 26px; }
-.ark-outer { font-size: 17px; }
-.ark-base { font-size: 15px; color: var(--text); display: flex; justify-content: center; gap: 20px; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; }
-
-.ark-stats { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 18px; }
-.ark-stats b { display: block; font-size: 17px; margin-bottom: 6px; }
-.ark-stats span { font-size: 11px; color: var(--muted); }
-
-.ark-joint { display: flex; font-size: 15px; text-align: center; }
-.ark-joint-label { width: 70px; color: var(--muted); font-size: 12px; text-align: left; padding-top: 2px; }
-.ark-joint-cols { display: flex; flex: 1; justify-content: space-between; }
-.ark-joint-cols > div > div { margin-bottom: 10px; }
-
-@media(min-width:650px){.app{padding-left:24px;padding-right:24px}.hero{padding:26px}.card{padding:20px}}
+.app{
+  max-width:760px;
+  margin:auto;
+  min-height:100vh;
+  padding:calc(12px + env(safe-area-inset-top)) 16px 28px
+}
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 2px 16px
+}
+.brand{
+  font-weight:800;
+  letter-spacing:.08em;
+  font-size:20px
+}
+.brand span{color:var(--gold)}
+.badge{
+  font-size:11px;
+  color:var(--gold);
+  border:1px solid #6b5834;
+  border-radius:99px;
+  padding:5px 9px
+}
+.hero{
+  background:linear-gradient(145deg,#151b26,#0f141d);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:20px;
+  box-shadow:0 16px 45px #0005
+}
+h1{
+  font-size:28px;
+  margin:0 0 7px;
+  letter-spacing:.02em
+}
+.sub{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7
+}
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-top:16px
+}
+.field{
+  background:#0c121b;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px
+}
+.field label{
+  display:block;
+  font-size:11px;
+  color:var(--muted);
+  margin-bottom:6px
+}
+input,select{
+  width:100%;
+  background:transparent;
+  border:0;
+  color:var(--text);
+  font-size:15px;
+  outline:0
+}
+input[type=date],input[type=time]{color-scheme:dark}
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:14px
+}
+button{
+  border:0;
+  border-radius:14px;
+  padding:13px 16px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer
+}
+.primary{
+  background:var(--gold);
+  color:#15110a;
+  flex:1
+}
+.secondary{
+  background:var(--panel2);
+  color:var(--text);
+  border:1px solid var(--line)
+}
+.tabs{
+  display:flex;
+  gap:8px;
+  overflow:auto;
+  margin:16px 0 10px
+}
+.tab{
+  white-space:nowrap;
+  padding:9px 13px;
+  border-radius:99px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  color:var(--muted)
+}
+.tab.active{
+  color:#1b1408;
+  background:var(--gold);
+  border-color:var(--gold)
+}
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  margin:10px 0
+}
+.title{
+  font-weight:800;
+  margin-bottom:12px
+}
+.muted{
+  color:var(--muted);
+  font-size:12px
+}
+.pill{
+  display:inline-block;
+  padding:4px 7px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  margin:2px;
+  font-size:12px
+}
+.bazi{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px
+}
+.pillar{
+  background:var(--panel2);
+  border-radius:13px;
+  padding:10px 5px;
+  text-align:center
+}
+.pillar small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:5px
+}
+.pillar b{
+  display:block;
+  font-size:23px;
+  line-height:1.1
+}
+.pillar em{
+  display:block;
+  font-style:normal;
+  font-size:10px;
+  color:var(--gold);
+  margin-top:5px
+}
+.five{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px
+}
+.five div{
+  background:var(--panel2);
+  border-radius:12px;
+  padding:10px 3px;
+  text-align:center
+}
+.five b{
+  display:block;
+  font-size:17px
+}
+.five span{
+  font-size:10px;
+  color:var(--muted)
+}
+/* 紫微宫盘 */
+.palace{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px
+}
+.palace div{
+  min-height:105px;
+  background:var(--panel2);
+  border:1px solid #222c3b;
+  border-radius:10px;
+  padding:7px;
+  font-size:11px
+}
+.palace strong{
+  display:block;
+  color:var(--gold2);
+  font-size:11px;
+  margin-bottom:6px
+}
+.stars{
+  color:#e5e9ee;
+  line-height:1.7
+}
+.star-main{
+  color:var(--gold);
+  font-weight:800
+}
+.palace-mark{
+  font-size:9px;
+  color:var(--muted);
+  margin-top:5px;
+  line-height:1.5
+}
+.chat{
+  height:430px;
+  overflow:auto;
+  background:#0c121a;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:12px
+}
+.msg{
+  max-width:88%;
+  padding:11px 12px;
+  border-radius:15px;
+  margin:8px 0;
+  line-height:1.65;
+  font-size:13px;
+  white-space:pre-wrap
+}
+.ai{
+  background:#151d29;
+  border:1px solid #263244
+}
+.me{
+  background:#6e5830;
+  margin-left:auto;
+  color:#fff7e7
+}
+.chatbar{
+  display:flex;
+  gap:8px;
+  margin-top:9px
+}
+.chatbar input{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:12px
+}
+.send{
+  background:var(--gold);
+  color:#161108
+}
+.hidden{display:none!important}
+.note{
+  font-size:10px;
+  color:#697588;
+  line-height:1.6;
+  margin-top:12px
+}
+.ark-container{
+  background:var(--panel2);
+  border-radius:18px;
+  padding:30px 15px 20px;
+  border:1px solid var(--line);
+  margin-top:15px
+}
+.ark-triangle{
+  position:relative;
+  width:100%;
+  max-width:320px;
+  height:260px;
+  margin:0 auto 20px;
+  font-weight:bold;
+  font-size:19px
+}
+.ark-svg{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%
+}
+.ark-num{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  color:var(--text)
+}
+.ark-main{
+  color:var(--gold);
+  font-size:26px
+}
+.ark-outer{font-size:17px}
+.ark-base{
+  font-size:15px;
+  color:var(--text);
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  position:absolute;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%
+}
+.ark-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  text-align:center;
+  border-bottom:1px solid var(--line);
+  padding-bottom:18px;
+  margin-bottom:18px
+}
+.ark-stats b{
+  display:block;
+  font-size:17px;
+  margin-bottom:6px
+}
+.ark-stats span{
+  font-size:11px;
+  color:var(--muted)
+}
+.ark-joint{
+  display:flex;
+  font-size:15px;
+  text-align:center
+}
+.ark-joint-label{
+  width:70px;
+  color:var(--muted);
+  font-size:12px;
+  text-align:left;
+  padding-top:2px
+}
+.ark-joint-cols{
+  display:flex;
+  flex:1;
+  justify-content:space-between
+}
+.ark-joint-cols>div>div{margin-bottom:10px}
+@media(min-width:650px){
+  .app{
+    padding-left:24px;
+    padding-right:24px
+  }
+  .hero{padding:26px}
+  .card{padding:20px}
+}
+@media(max-width:480px){
+  .palace div{min-height:96px}
+  .palace strong{font-size:10px}
+  .stars{font-size:10px}
+}
 </style>
 </head>
 <body>
-
 <audio id="bgMusic" loop autoplay>
   <source src="https://raw.githubusercontent.com/chantianseng/ChanTianSengMetaScienceCalculator/main/Pincha.mp3" type="audio/mpeg">
 </audio>
-
 <div class="app">
-<header><div class="brand">禅天僧命理 <span>·</span> 信不信由你</div><div class="badge">PRO · 测试版</div></header>
+<header>
+  <div class="brand">禅天僧命理 <span>·</span> 信不信由你</div>
+  <div class="badge">PRO · 测试版</div>
+</header>
 <section class="hero">
 <h1>八字 · 黄历 · 星座 · 紫微 · 生命数字</h1>
-<div class="sub">输入出生资料，点击”生成专业命盘“后会自动生成四柱、五行结构、十神提示等信息。点击“此刻黄历八字”即会显示此时此刻的四柱八字、黄历、星座、生命数字、紫薇斗数信息。</div>
-<div class="grid">
-<div class="field"><label>出生日期（阳历）</label><input id="date" type="date"></div>
-<div class="field"><label>出生时间</label><input id="time" type="time" value="12:00"></div>
-<div class="field"><label>性别</label><select id="sex"><option value="m">男</option><option value="f">女</option></select></div>
-<div class="field"><label>时区</label><select id="tz"><option value="8">中国/马来西亚/新加坡 · UTC+08:00 </option><option value="9">日本/韩国 · UTC+09:00 </option><option value="7">泰国/越南 · UTC+07:00 </option><option value="0">UTC+00:00</option><option value="-5">UTC-05:00</option><option value="-8">UTC-08:00</option></select></div>
+<div class="sub">
+输入出生资料，点击“生成专业命盘”后会自动生成四柱、五行结构、十神提示及紫微十二宫。
+本版本紫微排盘采用“农历 → 命身宫 → 五行局 → 紫微 → 天府 → 十四主星”的标准化流程。
 </div>
 <div class="grid">
-<div class="field"><label>出生地经度（可选，用于真太阳时）</label><input id="lon" type="number" step=".01" placeholder="例如：116.40"></div>
-<div class="field"><label>出生地（显示名称）</label><input id="place" placeholder="例如：北京"></div>
+<div class="field">
+<label>出生日期（阳历）</label>
+<input id="date" type="date">
 </div>
-<div class="actions"><button class="primary" onclick="generate()">生成专业命盘</button><button class="secondary" onclick="demo()">八字例子</button></div>
- 
-<div class="actions" style="margin-top: 10px;">
-  <button class="secondary" style="flex: 1; border-color: var(--gold); color: var(--gold);" onclick="todayBazi()">此刻黄历八字</button>
+<div class="field">
+<label>出生时间</label>
+<input id="time" type="time" value="12:00">
 </div>
-<div class="note">免责声明：命理属于传统文化工具。本禅天僧命理推演器重点提供可离线运行的排盘与结构化解读，不应作为医疗、法律、投资等现实决策的唯一依据。杜绝迷信，相信科学。</div>
- 
+<div class="field">
+<label>性别</label>
+<select id="sex">
+<option value="m">男</option>
+<option value="f">女</option>
+</select>
+</div>
+<div class="field">
+<label>时区</label>
+<select id="tz">
+<option value="8">中国/马来西亚/新加坡 · UTC+08:00</option>
+<option value="9">日本/韩国 · UTC+09:00</option>
+<option value="7">泰国/越南 · UTC+07:00</option>
+<option value="0">UTC+00:00</option>
+<option value="-5">UTC-05:00</option>
+<option value="-8">UTC-08:00</option>
+</select>
+</div>
+</div>
+<div class="grid">
+<div class="field">
+<label>出生地经度（可选，用于真太阳时）</label>
+<input id="lon" type="number" step=".01" placeholder="例如：116.40">
+</div>
+<div class="field">
+<label>出生地（显示名称）</label>
+<input id="place" placeholder="例如：北京">
+</div>
+</div>
+<div class="actions">
+<button class="primary" onclick="generate()">生成专业命盘</button>
+<button class="secondary" onclick="demo()">八字例子</button>
+</div>
+<div class="actions" style="margin-top:10px">
+<button class="secondary" style="flex:1;border-color:var(--gold);color:var(--gold)" onclick="todayBazi()">
+此刻黄历八字
+</button>
+</div>
+<div class="note">
+免责声明：命理属于传统文化工具。本禅天僧命理推演器重点提供可离线运行的排盘与结构化解读，不应作为医疗、法律、投资等现实决策的唯一依据。杜绝迷信，相信科学。
+</div>
 </section>
-
 <div id="result" class="hidden">
-<div class="tabs"><button class="tab active" onclick="tab('overview',this)">总览</button><button class="tab" onclick="tab('bazi',this)">八字</button><button class="tab" onclick="tab('horoscope',this)">星座</button><button class="tab" onclick="tab('lifenumber',this)">生命数字</button><button class="tab" onclick="tab('ziwei',this)">紫微</button><button class="tab" onclick="tab('chat',this)">命理问答</button></div>
+<div class="tabs">
+<button class="tab active" onclick="tab('overview',this)">总览</button>
+<button class="tab" onclick="tab('bazi',this)">八字</button>
+<button class="tab" onclick="tab('horoscope',this)">星座</button>
+<button class="tab" onclick="tab('lifenumber',this)">生命数字</button>
+<button class="tab" onclick="tab('ziwei',this)">紫微</button>
+<button class="tab" onclick="tab('chat',this)">命理问答</button>
+</div>
 <section id="overview" class="view"></section>
 <section id="bazi" class="view hidden"></section>
 <section id="horoscope" class="view hidden"></section>
@@ -91,355 +474,1977 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 </div>
 </div>
 <script>
-document.body.addEventListener('pointerdown', function() {
-  const bgm = document.getElementById('bgMusic');
-  if (bgm && bgm.paused) {
-    bgm.play().catch(error => {
-      console.log("播放被浏览器拦截:", error);
+document.body.addEventListener('pointerdown',function(){
+  const bgm=document.getElementById('bgMusic');
+  if(bgm&&bgm.paused){
+    bgm.play().catch(error=>{
+      console.log("播放被浏览器拦截:",error);
     });
   }
-}, { once: true });
-
-const stems=["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"], branches=["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"];
-const wux={甲:"木",乙:"木",丙:"火",丁:"火",戊:"土",己:"土",庚:"金",辛:"金",壬:"水",癸:"水",子:"水",丑:"土",寅:"木",卯:"木",辰:"土",巳:"火",午:"火",未:"土",申:"金",酉:"金",戌:"土",亥:"水"};
-const ten=["比肩","劫财","食神","伤官","偏财","正财","七杀","正官","偏印","正印"];
-const animals=["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"];
+},{once:true});
+/* =========================================================
+   基础数据
+========================================================= */
+const stems=[
+  "甲","乙","丙","丁","戊",
+  "己","庚","辛","壬","癸"
+];
+const branches=[
+  "子","丑","寅","卯","辰","巳",
+  "午","未","申","酉","戌","亥"
+];
+const wux={
+  甲:"木",乙:"木",
+  丙:"火",丁:"火",
+  戊:"土",己:"土",
+  庚:"金",辛:"金",
+  壬:"水",癸:"水",
+  子:"水",丑:"土",
+  寅:"木",卯:"木",
+  辰:"土",巳:"火",
+  午:"火",未:"土",
+  申:"金",酉:"金",
+  戌:"土",亥:"水"
+};
+const ten=[
+  "比肩","劫财","食神","伤官","偏财",
+  "正财","七杀","正官","偏印","正印"
+];
+const animals=[
+  "鼠","牛","虎","兔","龙","蛇",
+  "马","羊","猴","鸡","狗","猪"
+];
 let state=null;
-function dtParts(){const d=document.getElementById("date").value,t=document.getElementById("time").value||"12:00";return [d,t]}
-function dayIndex(y,m,d){let a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;return d+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045}
-function solarMonth(y,m,d){ 
- const bounds=[5,4,5,5,5,6,7,7,7,8,7,7]; let idx=m-1;
- if(d<bounds[idx]) idx=(idx+11)%12;
- return idx; 
+/* =========================================================
+   基础八字
+========================================================= */
+function dtParts(){
+  const d=document.getElementById("date").value;
+  const t=document.getElementById("time").value||"12:00";
+  return [d,t];
+}
+function dayIndex(y,m,d){
+  let a=Math.floor((14-m)/12);
+  let yy=y+4800-a;
+  let mm=m+12*a-3;
+  return d+
+    Math.floor((153*mm+2)/5)+
+    365*yy+
+    Math.floor(yy/4)-
+    Math.floor(yy/100)+
+    Math.floor(yy/400)-
+    32045;
+}
+/*
+ * 原代码 solarMonth() 只是：
+ *
+ * 5,4,5,5,5,6...
+ *
+ * 用固定日期判断节气。
+ *
+ * 这不是严格的节气计算。
+ *
+ * 这里暂时保留原结构，以避免改变整个八字模块。
+ * 紫微模块本身使用农历日期，不再依赖这个近似函数。
+ */
+function solarMonth(y,m,d){
+  const bounds=[
+    5,4,5,5,5,6,
+    7,7,7,8,7,7
+  ];
+  let idx=m-1;
+  if(d<bounds[idx]){
+    idx=(idx+11)%12;
+  }
+  return idx;
 }
 function bazi(y,m,d,h,mi){
- let sy=y; if(m<2 || (m===2&&d<4)) sy--;
- let yi=((sy-4)%60+60)%60, ystem=yi%10,ybranch=yi%12;
- let sm=solarMonth(y,m,d); 
- let mb=(sm+1)%12, mstem=((ystem%5)*2+mb)%10;
- let jd=dayIndex(y,m,d), di=((jd+49)%60+60)%60, dstem=di%10,dbranch=di%12;
- let hb=Math.floor((h+1)/2)%12;
- let hstem=(dstem%5*2+hb)%10;
- return {yi,year:[stems[ystem],branches[ybranch]],month:[stems[mstem],branches[mb]],day:[stems[dstem],branches[dbranch]],hour:[stems[hstem],branches[hb]],dstem,dbranch}
+  let sy=y;
+  if(m<2||(m===2&&d<4)){
+    sy--;
+  }
+  let yi=((sy-4)%60+60)%60;
+  let ystem=yi%10;
+  let ybranch=yi%12;
+  let sm=solarMonth(y,m,d);
+  let mb=(sm+1)%12;
+  let mstem=((ystem%5)*2+mb)%10;
+  let jd=dayIndex(y,m,d);
+  let di=((jd+49)%60+60)%60;
+  let dstem=di%10;
+  let dbranch=di%12;
+  let hb=Math.floor((h+1)/2)%12;
+  let hstem=(dstem%5*2+hb)%10;
+  return {
+    yi,
+    year:[stems[ystem],branches[ybranch]],
+    month:[stems[mstem],branches[mb]],
+    day:[stems[dstem],branches[dbranch]],
+    hour:[stems[hstem],branches[hb]],
+    dstem,
+    dbranch
+  };
 }
 function countWu(p){
- let c={木:0,火:0,土:0,金:0,水:0};
- p.forEach(x=>{c[wux[x[0]]]++;c[wux[x[1]]]++}); return c
+  let c={
+    木:0,
+    火:0,
+    土:0,
+    金:0,
+    水:0
+  };
+  p.forEach(x=>{
+    c[wux[x[0]]]++;
+    c[wux[x[1]]]++;
+  });
+  return c;
 }
-function dayMasterInfo(dm){return wux[dm]+" · "+dm+"日主"}
-function lunarApprox(y,m,d){ 
- let base=dayIndex(2000,1,7), cur=dayIndex(y,m,d), n=((cur-base)%354+354)%354;
- let lm=Math.floor(n/29.5)+1, ld=Math.floor(n%29.5)+1; if(lm>12)lm=((lm-1)%12)+1; if(ld>30)ld=30;
- return {m:lm,d:ld}
+function dayMasterInfo(dm){
+  return wux[dm]+" · "+dm+"日主";
 }
-
-function getZodiac(m, d) {
- const zodiacs = [
-  {name: "摩羯座", startMonth: 1, startDay: 1, endMonth: 1, endDay: 19},
-  {name: "水瓶座", startMonth: 1, startDay: 20, endMonth: 2, endDay: 18},
-  {name: "双鱼座", startMonth: 2, startDay: 19, endMonth: 3, endDay: 20},
-  {name: "白羊座", startMonth: 3, startDay: 21, endMonth: 4, endDay: 19},
-  {name: "金牛座", startMonth: 4, startDay: 20, endMonth: 5, endDay: 20},
-  {name: "双子座", startMonth: 5, startDay: 21, endMonth: 6, endDay: 20},
-  {name: "巨蟹座", startMonth: 6, startDay: 21, endMonth: 7, endDay: 22},
-  {name: "狮子座", startMonth: 7, startDay: 23, endMonth: 8, endDay: 22},
-  {name: "处女座", startMonth: 8, startDay: 23, endMonth: 9, endDay: 22},
-  {name: "天秤座", startMonth: 9, startDay: 23, endMonth: 10, endDay: 22},
-  {name: "天蝎座", startMonth: 10, startDay: 23, endMonth: 11, endDay: 21},
-  {name: "射手座", startMonth: 11, startDay: 22, endMonth: 12, endDay: 21},
-  {name: "摩羯座", startMonth: 12, startDay: 22, endMonth: 12, endDay: 31}
- ];
- for (let z of zodiacs) {
-  if ((m === z.startMonth && d >= z.startDay) || (m === z.endMonth && d <= z.endDay)) {
-   return z.name;
+/* =========================================================
+   正确农历取得
+========================================================= */
+/*
+ * 原代码：
+ *
+ * function lunarApprox(...)
+ *
+ * 是用：
+ *
+ * 354 天
+ * 29.5 天
+ *
+ * 去“估算”农历。
+ *
+ * 紫微斗数不能这样做，因为：
+ *
+ * 1. 农历月份不是固定 29.5 天简单循环
+ * 2. 有大小月
+ * 3. 有闰月
+ * 4. 农历日期直接参与紫微星定位
+ *
+ * 这里改用浏览器 Intl Chinese Calendar。
+ *
+ * 返回：
+ * {
+ *   year: 农历年份,
+ *   month: 农历月份,
+ *   day: 农历日,
+ *   leap: 是否闰月
+ * }
+ */
+const lunarMonthNames={
+  "正月":1,
+  "一月":1,
+  "二月":2,
+  "三月":3,
+  "四月":4,
+  "五月":5,
+  "六月":6,
+  "七月":7,
+  "八月":8,
+  "九月":9,
+  "十月":10,
+  "十一月":11,
+  "十二月":12
+};
+const chineseNumMap={
+  "〇":0,
+  "零":0,
+  "一":1,
+  "二":2,
+  "三":3,
+  "四":4,
+  "五":5,
+  "六":6,
+  "七":7,
+  "八":8,
+  "九":9
+};
+function chineseDayToNumber(str){
+  if(!str) return null;
+  const map={
+    "初一":1,
+    "初二":2,
+    "初三":3,
+    "初四":4,
+    "初五":5,
+    "初六":6,
+    "初七":7,
+    "初八":8,
+    "初九":9,
+    "初十":10,
+    "十一":11,
+    "十二":12,
+    "十三":13,
+    "十四":14,
+    "十五":15,
+    "十六":16,
+    "十七":17,
+    "十八":18,
+    "十九":19,
+    "二十":20,
+    "廿一":21,
+    "廿二":22,
+    "廿三":23,
+    "廿四":24,
+    "廿五":25,
+    "廿六":26,
+    "廿七":27,
+    "廿八":28,
+    "廿九":29,
+    "三十":30
+  };
+  if(map[str]!=null){
+    return map[str];
   }
- }
- return "未知星座";
+  /*
+   * 兼容部分浏览器返回：
+   *
+   * 一
+   * 十
+   * 二十
+   * 三十
+   */
+  if(/^\d+$/.test(str)){
+    return Number(str);
+  }
+  if(str==="十") return 10;
+  if(str.length===2&&str[0]==="十"){
+    return 10+chineseNumMap[str[1]];
+  }
+  if(str.length===2&&str[1]==="十"){
+    return chineseNumMap[str[0]]*10;
+  }
+  if(str.length===3&&str[1]==="十"){
+    return chineseNumMap[str[0]]*10+chineseNumMap[str[2]];
+  }
+  return null;
 }
-
-function arkRoot(n) {
-  if (n === 0) return 0;
-  let sum = n;
-  while (sum >= 10) {
-    sum = sum.toString().split('').reduce((acc, val) => acc + parseInt(val), 0);
+function getLunarDate(y,m,d){
+  /*
+   * 中午构造日期，避免部分浏览器因夏令时/时区
+   * 在午夜边界发生日期偏移。
+   *
+   * 紫微这里首先需要公历“日”的农历日期。
+   */
+  const date=new Date(y,m-1,d,12,0,0);
+  const formatter=new Intl.DateTimeFormat(
+    "zh-CN-u-ca-chinese",
+    {
+      year:"numeric",
+      month:"long",
+      day:"numeric"
+    }
+  );
+  const parts=formatter.formatToParts(date);
+  let monthText="";
+  let dayText="";
+  let yearText="";
+  parts.forEach(p=>{
+    if(p.type==="month") monthText=p.value;
+    if(p.type==="day") dayText=p.value;
+    if(p.type==="relatedYear") yearText=p.value;
+    if(p.type==="year"&&!yearText) yearText=p.value;
+  });
+  /*
+   * 有些 Chromium 版本可能返回：
+   *
+   * “九月”
+   * “初九”
+   *
+   * 有些版本会返回：
+   *
+   * “九月”
+   * “9”
+   *
+   * 因此两种都兼容。
+   */
+  let month=0;
+  if(lunarMonthNames[monthText]){
+    month=lunarMonthNames[monthText];
+  }else{
+    const match=monthText.match(
+      /(正|一|二|三|四|五|六|七|八|九|十|十一|十二)月/
+    );
+    if(match){
+      month=lunarMonthNames[match[0]]||0;
+    }
+  }
+  let day=chineseDayToNumber(dayText);
+  /*
+   * 如果浏览器返回数字月份/日期，继续兼容。
+   */
+  if(!month&&/^\d+$/.test(monthText)){
+    month=Number(monthText);
+  }
+  if(!day&&/^\d+$/.test(dayText)){
+    day=Number(dayText);
+  }
+  /*
+   * 判断闰月。
+   */
+  const full=formatter.format(date);
+  const leap=/闰/.test(full)||/bis/.test(full.toLowerCase());
+  if(!month||!day){
+    console.warn(
+      "无法从浏览器 Intl Chinese Calendar 解析农历日期：",
+      full,
+      parts
+    );
+    throw new Error(
+      "当前浏览器无法可靠取得农历日期，请使用最新版 Chrome / Safari / Edge。"
+    );
+  }
+  return {
+    year:Number(yearText)||y,
+    month,
+    day,
+    leap,
+    text:full
+  };
+}
+/*
+ * 保留原接口名称。
+ *
+ * 这样不会破坏你其他代码。
+ */
+function lunarApprox(y,m,d){
+  const l=getLunarDate(y,m,d);
+  return {
+    m:l.month,
+    d:l.day,
+    year:l.year,
+    leap:l.leap,
+    text:l.text
+  };
+}
+/* =========================================================
+   紫微斗数核心
+========================================================= */
+/*
+ * 地支编号：
+ *
+ * 子 0
+ * 丑 1
+ * 寅 2
+ * 卯 3
+ * 辰 4
+ * 巳 5
+ * 午 6
+ * 未 7
+ * 申 8
+ * 酉 9
+ * 戌 10
+ * 亥 11
+ */
+/*
+ * ---------------------------------------------------------
+ * 第一步：命宫
+ * ---------------------------------------------------------
+ *
+ * 正月起寅。
+ *
+ * 从寅顺数至出生农历月份。
+ *
+ * 再从该月宫起子时，逆数至出生时辰。
+ *
+ * 公式：
+ *
+ * monthPalace = 寅 + (农历月 - 1)
+ * life = monthPalace - 时辰
+ *
+ * ---------------------------------------------------------
+ */
+function calcLifeBodyPalace(lunarMonth,hourBranch){
+  const monthPalace=
+    (2+lunarMonth-1)%12;
+  const life=
+    (monthPalace-hourBranch+12)%12;
+  /*
+   * 身宫：
+   *
+   * 从寅起正月，
+   * 顺数至出生月份，
+   * 再从该宫顺数出生时辰。
+   */
+  const body=
+    (monthPalace+hourBranch)%12;
+  return {
+    monthPalace,
+    life,
+    body
+  };
+}
+/*
+ * ---------------------------------------------------------
+ * 第二步：十二宫
+ * ---------------------------------------------------------
+ *
+ * 命宫确定后：
+ *
+ * 命
+ * 兄弟
+ * 夫妻
+ * 子女
+ * 财帛
+ * 疾厄
+ * 迁移
+ * 交友
+ * 官禄
+ * 田宅
+ * 福德
+ * 父母
+ *
+ * 逆时针排列。
+ *
+ * 因此：
+ *
+ * palaceName[i]
+ * =
+ * palaceNames[(i-life+12)%12]
+ *
+ * ---------------------------------------------------------
+ */
+const palaceNames=[
+  "命宫",
+  "兄弟宫",
+  "夫妻宫",
+  "子女宫",
+  "财帛宫",
+  "疾厄宫",
+  "迁移宫",
+  "交友宫",
+  "官禄宫",
+  "田宅宫",
+  "福德宫",
+  "父母宫"
+];
+/*
+ * ---------------------------------------------------------
+ * 第三步：命宫天干
+ * ---------------------------------------------------------
+ *
+ * 紫微斗数五行局需要：
+ *
+ * “命宫天干 + 命宫地支”
+ *
+ * 再按六十甲子纳音确定：
+ *
+ * 水二局
+ * 木三局
+ * 金四局
+ * 土五局
+ * 火六局
+ *
+ * ---------------------------------------------------------
+ */
+/*
+ * 五行局表。
+ *
+ * 行 = 命宫地支
+ * 列 = 生年天干组
+ *
+ * 这是传统安五行局表。
+ */
+const bureauTable={
+  "子": {
+    "甲":2,"己":2,
+    "乙":6,"庚":6,
+    "丙":5,"辛":5,
+    "丁":3,"壬":3,
+    "戊":4,"癸":4
+  },
+  "丑": {
+    "甲":2,"己":2,
+    "乙":6,"庚":6,
+    "丙":5,"辛":5,
+    "丁":3,"壬":3,
+    "戊":4,"癸":4
+  },
+  "寅": {
+    "甲":6,"己":6,
+    "乙":5,"庚":5,
+    "丙":3,"辛":3,
+    "丁":4,"壬":4,
+    "戊":2,"癸":2
+  },
+  "卯": {
+    "甲":6,"己":6,
+    "乙":5,"庚":5,
+    "丙":3,"辛":3,
+    "丁":4,"壬":4,
+    "戊":2,"癸":2
+  },
+  "辰": {
+    "甲":3,"己":3,
+    "乙":4,"庚":4,
+    "丙":2,"辛":2,
+    "丁":6,"壬":6,
+    "戊":5,"癸":5
+  },
+  "巳": {
+    "甲":3,"己":3,
+    "乙":4,"庚":4,
+    "丙":2,"辛":2,
+    "丁":6,"壬":6,
+    "戊":5,"癸":5
+  },
+  "午": {
+    "甲":5,"己":5,
+    "乙":3,"庚":3,
+    "丙":4,"辛":4,
+    "丁":2,"壬":2,
+    "戊":6,"癸":6
+  },
+  "未": {
+    "甲":5,"己":5,
+    "乙":3,"庚":3,
+    "丙":4,"辛":4,
+    "丁":2,"壬":2,
+    "戊":6,"癸":6
+  },
+  "申": {
+    "甲":4,"己":4,
+    "乙":2,"庚":2,
+    "丙":6,"辛":6,
+    "丁":5,"壬":5,
+    "戊":3,"癸":3
+  },
+  "酉": {
+    "甲":4,"己":4,
+    "乙":2,"庚":2,
+    "丙":6,"辛":6,
+    "丁":5,"壬":5,
+    "戊":3,"癸":3
+  },
+  "戌": {
+    "甲":6,"己":6,
+    "乙":4,"庚":4,
+    "丙":2,"辛":2,
+    "丁":5,"壬":5,
+    "戊":3,"癸":3
+  },
+  "亥": {
+    "甲":6,"己":6,
+    "乙":4,"庚":4,
+    "丙":2,"辛":2,
+    "丁":5,"壬":5,
+    "戊":3,"癸":3
+  }
+};
+function getBureau(yearStem,lifeBranch){
+  const number=bureauTable[lifeBranch][yearStem];
+  const names={
+    2:"水二局",
+    3:"木三局",
+    4:"金四局",
+    5:"土五局",
+    6:"火六局"
+  };
+  return {
+    number,
+    name:names[number]
+  };
+}
+/*
+ * ---------------------------------------------------------
+ * 第四步：安紫微
+ * ---------------------------------------------------------
+ *
+ * 传统口诀：
+ *
+ * 六五四三二
+ * 酉午亥辰丑
+ *
+ * 即：
+ *
+ * 火六局 → 酉
+ * 土五局 → 午
+ * 金四局 → 亥
+ * 木三局 → 辰
+ * 水二局 → 丑
+ *
+ * 再根据农历生日和局数安紫微。
+ *
+ * 为了避免“余数算法”在整除、生日小于局数时出错，
+ * 这里直接采用公式化版本：
+ *
+ * Q = ceil(D / M)
+ * R = Q*M - D
+ *
+ * 以寅宫为基准：
+ *
+ * pos = 寅 + (Q-1)
+ *
+ * R 为偶数 → 顺数 R
+ * R 为奇数 → 逆数 R
+ *
+ * ---------------------------------------------------------
+ */
+function mod12(n){
+  return ((n%12)+12)%12;
+}
+function calcZiweiPosition(lunarDay,bureauNumber){
+  const D=lunarDay;
+  const M=bureauNumber;
+  const Q=Math.ceil(D/M);
+  const R=Q*M-D;
+  let pos=
+    2+(Q-1);
+  if(R%2===0){
+    pos+=R;
+  }else{
+    pos-=R;
+  }
+  return mod12(pos);
+}
+/*
+ * ---------------------------------------------------------
+ * 第五步：天府
+ * ---------------------------------------------------------
+ *
+ * 紫微与天府不是随机独立计算。
+ *
+ * 天府由紫微位置镜像确定。
+ *
+ * 常用十二宫编号下：
+ *
+ * Tianfu = 4 - Ziwei
+ *
+ * ---------------------------------------------------------
+ */
+function calcTianfuPosition(ziweiPos){
+  return mod12(4-ziweiPos);
+}
+/*
+ * ---------------------------------------------------------
+ * 第六步：十四主星
+ * ---------------------------------------------------------
+ *
+ * 紫微系：
+ *
+ * 紫微
+ * 天机
+ * 太阳
+ * 武曲
+ * 天同
+ * 廉贞
+ *
+ * 天府系：
+ *
+ * 天府
+ * 太阴
+ * 贪狼
+ * 巨门
+ * 天相
+ * 天梁
+ * 七杀
+ * 破军
+ *
+ * ---------------------------------------------------------
+ */
+function addStar(palaceStars,pos,name){
+  if(!palaceStars[pos]){
+    palaceStars[pos]=[];
+  }
+  palaceStars[pos].push(name);
+}
+function placeMajorStars(ziweiPos){
+  const palaceStars=
+    Array.from({length:12},()=>[]);
+  const tianfuPos=
+    calcTianfuPosition(ziweiPos);
+  /*
+   * 紫微系逆行。
+   */
+  addStar(palaceStars,ziweiPos,"紫微");
+  addStar(
+    palaceStars,
+    mod12(ziweiPos-1),
+    "天机"
+  );
+  addStar(
+    palaceStars,
+    mod12(ziweiPos-3),
+    "太阳"
+  );
+  addStar(
+    palaceStars,
+    mod12(ziweiPos-4),
+    "武曲"
+  );
+  addStar(
+    palaceStars,
+    mod12(ziweiPos-5),
+    "天同"
+  );
+  addStar(
+    palaceStars,
+    mod12(ziweiPos-8),
+    "廉贞"
+  );
+  /*
+   * 天府系顺行。
+   */
+  addStar(
+    palaceStars,
+    tianfuPos,
+    "天府"
+  );
+  addStar(
+    palaceStars,
+    mod12(tianfuPos+1),
+    "太阴"
+  );
+  addStar(
+    palaceStars,
+    mod12(tianfuPos+2),
+    "贪狼"
+  );
+  addStar(
+    palaceStars,
+    mod12(tianfuPos+3),
+    "巨门"
+  );
+  addStar(
+    palaceStars,
+    mod12(tianfuPos+4),
+    "天相"
+  );
+  addStar(
+    palaceStars,
+    mod12(tianfuPos+5),
+    "天梁"
+  );
+  addStar(
+    palaceStars,
+    mod12(tianfuPos+6),
+    "七杀"
+  );
+  /*
+   * 破军与七杀并非简单 +1。
+   *
+   * 其传统定位为天府系的特定对应宫位。
+   */
+  addStar(
+    palaceStars,
+    mod12(tianfuPos+10),
+    "破军"
+  );
+  return {
+    palaceStars,
+    ziweiPos,
+    tianfuPos
+  };
+}
+/*
+ * ---------------------------------------------------------
+ * 紫微主函数
+ * ---------------------------------------------------------
+ *
+ * 这是本次最重要的替换。
+ *
+ * 删除原来的：
+ *
+ * if (y === 1990 && m === 10 && d === 26) {
+ *    ...
+ * }
+ *
+ * 以后任何日期都走统一算法。
+ * ---------------------------------------------------------
+ */
+function ziwei(y,m,d,h){
+  /*
+   * 1. 获取真实农历
+   */
+  const l=lunarApprox(y,m,d);
+  /*
+   * 2. 出生时辰
+   */
+  const hourBranch=
+    Math.floor((h+1)/2)%12;
+  /*
+   * 3. 命宫、身宫
+   */
+  const mb=
+    calcLifeBodyPalace(
+      l.m,
+      hourBranch
+    );
+  /*
+   * 4. 生年干
+   *
+   * 使用八字年柱。
+   */
+  const bp=bazi(y,m,d,h,0);
+  const yearStem=
+    bp.year[0];
+  /*
+   * 5. 命宫所在干支
+   *
+   * 命宫地支已经确定。
+   *
+   * 现在需要把命宫天干推出来。
+   *
+   * 五虎遁：
+   *
+   * 甲己年丙寅起
+   * 乙庚年戊寅起
+   * 丙辛年庚寅起
+   * 丁壬年壬寅起
+   * 戊癸年甲寅起
+   */
+  const monthStemStart={
+    "甲":2,
+    "己":2,
+    "乙":4,
+    "庚":4,
+    "丙":6,
+    "辛":6,
+    "丁":8,
+    "壬":8,
+    "戊":0,
+    "癸":0
+  }[yearStem];
+  const lifeStem=
+    stems[
+      mod12(
+        monthStemStart+
+        (mb.life-2)
+      )%10
+    ];
+  /*
+   * 上面必须使用“天干十位”而不是直接使用
+   * 十二宫编号。
+   *
+   * 重新规范计算。
+   */
+  const lifeStemIndex=
+    mod12(monthStemStart+(mb.life-2))%10;
+  const lifeStemFinal=
+    stems[lifeStemIndex];
+  /*
+   * 6. 五行局
+   */
+  const bureau=
+    getBureau(
+      yearStem,
+      branches[mb.life]
+    );
+  /*
+   * 7. 紫微
+   */
+  const ziweiPos=
+    calcZiweiPosition(
+      l.d,
+      bureau.number
+    );
+  /*
+   * 8. 十四主星
+   */
+  const starResult=
+    placeMajorStars(ziweiPos);
+  /*
+   * 9. 十二宫
+   */
+  const cells=[];
+  for(let i=0;i<12;i++){
+    const palaceIndex=
+      mod12(i-mb.life);
+    const palace=
+      palaceNames[palaceIndex];
+    const stars=
+      starResult.palaceStars[i].length
+      ? starResult.palaceStars[i]
+      : ["无主星"];
+    cells.push({
+      index:i,
+      branch:branches[i],
+      palace,
+      stars,
+      isLife:i===mb.life,
+      isBody:i===mb.body
+    });
+  }
+  return {
+    lunar:l,
+    /*
+     * 兼容原 render() 中 z.l.m / z.l.d
+     */
+    l:{
+      m:l.m,
+      d:l.d,
+      year:l.year,
+      leap:l.leap
+    },
+    life:mb.life,
+    body:mb.body,
+    monthPalace:mb.monthPalace,
+    yearStem,
+    lifeStem:lifeStemFinal,
+    lifeGanzhi:
+      lifeStemFinal+
+      branches[mb.life],
+    bureauNumber:bureau.number,
+    bureauName:bureau.name,
+    ziweiPos,
+    ziweiBranch:
+      branches[ziweiPos],
+    tianfuPos:
+      starResult.tianfuPos,
+    tianfuBranch:
+      branches[starResult.tianfuPos],
+    palaceStars:
+      starResult.palaceStars,
+    cells
+  };
+}
+/* =========================================================
+   十神
+========================================================= */
+function tenFor(stem,dm){
+  let a=stems.indexOf(stem);
+  let b=stems.indexOf(dm);
+  let diff=(a-b+10)%10;
+  return ten[diff];
+}
+/* =========================================================
+   生成
+========================================================= */
+function generate(){
+  let [ds,ts]=dtParts();
+  if(!ds){
+    alert("请选择出生日期");
+    return;
+  }
+  let [y,m,d]=ds.split("-").map(Number);
+  let [hh,mm]=ts.split(":").map(Number);
+  try{
+    const p=bazi(y,m,d,hh,mm);
+    const counts=
+      countWu([
+        p.year,
+        p.month,
+        p.day,
+        p.hour
+      ]);
+    const z=
+      ziwei(y,m,d,hh);
+    state={
+      y,m,d,
+      hh,mm,
+      p,
+      counts,
+      z,
+      sex:document.getElementById("sex").value,
+      place:document.getElementById("place").value||"未填写"
+    };
+    document
+      .getElementById("result")
+      .classList
+      .remove("hidden");
+    render();
+    tab(
+      "overview",
+      document.querySelector(".tab")
+    );
+  }catch(e){
+    console.error(e);
+    alert(
+      "排盘失败："+e.message
+    );
+  }
+}
+/* =========================================================
+   生命数字
+========================================================= */
+function numToChinese(num){
+  const digits=[
+    "零","一","二","三","四",
+    "五","六","七","八","九"
+  ];
+  return String(num)
+    .split("")
+    .map(d=>digits[parseInt(d)])
+    .join("");
+}
+function arkRoot(n){
+  if(n===0)return 0;
+  let sum=n;
+  while(sum>=10){
+    sum=sum
+      .toString()
+      .split("")
+      .reduce(
+        (acc,val)=>
+          acc+parseInt(val),
+        0
+      );
   }
   return sum;
 }
-
-function getLifeNumber(y, m, d) {
-  let str = `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
-  let sum = str.split('').reduce((acc, val) => acc + parseInt(val), 0);
+function getLifeNumber(y,m,d){
+  let str=
+    `${y}${String(m).padStart(2,'0')}${String(d).padStart(2,'0')}`;
+  let sum=
+    str
+      .split("")
+      .reduce(
+        (acc,val)=>
+          acc+parseInt(val),
+        0
+      );
   return arkRoot(sum);
 }
-
-function calcHarmonyArk(y, m, d) {
-  let ys = y.toString().padStart(4, '0');
-  let ms = m.toString().padStart(2, '0');
-  let ds = d.toString().padStart(2, '0');
-
-  let Y1 = parseInt(ys.substring(0, 2)), Y2 = parseInt(ys.substring(2, 4));
-  let M = parseInt(ms), D = parseInt(ds);
-
-  let B1 = arkRoot(D), B2 = arkRoot(M), B3 = arkRoot(Y1), B4 = arkRoot(Y2);
-  let M1 = arkRoot(B1 + B2), M2 = arkRoot(B3 + B4);
-  let G = arkRoot(M1 + M2);
-
-  let L1 = arkRoot(M1 + B1), L2 = arkRoot(M1 + B2);
-  let L3 = arkRoot(L1 + L2);
-  
-  let R1 = arkRoot(M2 + B3), R2 = arkRoot(M2 + B4);
-  let R3 = arkRoot(R1 + R2);
-  
-  let T1 = arkRoot(G + M1), T2 = arkRoot(G + M2);
-  let T3 = arkRoot(T1 + T2);
-
-  let inner = arkRoot(M1 + M2 + G);
-  let outer = arkRoot(L3 + R3 + T3);
-  let sub = arkRoot(B1 + B4 + M1 + M2); 
-  
-  let late = `${R1}${R2}${R3}`; 
-
-  let joint = [
-    [`${B1}${B2}${M1}`, `${B3}${B4}${M2}`, `${M1}${M2}${G}`, `${B2}${M1}${L2}`],
-    [`${B1}${M1}${L1}`, `${L1}${L2}${L3}`, `${M2}${G}${T2}`, `${M1}${G}${T1}`],
-    [`${T2}${T1}${T3}`, `${B3}${M2}${R1}`, `${B4}${M2}${R2}`, `${R1}${R2}${R3}`]
+/* =========================================================
+   生命密码
+========================================================= */
+function calcHarmonyArk(y,m,d){
+  let ys=y.toString().padStart(4,"0");
+  let ms=m.toString().padStart(2,"0");
+  let ds=d.toString().padStart(2,"0");
+  let Y1=parseInt(ys.substring(0,2));
+  let Y2=parseInt(ys.substring(2,4));
+  let M=parseInt(ms);
+  let D=parseInt(ds);
+  let B1=arkRoot(D);
+  let B2=arkRoot(M);
+  let B3=arkRoot(Y1);
+  let B4=arkRoot(Y2);
+  let M1=arkRoot(B1+B2);
+  let M2=arkRoot(B3+B4);
+  let G=arkRoot(M1+M2);
+  let L1=arkRoot(M1+B1);
+  let L2=arkRoot(M1+B2);
+  let L3=arkRoot(L1+L2);
+  let R1=arkRoot(M2+B3);
+  let R2=arkRoot(M2+B4);
+  let R3=arkRoot(R1+R2);
+  let T1=arkRoot(G+M1);
+  let T2=arkRoot(G+M2);
+  let T3=arkRoot(T1+T2);
+  let inner=arkRoot(M1+M2+G);
+  let outer=arkRoot(L3+R3+T3);
+  let sub=arkRoot(B1+B4+M1+M2);
+  let late=`${R1}${R2}${R3}`;
+  let joint=[
+    [
+      `${B1}${B2}${M1}`,
+      `${B3}${B4}${M2}`,
+      `${M1}${M2}${G}`,
+      `${B2}${M1}${L2}`
+    ],
+    [
+      `${B1}${M1}${L1}`,
+      `${L1}${L2}${L3}`,
+      `${M2}${G}${T2}`,
+      `${M1}${G}${T1}`
+    ],
+    [
+      `${T2}${T1}${T3}`,
+      `${B3}${M2}${R1}`,
+      `${B4}${M2}${R2}`,
+      `${R1}${R2}${R3}`
+    ]
   ];
-
-  return { B1, B2, B3, B4, M1, M2, G, L1, L2, L3, R1, R2, R3, T1, T2, T3, 
-           inner, outer, sub, late, joint, ds, ms, y1: ys.substring(0,2), y2: ys.substring(2,4) };
+  return {
+    B1,B2,B3,B4,
+    M1,M2,G,
+    L1,L2,L3,
+    R1,R2,R3,
+    T1,T2,T3,
+    inner,outer,sub,
+    late,
+    joint,
+    ds,ms,
+    y1:ys.substring(0,2),
+    y2:ys.substring(2,4)
+  };
 }
-
-// 【已修正】完美匹配命宫在戌、武曲独坐的紫微斗数排盘引擎
-function ziwei(y, m, d, h) {
-  let lm = 9, ld = 8;
-  if (!(y === 1990 && m === 10 && d === 26)) {
-    const lObj = lunarApprox(y, m, d);
-    lm = lObj.m;
-    ld = lObj.d;
+/* =========================================================
+   星座
+========================================================= */
+function getZodiac(m,d){
+  const zodiacs=[
+    {
+      name:"摩羯座",
+      startMonth:1,
+      startDay:1,
+      endMonth:1,
+      endDay:19
+    },
+    {
+      name:"水瓶座",
+      startMonth:1,
+      startDay:20,
+      endMonth:2,
+      endDay:18
+    },
+    {
+      name:"双鱼座",
+      startMonth:2,
+      startDay:19,
+      endMonth:3,
+      endDay:20
+    },
+    {
+      name:"白羊座",
+      startMonth:3,
+      startDay:21,
+      endMonth:4,
+      endDay:19
+    },
+    {
+      name:"金牛座",
+      startMonth:4,
+      startDay:20,
+      endMonth:5,
+      endDay:20
+    },
+    {
+      name:"双子座",
+      startMonth:5,
+      startDay:21,
+      endMonth:6,
+      endDay:20
+    },
+    {
+      name:"巨蟹座",
+      startMonth:6,
+      startDay:21,
+      endMonth:7,
+      endDay:22
+    },
+    {
+      name:"狮子座",
+      startMonth:7,
+      startDay:23,
+      endMonth:8,
+      endDay:22
+    },
+    {
+      name:"处女座",
+      startMonth:8,
+      startDay:23,
+      endMonth:9,
+      endDay:22
+    },
+    {
+      name:"天秤座",
+      startMonth:9,
+      startDay:23,
+      endMonth:10,
+      endDay:22
+    },
+    {
+      name:"天蝎座",
+      startMonth:10,
+      startDay:23,
+      endMonth:11,
+      endDay:21
+    },
+    {
+      name:"射手座",
+      startMonth:11,
+      startDay:22,
+      endMonth:12,
+      endDay:21
+    },
+    {
+      name:"摩羯座",
+      startMonth:12,
+      startDay:22,
+      endMonth:12,
+      endDay:31
+    }
+  ];
+  for(let z of zodiacs){
+    if(
+      (m===z.startMonth&&d>=z.startDay)||
+      (m===z.endMonth&&d<=z.endDay)
+    ){
+      return z.name;
+    }
   }
-  const l = { m: lm, d: ld };
-  const palaceNames = ["命宫", "兄弟", "夫妻", "子女", "财帛", "疾厄", "迁移", "交友", "官禄", "田宅", "福德", "父母"];
-  
-  // 正确命宫起例：正月起寅(2)，顺数至生月，再从生月逆数生时
-  const mPalace = (2 + l.m - 1) % 12;
-  const hourOffset = Math.floor((h + 1) / 2) % 12;
-  const life = (mPalace - hourOffset + 12) % 12; // 1990-10-26 子时结果为 10（戌宫）
-  const body = (mPalace + hourOffset) % 12;
-
-  let palaceStars = Array.from({ length: 12 }, () => []);
-  
-  if (y === 1990 && m === 10 && d === 26) {
-    // 1990-10-26 子时：命宫在戌，武曲独坐
-    palaceStars[10] = ["武曲"]; // 戌宫 (命宫)
-    palaceStars[11] = ["太阳", "巨门"]; // 亥宫
-    palaceStars[0] = ["天同", "天梁"];  // 子宫
-    palaceStars[1] = ["七杀"];        // 丑宫
-    palaceStars[2] = ["天机", "太阴"];  // 寅宫
-    palaceStars[3] = ["紫微", "天府"];  // 卯宫
-    palaceStars[4] = ["贪狼"];        // 辰宫
-    palaceStars[5] = ["巨门"];        // 巳宫
-    palaceStars[6] = ["破军"];        // 午宫
-    palaceStars[7] = ["廉贞"];        // 未宫
-    palaceStars[8] = [];              // 申宫
-    palaceStars[9] = [];              // 酉宫
-  } else {
-    // 通用双星系确定性定位
-    let zPos = (l.d + l.m) % 12;
-    let fPos = (4 - zPos + 12) % 12;
-    let ziweiGroup = [
-      { name: "紫微", pos: zPos }, { name: "天机", pos: (zPos - 1 + 12) % 12 },
-      { name: "太阳", pos: (zPos - 3 + 12) % 12 }, { name: "武曲", pos: (zPos - 4 + 12) % 12 },
-      { name: "天同", pos: (zPos - 5 + 12) % 12 }, { name: "廉贞", pos: (zPos - 8 + 12) % 12 }
-    ];
-    let tianfuGroup = [
-      { name: "天府", pos: fPos }, { name: "太阴", pos: (fPos + 1) % 12 },
-      { name: "贪狼", pos: (fPos + 2) % 12 }, { name: "巨门", pos: (fPos + 3) % 12 },
-      { name: "天相", pos: (fPos + 4) % 12 }, { name: "天梁", pos: (fPos + 5) % 12 },
-      { name: "七杀", pos: (fPos + 6) % 12 }, { name: "破军", pos: (fPos + 10) % 12 }
-    ];
-    [...ziweiGroup, ...tianfuGroup].forEach(star => { palaceStars[star.pos].push(star.name); });
-  }
-
-  let cells = [];
-  for (let i = 0; i < 12; i++) {
-    let p = palaceNames[(i - life + 12) % 12];
-    let stars = palaceStars[i].length > 0 ? palaceStars[i] : ["无主星"];
-    cells.push({ branch: branches[i], p, stars });
-  }
-  return { l, life, body, cells };
+  return "未知星座";
 }
-  
-function tenFor(stem,dm){let a=stems.indexOf(stem),b=stems.indexOf(dm);let diff=(a-b+10)%10;return ten[diff]}
-function generate(){
-  let [ds,ts]=dtParts(); if(!ds){alert("请选择出生日期");return}
-  let [y,m,d]=ds.split("-").map(Number), [hh,mm]=ts.split(":").map(Number);
-  let p=bazi(y,m,d,hh,mm), counts=countWu([p.year,p.month,p.day,p.hour]), z=ziwei(y,m,d,hh);
-  state={y,m,d,hh,mm,p,counts,z,sex:document.getElementById("sex").value,place:document.getElementById("place").value||"未填写"};
-  document.getElementById("result").classList.remove("hidden"); render(); tab("overview",document.querySelector(".tab"));
-}
-
-function numToChinese(num) {
-  const digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
-  return String(num).split('').map(d => digits[parseInt(d)]).join('');
-}
-
+/* =========================================================
+   Render
+========================================================= */
 function render(){
- const s=state,p=s.p,c=s.counts, total=8, dm=p.day[0], z=s.z;
- let max=Math.max(...Object.values(c)), strongest=Object.keys(c).find(k=>c[k]===max);
- let zodiacName = getZodiac(s.m, s.d);
- let ark = calcHarmonyArk(s.y, s.m, s.d);
-
- let ln = getLifeNumber(s.y, s.m, s.d);
- const lnDesc = {
-    1: "【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
-    2: "【沟通数】代表合作、平衡、倾听与耐心。你擅长协调与建立关系。",
-    3: "【表达数】代表创意、表达、欢乐与社交。你具有极强的艺术感染力。",
-    4: "【稳定数】代表规律、执行、秩序与务实。你是脚踏实地的建设者。",
-    5: "【自由数】代表自由、冒险、多变与好奇。你向往无拘无束的生活。",
-    6: "【关怀数】代表责任、家庭、大爱与疗愈。你富有同情心与奉献精神。",
-    7: "【真理数】代表探究、直觉、内省与智慧。你是真理的追寻者。",
-    8: "【财富数】代表权力、商业、成就与效率。你具备强大的执行力与商业头脑。",
-    9: "【智慧数】代表大爱、奉献、灵性与完美。你拥有悲天悯人的情怀."
- };
-
- let lunarYearStr = numToChinese(s.y) + "年";
- let lunarHourStr = p.hour[1] + "时";
- let lunarMStr = "正月", lunarDStr = "初一";
- 
- try {
-   const formatter = new Intl.DateTimeFormat('zh-CN-u-ca-chinese', { month: 'long', day: 'numeric' });
-   const parts = formatter.formatToParts(new Date(s.y, s.m - 1, s.d));
-   parts.forEach(pt => {
-     if (pt.type === 'month') lunarMStr = pt.value;
-     if (pt.type === 'day') lunarDStr = pt.value;
-   });
-   if (/^\d+$/.test(lunarDStr)) {
-     const dayNames = ["", "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
-                       "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
-                       "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
-     let dNum = parseInt(lunarDStr, 10);
-     lunarDStr = dayNames[dNum] || (dNum + "日");
-   }
- } catch (e) {
-   lunarMStr = z.l.m + "月";
-   lunarDStr = z.l.d + "日";
- }
-
- let fullLunarText = `${lunarYearStr} ${lunarMStr} ${lunarDStr} ${lunarHourStr}`;
-
- document.getElementById("overview").innerHTML=`
- <div class="card"><div class="title">命盘摘要</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${n}</small><b>${p[["year","month","day","hour"][i]].join("")}</b><em>${i===2?"日主":p[["year","month","day","hour"][i]][1]}</em></div>`).join("")}</div></div>
- <div class="card"><div class="title">五行结构</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v} / ${total}</span></div>`).join("")}</div><p class="sub">日主：${dayMasterInfo(dm)}。当前结构中「${strongest}」出现频率最高；仅按显性干支计数，未把藏干、节令旺衰等复杂权重混入。</p></div>
- <div class="card"><div class="title">传统命理提示</div><p class="sub">${advice(dm,c,strongest)}</p></div>
- <div class="card"><div class="title">农历日期</div><div style="font-size: 15px; font-weight: bold; color: var(--gold2);">${fullLunarText}</div></div>
- <div class="card"><div class="title">出生资料</div><span class="pill">${s.y}-${String(s.m).padStart(2,"0")}-${String(s.d).padStart(2,"0")} ${String(s.hh).padStart(2,"0")}:${String(s.mm).padStart(2,"0")}</span><span class="pill">${s.sex==="m"?"男":"女"}</span><span class="pill">${s.place}</span></div>`;
- 
- document.getElementById("bazi").innerHTML=`
- <div class="card"><div class="title">四柱与十神</div><div class="bazi">${["year","month","day","hour"].map((k,i)=>{let q=p[k];return `<div class="pillar"><small>${["年柱","月柱","日柱","时柱"][i]}</small><b>${q[0]}${q[1]}</b><em>${tenFor(q[0],dm)} / ${wux[q[0]]}${wux[q[1]]}</em></div>`}).join("")}</div></div>
- <div class="card"><div class="title">五行与日主</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v}</span></div>`).join("")}</div><p class="sub">日主 ${dm}（${wux[dm]}）。十神以日干与各柱天干的五行生克、阴阳关系做快速归类。</p></div>
- <div class="card"><div class="title">分析入口</div><span class="pill">性格结构</span><span class="pill">事业方向</span><span class="pill">财星结构</span><span class="pill">关系模式</span><span class="pill">大运（高级版）</span></div>`;
- 
- document.getElementById("horoscope").innerHTML=`
- <div class="card"><div class="title">西方星座</div><p class="sub">根据您输入的公历日期（${s.m}月${s.d}日），对应的黄道十二星座为：</p><div style="font-size: 28px; font-weight: bold; color: var(--gold); text-align: center; margin: 30px 0;">${zodiacName}</div></div>`;
-
- document.getElementById("lifenumber").innerHTML=`
- <div class="card" style="padding: 10px;">
-   <div class="ark-container">
-     <div class="ark-triangle">
-       <svg class="ark-svg" viewBox="0 0 300 240">
-         <polygon points="145,55 35,200 255,200" fill="none" stroke="var(--gold)" stroke-width="1.2" opacity="0.6"/>
-         <line x1="90.4" y1="127" x2="199.6" y2="127" stroke="var(--gold)" stroke-width="1.2" opacity="0.6"/>
-         <line x1="63.1" y1="163" x2="226.9" y2="163" stroke="var(--gold)" stroke-width="1.2" opacity="0.6"/>
-         <line x1="145" y1="127" x2="145" y2="200" stroke="var(--gold)" stroke-width="1.2" opacity="0.6"/>
-       </svg>
-       
-       <div class="ark-num ark-outer" style="top: 15px; left: 150px; text-align: center; width: 60px;">
-         <div style="margin-bottom: 4px;">${ark.T3}</div>
-         <div style="border-top: 1.5px solid var(--text); padding-top: 4px; display: flex; justify-content: space-between; padding: 4px 6px 0;"><span>${ark.T2}</span><span>${ark.T1}</span></div>
-       </div>
-
-       <div class="ark-num ark-main" style="top: 110px; left: 150px;">${ark.G}</div>
-       
-       <div class="ark-num" style="top: 155px; left: 125px;">${ark.M1}</div>
-       <div class="ark-num" style="top: 155px; left: 175px;">${ark.M2}</div>
-       
-       <div class="ark-num" style="top: 195px; left: 95px;">${ark.B1}</div>
-       <div class="ark-num" style="top: 195px; left: 132px;">${ark.B2}</div>
-       <div class="ark-num" style="top: 195px; left: 172px;">${ark.B3}</div>
-       <div class="ark-num" style="top: 195px; left: 210px;">${ark.B4}</div>
-
-       <div class="ark-num ark-outer" style="top: 100px; left: 60px; white-space: nowrap;">
-         ${ark.L3}=${ark.L1} ${ark.L2}
-       </div>
-       
-       <div class="ark-num ark-outer" style="top: 100px; left: 240px; white-space: nowrap;">
-         ${ark.R1} ${ark.R2}=${ark.R3}
-       </div>
-
-       <div class="ark-base" style="bottom: 8px;">
-         <span>${ark.ds}</span><span>${ark.ms}</span><span>${ark.y1}</span><span>${ark.y2}</span>
-       </div>
-     </div>
-
-     <div class="ark-stats">
-       <div><b>${ark.inner}</b><span>内心数字</span></div>
-       <div><b>${ark.outer}</b><span>外心数字</span></div>
-       <div><b>${ark.sub}</b><span>潜意识数字</span></div>
-       <div><b>${ark.late}</b><span>晚年数字</span></div>
-     </div>
-
-     <div class="ark-joint">
-       <div class="ark-joint-label">联合数字</div>
-       <div class="ark-joint-cols">
-         ${[0,1,2,3].map(col => `
-           <div>
-             <div>${ark.joint[0][col]}</div>
-             <div>${ark.joint[1][col]}</div>
-             <div>${ark.joint[2][col]}</div>
-           </div>
-         `).join('')}
-       </div>
-     </div>
-   </div>
- </div>
-
- <div class="card">
-   <div class="title">生命密码 / 生命数字</div>
-   <p class="sub">根据您输入的公历出生日期（${s.y}年${s.m}月${s.d}日）计算得出：</p>
-   <div style="font-size: 32px; font-weight: bold; color: var(--gold); text-align: center; margin: 25px 0;">${ln}</div>
-   <p style="text-align: center; font-size: 14px; font-weight: bold; color: var(--gold2);">${lnDesc[ln]}</p>
-   <p class="sub" style="margin-top: 15px; border-top: 1px solid var(--line); padding-top: 12px;">算法说明：将公历年月日的每一个数字相加，直至得出1-9的个位数。它揭示了个人的先天性格、天赋以及人生核心课题。</p>
- </div>`;
-
- document.getElementById("ziwei").innerHTML=`
- <div class="card"><div class="title">紫微十二宫</div><p class="sub">${fullLunarText} · 命宫 ${branches[z.life]} · 身宫 ${branches[z.body]}</p><div class="palace">${z.cells.map(x=>`<div><strong>${x.p} · ${x.branch}</strong><span class="stars">${x.stars.join(" · ")}</span></div>`).join("")}</div></div>
- <div class="card"><div class="title">宫位重点</div><p class="sub">命宫：${branches[z.life]}。本试用版用轻量化历法与星曜定位算法生成互动盘面，适合体验产品流程；如需严谨到节气分秒、真太阳时、闰月与完整四化，请接入专业历表数据源。</p></div>`;
-
- document.getElementById("chat").innerHTML=`<div id="messages" class="chat"><div class="msg ai">命盘已就绪。你可以问我：\n• 我的事业优势是什么？\n• 财运结构怎么看？\n• 感情中容易出现什么模式？\n• 八字和紫微对某个问题是否指向一致？</div></div><div class="chatbar"><input id="q" placeholder="例如：我适合什么类型的工作？" onkeydown="if(event.key==='Enter')ask()"><button class="send" onclick="ask()">发送</button></div>`;
+  const s=state;
+  const p=s.p;
+  const c=s.counts;
+  const z=s.z;
+  const total=8;
+  const dm=p.day[0];
+  let max=
+    Math.max(...Object.values(c));
+  let strongest=
+    Object.keys(c)
+      .find(k=>c[k]===max);
+  let zodiacName=
+    getZodiac(s.m,s.d);
+  let ark=
+    calcHarmonyArk(
+      s.y,s.m,s.d
+    );
+  let ln=
+    getLifeNumber(
+      s.y,s.m,s.d
+    );
+  const lnDesc={
+    1:"【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
+    2:"【沟通数】代表合作、平衡、倾听与耐心。你擅长协调与建立关系。",
+    3:"【表达数】代表创意、表达、欢乐与社交。你具有极强的艺术感染力。",
+    4:"【稳定数】代表规律、执行、秩序与务实。你是脚踏实地的建设者。",
+    5:"【自由数】代表自由、冒险、多变与好奇。你向往无拘无束的生活。",
+    6:"【关怀数】代表责任、家庭、大爱与疗愈。你富有同情心与奉献精神。",
+    7:"【真理数】代表探究、直觉、内省与智慧。你是真理的追寻者。",
+    8:"【财富数】代表权力、商业、成就与效率。你具备强大的执行力与商业头脑。",
+    9:"【智慧数】代表大爱、奉献、灵性与完美。你拥有悲天悯人的情怀。"
+  };
+  const lunarText=
+    z.l.text||
+    `农历${z.l.m}月${z.l.d}日`;
+  /* ---------------- 总览 ---------------- */
+  document.getElementById("overview").innerHTML=`
+  <div class="card">
+    <div class="title">命盘摘要</div>
+    <div class="bazi">
+      ${[
+        "年柱",
+        "月柱",
+        "日柱",
+        "时柱"
+      ].map((n,i)=>`
+        <div class="pillar">
+          <small>${n}</small>
+          <b>
+            ${
+              p[
+                [
+                  "year",
+                  "month",
+                  "day",
+                  "hour"
+                ][i]
+              ].join("")
+            }
+          </b>
+          <em>
+            ${
+              i===2
+              ?"日主"
+              :
+              p[
+                [
+                  "year",
+                  "month",
+                  "day",
+                  "hour"
+                ][i]
+              ][1]
+            }
+          </em>
+        </div>
+      `).join("")}
+    </div>
+  </div>
+  <div class="card">
+    <div class="title">五行结构</div>
+    <div class="five">
+      ${
+        Object.entries(c)
+        .map(([k,v])=>`
+          <div>
+            <b>${k}</b>
+            <span>${v} / ${total}</span>
+          </div>
+        `).join("")
+      }
+    </div>
+    <p class="sub">
+      日主：${dayMasterInfo(dm)}。
+      当前结构中「${strongest}」出现频率最高；
+      这里只统计显性干支，没有加入藏干、节令旺衰等复杂权重。
+    </p>
+  </div>
+  <div class="card">
+    <div class="title">紫微核心结果</div>
+    <span class="pill">
+      命宫：${branches[z.life]}
+    </span>
+    <span class="pill">
+      身宫：${branches[z.body]}
+    </span>
+    <span class="pill">
+      命宫干支：${z.lifeGanzhi}
+    </span>
+    <span class="pill">
+      ${z.bureauName}
+    </span>
+    <span class="pill">
+      紫微：${z.ziweiBranch}
+    </span>
+    <span class="pill">
+      天府：${z.tianfuBranch}
+    </span>
+  </div>
+  <div class="card">
+    <div class="title">传统命理提示</div>
+    <p class="sub">
+      ${advice(dm,c,strongest)}
+    </p>
+  </div>
+  <div class="card">
+    <div class="title">农历日期</div>
+    <div style="
+      font-size:15px;
+      font-weight:bold;
+      color:var(--gold2);
+    ">
+      ${lunarText}
+    </div>
+  </div>
+  <div class="card">
+    <div class="title">出生资料</div>
+    <span class="pill">
+      ${s.y}-${String(s.m).padStart(2,"0")}-${String(s.d).padStart(2,"0")}
+      ${String(s.hh).padStart(2,"0")}:${String(s.mm).padStart(2,"0")}
+    </span>
+    <span class="pill">
+      ${s.sex==="m"?"男":"女"}
+    </span>
+    <span class="pill">
+      ${s.place}
+    </span>
+  </div>
+  `;
+  /* ---------------- 八字 ---------------- */
+  document.getElementById("bazi").innerHTML=`
+  <div class="card">
+    <div class="title">四柱与十神</div>
+    <div class="bazi">
+      ${
+        [
+          "year",
+          "month",
+          "day",
+          "hour"
+        ]
+        .map((k,i)=>{
+          let q=p[k];
+          return `
+          <div class="pillar">
+            <small>
+              ${
+                [
+                  "年柱",
+                  "月柱",
+                  "日柱",
+                  "时柱"
+                ][i]
+              }
+            </small>
+            <b>
+              ${q[0]}${q[1]}
+            </b>
+            <em>
+              ${tenFor(q[0],dm)}
+              /
+              ${wux[q[0]]}${wux[q[1]]}
+            </em>
+          </div>
+          `;
+        }).join("")
+      }
+    </div>
+  </div>
+  <div class="card">
+    <div class="title">五行与日主</div>
+    <div class="five">
+      ${
+        Object.entries(c)
+        .map(([k,v])=>`
+          <div>
+            <b>${k}</b>
+            <span>${v}</span>
+          </div>
+        `).join("")
+      }
+    </div>
+    <p class="sub">
+      日主 ${dm}（${wux[dm]}）。
+      十神以日干与各柱天干的阴阳五行关系做快速归类。
+    </p>
+  </div>
+  <div class="card">
+    <div class="title">分析入口</div>
+    <span class="pill">性格结构</span>
+    <span class="pill">事业方向</span>
+    <span class="pill">财星结构</span>
+    <span class="pill">关系模式</span>
+    <span class="pill">大运（高级版）</span>
+  </div>
+  `;
+  /* ---------------- 星座 ---------------- */
+  document.getElementById("horoscope").innerHTML=`
+  <div class="card">
+    <div class="title">西方星座</div>
+    <p class="sub">
+      根据您输入的公历日期
+      （${s.m}月${s.d}日），
+      对应的黄道十二星座为：
+    </p>
+    <div style="
+      font-size:28px;
+      font-weight:bold;
+      color:var(--gold);
+      text-align:center;
+      margin:30px 0;
+    ">
+      ${zodiacName}
+    </div>
+  </div>
+  `;
+  /* ---------------- 生命数字 ---------------- */
+  document.getElementById("lifenumber").innerHTML=`
+  <div class="card" style="padding:10px">
+    <div class="ark-container">
+      <div class="ark-triangle">
+        <svg class="ark-svg" viewBox="0 0 300 240">
+          <polygon
+            points="145,55 35,200 255,200"
+            fill="none"
+            stroke="var(--gold)"
+            stroke-width="1.2"
+            opacity="0.6"
+          />
+          <line
+            x1="90.4"
+            y1="127"
+            x2="199.6"
+            y2="127"
+            stroke="var(--gold)"
+            stroke-width="1.2"
+            opacity="0.6"
+          />
+          <line
+            x1="63.1"
+            y1="163"
+            x2="226.9"
+            y2="163"
+            stroke="var(--gold)"
+            stroke-width="1.2"
+            opacity="0.6"
+          />
+          <line
+            x1="145"
+            y1="127"
+            x2="145"
+            y2="200"
+            stroke="var(--gold)"
+            stroke-width="1.2"
+            opacity="0.6"
+          />
+        </svg>
+        <div
+          class="ark-num ark-outer"
+          style="
+            top:15px;
+            left:150px;
+            text-align:center;
+            width:60px;
+          "
+        >
+          <div style="margin-bottom:4px">
+            ${ark.T3}
+          </div>
+          <div style="
+            border-top:1.5px solid var(--text);
+            padding-top:4px;
+            display:flex;
+            justify-content:space-between;
+            padding:4px 6px 0;
+          ">
+            <span>${ark.T2}</span>
+            <span>${ark.T1}</span>
+          </div>
+        </div>
+        <div
+          class="ark-num ark-main"
+          style="top:110px;left:150px"
+        >
+          ${ark.G}
+        </div>
+        <div
+          class="ark-num"
+          style="top:155px;left:125px"
+        >
+          ${ark.M1}
+        </div>
+        <div
+          class="ark-num"
+          style="top:155px;left:175px"
+        >
+          ${ark.M2}
+        </div>
+        <div
+          class="ark-num"
+          style="top:195px;left:95px"
+        >
+          ${ark.B1}
+        </div>
+        <div
+          class="ark-num"
+          style="top:195px;left:132px"
+        >
+          ${ark.B2}
+        </div>
+        <div
+          class="ark-num"
+          style="top:195px;left:172px"
+        >
+          ${ark.B3}
+        </div>
+        <div
+          class="ark-num"
+          style="top:195px;left:210px"
+        >
+          ${ark.B4}
+        </div>
+        <div
+          class="ark-num ark-outer"
+          style="
+            top:100px;
+            left:60px;
+            white-space:nowrap;
+          "
+        >
+          ${ark.L3}=${ark.L1} ${ark.L2}
+        </div>
+        <div
+          class="ark-num ark-outer"
+          style="
+            top:100px;
+            left:240px;
+            white-space:nowrap;
+          "
+        >
+          ${ark.R1} ${ark.R2}=${ark.R3}
+        </div>
+        <div
+          class="ark-base"
+          style="bottom:8px"
+        >
+          <span>${ark.ds}</span>
+          <span>${ark.ms}</span>
+          <span>${ark.y1}</span>
+          <span>${ark.y2}</span>
+        </div>
+      </div>
+      <div class="ark-stats">
+        <div>
+          <b>${ark.inner}</b>
+          <span>内心数字</span>
+        </div>
+        <div>
+          <b>${ark.outer}</b>
+          <span>外心数字</span>
+        </div>
+        <div>
+          <b>${ark.sub}</b>
+          <span>潜意识数字</span>
+        </div>
+        <div>
+          <b>${ark.late}</b>
+          <span>晚年数字</span>
+        </div>
+      </div>
+      <div class="ark-joint">
+        <div class="ark-joint-label">
+          联合数字
+        </div>
+        <div class="ark-joint-cols">
+          ${
+            [0,1,2,3]
+            .map(col=>`
+              <div>
+                <div>${ark.joint[0][col]}</div>
+                <div>${ark.joint[1][col]}</div>
+                <div>${ark.joint[2][col]}</div>
+              </div>
+            `).join("")
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="title">
+      生命密码 / 生命数字
+    </div>
+    <p class="sub">
+      根据您输入的公历出生日期
+      （${s.y}年${s.m}月${s.d}日）计算得出：
+    </p>
+    <div style="
+      font-size:32px;
+      font-weight:bold;
+      color:var(--gold);
+      text-align:center;
+      margin:25px 0;
+    ">
+      ${ln}
+    </div>
+    <p style="
+      text-align:center;
+      font-size:14px;
+      font-weight:bold;
+      color:var(--gold2);
+    ">
+      ${lnDesc[ln]}
+    </p>
+    <p class="sub" style="
+      margin-top:15px;
+      border-top:1px solid var(--line);
+      padding-top:12px;
+    ">
+      算法说明：将公历年月日的每一个数字相加，
+      直至得出1-9的个位数。
+    </p>
+  </div>
+  `;
+  /* =======================================================
+     紫微
+  ======================================================= */
+  const starHtml=
+    z.cells.map(x=>{
+      const stars=
+        x.stars
+        .map(star=>{
+          const isMain=[
+            "紫微",
+            "天机",
+            "太阳",
+            "武曲",
+            "天同",
+            "廉贞",
+            "天府",
+            "太阴",
+            "贪狼",
+            "巨门",
+            "天相",
+            "天梁",
+            "七杀",
+            "破军"
+          ].includes(star);
+          return `
+            <span class="${isMain?"star-main":""}">
+              ${star}
+            </span>
+          `;
+        })
+        .join(" · ");
+      let mark="";
+      if(x.isLife){
+        mark+="★ 命宫";
+      }
+      if(x.isBody){
+        if(mark)mark+=" · ";
+        mark+="身宫";
+      }
+      return `
+      <div>
+        <strong>
+          ${x.palace} · ${x.branch}
+        </strong>
+        <span class="stars">
+          ${starHtml}
+        </span>
+        ${
+          mark
+          ?
+          `<div class="palace-mark">${mark}</div>`
+          :""
+        }
+      </div>
+      `;
+    }).join("");
+  document.getElementById("ziwei").innerHTML=`
+  <div class="card">
+    <div class="title">
+      紫微斗数核心排盘
+    </div>
+    <p class="sub">
+      农历：
+      ${z.l.text||`${z.l.m}月${z.l.d}日`}
+      <br>
+      命宫：
+      <b>${branches[z.life]}</b>
+      ·
+      身宫：
+      <b>${branches[z.body]}</b>
+      <br>
+      命宫干支：
+      <b>${z.lifeGanzhi}</b>
+      <br>
+      五行局：
+      <b>${z.bureauName}</b>
+      <br>
+      紫微：
+      <b>${z.ziweiBranch}</b>
+      ·
+      天府：
+      <b>${z.tianfuBranch}</b>
+    </p>
+    <div class="palace">
+      ${starHtml}
+    </div>
+  </div>
+  <div class="card">
+    <div class="title">
+      十四主星定位
+    </div>
+    <p class="sub">
+      紫微系：
+      紫微 → 天机 → 太阳 → 武曲 → 天同 → 廉贞
+      <br><br>
+      天府系：
+      天府 → 太阴 → 贪狼 → 巨门 → 天相 → 天梁 → 七杀 → 破军
+      <br><br>
+      本版不再针对某一个生日写死星曜，
+      所有日期均按照统一的农历生日、命宫、五行局和十四主星安星流程计算。
+    </p>
+  </div>
+  <div class="card">
+    <div class="title">
+      本次紫微排盘修正说明
+    </div>
+    <p class="sub">
+      ① 删除原来的 1990-10-26 特殊硬编码。
+      <br>
+      ② 删除“农历354天近似算法”。
+      <br>
+      ③ 改为浏览器 Chinese Calendar 获取农历年月日。
+      <br>
+      ④ 命宫按照农历月份与出生时辰计算。
+      <br>
+      ⑤ 身宫按照农历月份与出生时辰顺数计算。
+      <br>
+      ⑥ 根据命宫干支确定水二、木三、金四、土五、火六局。
+      <br>
+      ⑦ 根据农历生日与五行局确定紫微。
+      <br>
+      ⑧ 根据紫微位置确定天府。
+      <br>
+      ⑨ 根据紫微系、天府系完整安十四主星。
+    </p>
+  </div>
+  `;
+  /* ---------------- Chat ---------------- */
+  document.getElementById("chat").innerHTML=`
+  <div id="messages" class="chat">
+    <div class="msg ai">
+命盘已就绪。你可以问我：
+• 我的事业优势是什么？
+• 财运结构怎么看？
+• 感情中容易出现什么模式？
+• 八字和紫微对某个问题是否指向一致？
+• 我的命宫是什么？
+• 紫微星和天府在哪里？
+• 我的十四主星怎么分布？
+    </div>
+  </div>
+  <div class="chatbar">
+    <input
+      id="q"
+      placeholder="例如：我的命宫怎么看？"
+      onkeydown="if(event.key==='Enter')ask()"
+    >
+    <button
+      class="send"
+      onclick="ask()"
+    >
+      发送
+    </button>
+  </div>
+  `;
 }
- 
-function advice(dm,c,strong){let t={木:"重视成长、规划与长期积累",火:"行动力与表达是重要资产",土:"稳定、承载与执行是优势",金:"规则、判断与效率值得发挥",水:"信息、流动与洞察力值得发挥"};return `${dm}日主可从「${t[wux[dm]]}」切入。五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`}
-function ask(){let q=document.getElementById("q"),txt=q.value.trim();if(!txt||!state)return;let box=document.getElementById("messages");box.innerHTML+=`<div class="msg me">${esc(txt)}</div>`;let a=answer(txt);box.innerHTML+=`<div class="msg ai">${a}</div>`;box.scrollTop=box.scrollHeight;q.value=""}
-function answer(q){let p=state.p,c=state.counts,dm=p.day[0];if(/事业|工作|职业/.test(q))return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。职业判断不能只看一个五行，建议再结合月令、官杀,财星、食伤以及大运。若你愿意，我可以继续按‘事业优势 → 风险 → 适合环境 → 行动建议’四步拆解。`;if(/财|钱|收入/.test(q))return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。你的日主是${dm}，我可以进一步做财星结构的专项解读。`;if(/感情|恋爱|婚姻|对象/.test(q))return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；紫微则会重点看夫妻宫及相关会照。你当前盘面已经生成，可以继续问‘我的关系模式有哪些优点和盲点？’。`;return `我会以你的${dm}日主和当前四柱为基础回答。这个试用版适合做结构化命理问答；你可以直接问事业、财运、感情、性格、迁移或某一年份。`;}
-function esc(s){return s.replace(/[&<>"]/g,x=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[x]))}
-function tab(id,el){document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById(id).classList.remove("hidden");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));if(el)el.classList.add("active")}
-function demo(){document.getElementById("date").value="1990-10-26";document.getElementById("time").value="00:00";document.getElementById("sex").value="m";document.getElementById("lon").value="101.69";document.getElementById("place").value="Kuala Lumpur";generate()}
-              
-function todayBazi() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  const h = String(now.getHours()).padStart(2, '0');
-  const min = String(now.getMinutes()).padStart(2, '0');
-
-  document.getElementById("date").value = `${y}-${m}-${d}`;
-  document.getElementById("time").value = `${h}:${min}`;
-
+/* =========================================================
+   八字建议
+========================================================= */
+function advice(dm,c,strong){
+  let t={
+    木:"重视成长、规划与长期积累",
+    火:"行动力与表达是重要资产",
+    土:"稳定、承载与执行是优势",
+    金:"规则、判断与效率值得发挥",
+    水:"信息、流动与洞察力值得发挥"
+  };
+  return `${dm}日主可从「${t[wux[dm]]}」切入。
+  五行显性计数以${strong}较突出，传统命理通常还需结合月令、藏干、刑冲合害及大运流年综合判断，不能只凭一个数量下结论。`;
+}
+/* =========================================================
+   Chat
+========================================================= */
+function ask(){
+  let q=document.getElementById("q");
+  let txt=q.value.trim();
+  if(!txt||!state)return;
+  let box=document.getElementById("messages");
+  box.innerHTML+=`
+    <div class="msg me">
+      ${esc(txt)}
+    </div>
+  `;
+  let a=answer(txt);
+  box.innerHTML+=`
+    <div class="msg ai">
+      ${a}
+    </div>
+  `;
+  box.scrollTop=box.scrollHeight;
+  q.value="";
+}
+function answer(q){
+  let p=state.p;
+  let c=state.counts;
+  let dm=p.day[0];
+  let z=state.z;
+  if(/命宫/.test(q)){
+    return `
+你的紫微命宫在
+「${branches[z.life]}」。
+命宫干支为
+「${z.lifeGanzhi}」。
+五行局为
+「${z.bureauName}」。
+紫微星在
+「${z.ziweiBranch}」。
+天府星在
+「${z.tianfuBranch}」。
+    `.trim();
+  }
+  if(/紫微|天府|主星/.test(q)){
+    return `
+你的十四主星已经按照统一安星算法排入十二宫。
+紫微：
+${z.ziweiBranch}
+天府：
+${z.tianfuBranch}
+命宫：
+${branches[z.life]}
+身宫：
+${branches[z.body]}
+可以进一步按照命宫、夫妻宫、官禄宫、财帛宫分别解释。
+    `.trim();
+  }
+  if(/事业|工作|职业/.test(q)){
+    return `从八字快速结构看，你的日主为${dm}（${wux[dm]}）。
+目前显性五行以${Object.keys(c).sort((a,b)=>c[b]-c[a])[0]}较突出。
+职业判断不能只看一个五行，建议再结合官杀、财星、食伤以及大运。
+紫微方面则可以进一步观察命宫、官禄宫、财帛宫。`;
+  }
+  if(/财|钱|收入/.test(q)){
+    return `财务主题建议重点观察财星、日主承载力与大运流年，而不是简单地把“某五行多”当成有财或没财。
+你的日主是${dm}，紫微则可以进一步观察财帛宫、命宫与官禄宫之间的结构。`;
+  }
+  if(/感情|恋爱|婚姻|对象/.test(q)){
+    return `关系分析在八字里要结合夫妻宫、财官星、合冲刑害和运势阶段；
+紫微则会重点看夫妻宫以及命宫、福德宫等相关宫位。
+你当前盘面已经生成，可以继续问“我的夫妻宫在哪里？”`;
+  }
+  return `我会以你的${dm}日主和当前四柱为基础回答。
+紫微方面目前已经完成命宫、身宫、五行局、紫微、天府以及十四主星定位。
+你可以直接问事业、财运、感情、命宫、夫妻宫或官禄宫。`;
+}
+function esc(s){
+  return s.replace(
+    /[&<>"]/g,
+    x=>({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;"
+    }[x])
+  );
+}
+/* =========================================================
+   Tabs
+========================================================= */
+function tab(id,el){
+  document
+    .querySelectorAll(".view")
+    .forEach(x=>x.classList.add("hidden"));
+  document
+    .getElementById(id)
+    .classList
+    .remove("hidden");
+  document
+    .querySelectorAll(".tab")
+    .forEach(x=>x.classList.remove("active"));
+  if(el){
+    el.classList.add("active");
+  }
+}
+/* =========================================================
+   Demo
+========================================================= */
+function demo(){
+  document.getElementById("date").value="1990-10-26";
+  document.getElementById("time").value="00:00";
+  document.getElementById("sex").value="m";
+  document.getElementById("lon").value="101.69";
+  document.getElementById("place").value="Kuala Lumpur";
+  document.getElementById("tz").value="8";
   generate();
 }
-
-if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js"));
+/* =========================================================
+   此刻
+========================================================= */
+function todayBazi(){
+  const now=new Date();
+  const y=now.getFullYear();
+  const m=
+    String(now.getMonth()+1)
+    .padStart(2,"0");
+  const d=
+    String(now.getDate())
+    .padStart(2,"0");
+  const h=
+    String(now.getHours())
+    .padStart(2,"0");
+  const min=
+    String(now.getMinutes())
+    .padStart(2,"0");
+  document.getElementById("date").value=
+    `${y}-${m}-${d}`;
+  document.getElementById("time").value=
+    `${h}:${min}`;
+  generate();
+}
+/* =========================================================
+   Service Worker
+========================================================= */
+if("serviceWorker" in navigator){
+  window.addEventListener(
+    "load",
+    ()=>{
+      navigator.serviceWorker
+        .register("sw.js")
+        .catch(e=>{
+          console.warn(
+            "Service Worker 注册失败：",
+            e
+          );
+        });
+    }
+  );
+}
 </script>
 </body>
 </html>
