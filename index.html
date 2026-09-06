@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -175,7 +174,7 @@ function getLifeNumber(y, m, d) {
   return arkRoot(sum);
 }
 
-// 和谐方舟完整排盘引擎（基于正确对齐规律重构）
+// 和谐方舟完整排盘引擎
 function calcHarmonyArk(y, m, d) {
   let ys = y.toString().padStart(4, '0');
   let ms = m.toString().padStart(2, '0');
@@ -194,22 +193,18 @@ function calcHarmonyArk(y, m, d) {
   let R1 = arkRoot(M2 + B3), R2 = arkRoot(M2 + B4);
   let R3 = arkRoot(R1 + R2);
   
-  // 顶部顶端冠顶数字运算规律调整
-  let T1 = arkRoot(G + M1), T2 = arkRoot(G + M2);
-  let T3 = arkRoot(T1 + T2);
+  let T2 = arkRoot(G + M2), T1 = arkRoot(G + M1); 
+  let T3 = arkRoot(T2 + T1);
 
   let inner = arkRoot(M1 + M2 + G);
   let outer = arkRoot(L3 + R3 + T3);
   let sub = arkRoot(B1 + B4 + M1 + M2); 
-  
-  // 晚年数字与三角形右侧外部数字（R1、R2、R3）保持一致
-  let late = `${R1}${R2}${R3}`; 
+  let late = `${T2}${T1}${T3}`; 
 
-  // 根据截图规律完整校准3x4联合数字矩阵
   let joint = [
-    [`${B1}${B2}${M1}`, `${B3}${B4}${M2}`, `${M1}${M2}${G}`, `${R1}${R2}${R3}`],
+    [`${B1}${B2}${M1}`, `${B3}${B4}${M2}`, `${M1}${M2}${G}`, `${B2}${M1}${L2}`],
     [`${B1}${M1}${L1}`, `${L1}${L2}${L3}`, `${M2}${B3}${R1}`, `${M1}${G}${T1}`],
-    [`${T1}${T2}${T3}`, `${G}${M2}${T2}`, `${B4}${M2}${R2}`, `${L3}${R3}${T3}`]
+    [`${T2}${T1}${T3}`, `${G}${M2}${T2}`, `${B4}${M2}${R2}`, `${R1}${R2}${R3}`]
   ];
 
   return { B1, B2, B3, B4, M1, M2, G, L1, L2, L3, R1, R2, R3, T1, T2, T3, 
@@ -245,6 +240,7 @@ function render(){
  let zodiacName = getZodiac(s.m, s.d);
  let ark = calcHarmonyArk(s.y, s.m, s.d);
 
+ // 新增生命数字计算及描述
  let ln = getLifeNumber(s.y, s.m, s.d);
  const lnDesc = {
    1: "【创始数】代表独立、领导、创新与自信。你是天生的开拓者。",
@@ -287,7 +283,9 @@ function render(){
  <div class="card"><div class="title">命盘摘要</div><div class="bazi">${["年柱","月柱","日柱","时柱"].map((n,i)=>`<div class="pillar"><small>${n}</small><b>${p[["year","month","day","hour"][i]].join("")}</b><em>${i===2?"日主":p[["year","month","day","hour"][i]][1]}</em></div>`).join("")}</div></div>
  <div class="card"><div class="title">五行结构</div><div class="five">${Object.entries(c).map(([k,v])=>`<div><b>${k}</b><span>${v} / ${total}</span></div>`).join("")}</div><p class="sub">日主：${dayMasterInfo(dm)}。当前结构中「${strongest}」出现频率最高；仅按显性干支计数，未把藏干、节令旺衰等复杂权重混入。</p></div>
  <div class="card"><div class="title">传统命理提示</div><p class="sub">${advice(dm,c,strongest)}</p></div>
+ 
  <div class="card"><div class="title">农历日期</div><div style="font-size: 15px; font-weight: bold; color: var(--gold2);">${fullLunarText}</div></div>
+ 
  <div class="card"><div class="title">出生资料</div><span class="pill">${s.y}-${String(s.m).padStart(2,"0")}-${String(s.d).padStart(2,"0")} ${String(s.hh).padStart(2,"0")}:${String(s.mm).padStart(2,"0")}</span><span class="pill">${s.sex==="m"?"男":"女"}</span><span class="pill">${s.place}</span></div>`;
  
  document.getElementById("bazi").innerHTML=`
@@ -301,7 +299,10 @@ function render(){
  document.getElementById("lifenumber").innerHTML=`
  <div class="card" style="padding: 10px;">
    <div class="ark-container">
+     
+     <!-- 金字塔图形区域 -->
      <div class="ark-triangle">
+       <!-- 背景画线 -->
        <svg class="ark-svg" viewBox="0 0 300 240">
          <polygon points="150,55 40,200 260,200" fill="none" stroke="var(--gold)" stroke-width="1.2" opacity="0.6"/>
          <line x1="95" y1="127" x2="205" y2="127" stroke="var(--gold)" stroke-width="1.2" opacity="0.6"/>
@@ -309,34 +310,42 @@ function render(){
          <line x1="150" y1="127" x2="150" y2="200" stroke="var(--gold)" stroke-width="1.2" opacity="0.6"/>
        </svg>
        
+       <!-- 顶部外部数字 -->
        <div class="ark-num ark-outer" style="top: 15px; left: 150px; text-align: center; width: 60px;">
          <div style="margin-bottom: 4px;">${ark.T3}</div>
-         <div style="border-top: 1.5px solid var(--text); padding-top: 4px; display: flex; justify-content: space-between; padding: 4px 6px 0;"><span>${ark.T1}</span><span>${ark.T2}</span></div>
+         <div style="border-top: 1.5px solid var(--text); padding-top: 4px; display: flex; justify-content: space-between; padding: 4px 6px 0;"><span>${ark.T2}</span><span>${ark.T1}</span></div>
        </div>
 
+       <!-- 主性格数字 -->
        <div class="ark-num ark-main" style="top: 100px; left: 150px;">${ark.G}</div>
        
+       <!-- 中间层数字 -->
        <div class="ark-num" style="top: 147px; left: 125px;">${ark.M1}</div>
        <div class="ark-num" style="top: 147px; left: 175px;">${ark.M2}</div>
        
+       <!-- 底层数字 -->
        <div class="ark-num" style="top: 183px; left: 95px;">${ark.B1}</div>
        <div class="ark-num" style="top: 183px; left: 132px;">${ark.B2}</div>
        <div class="ark-num" style="top: 183px; left: 168px;">${ark.B3}</div>
        <div class="ark-num" style="top: 183px; left: 205px;">${ark.B4}</div>
 
+       <!-- 左侧外部 -->
        <div class="ark-num ark-outer" style="top: 100px; left: 60px; white-space: nowrap;">
-         ${ark.L1}=${ark.L2} ${ark.L3}
+         ${ark.L3}=${ark.L1} ${ark.L2}
        </div>
        
+       <!-- 右侧外部 -->
        <div class="ark-num ark-outer" style="top: 100px; left: 240px; white-space: nowrap;">
          ${ark.R1} ${ark.R2}=${ark.R3}
        </div>
 
+       <!-- 底部出生原数 -->
        <div class="ark-base" style="bottom: 8px;">
          <span>${ark.ds}</span><span>${ark.ms}</span><span>${ark.y1}</span><span>${ark.y2}</span>
        </div>
      </div>
 
+     <!-- 四大数据指标 -->
      <div class="ark-stats">
        <div><b>${ark.inner}</b><span>内心数字</span></div>
        <div><b>${ark.outer}</b><span>外心数字</span></div>
@@ -344,6 +353,7 @@ function render(){
        <div><b>${ark.late}</b><span>晚年数字</span></div>
      </div>
 
+     <!-- 联合数字 3x4 矩阵 -->
      <div class="ark-joint">
        <div class="ark-joint-label">联合数字</div>
        <div class="ark-joint-cols">
@@ -356,9 +366,11 @@ function render(){
          `).join('')}
        </div>
      </div>
+     
    </div>
  </div>
 
+ <!-- 新增：生命密码 / 主性格说明卡片 -->
  <div class="card">
    <div class="title">生命密码 / 生命数字</div>
    <p class="sub">根据您输入的公历出生日期（${s.y}年${s.m}月${s.d}日）计算得出：</p>
