@@ -560,7 +560,8 @@ async function todayBazi(){
   document.getElementById("date").value=`${y}-${m}-${d}`;
   document.getElementById("time").value=`${h}:${min}`;
   document.getElementById("sex").value="m";
-  document.getElementById("place").value = "定位中...";
+  // 👉 提示文字根据当前语言自动切换
+  document.getElementById("place").value = currentLang === 'en' ? "Locating..." : "定位中...";
 
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
@@ -570,45 +571,46 @@ async function todayBazi(){
         document.getElementById("lon").value = lon.toFixed(2);
 
         try {
-          // 通过反向地理编码 API 实时读取坐标对应的具体地名
-          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=zh-CN`);
+          // 👉 根据当前语言动态设置 API 的 accept-language 参数 ('en' 或 'zh-CN')
+          const apiLang = currentLang === 'en' ? 'en' : 'zh-CN';
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${apiLang}`);
           const data = await response.json();
           const addr = data.address || {};
           
-          // 获取上级地域（如：玻璃市、广东省、揭阳市）
           const region = addr.state || addr.state_district || addr.city || "";
-          // 获取具体城镇/县区/乡村（如：柏斯里、普宁市、海淀区）
           const local = addr.town || addr.suburb || addr.village || addr.county || addr.city_district || "";
 
           let placeName = "";
           if (region && local && region !== local) {
-            // 拼接地域名与具体地名，若两者相互包含则避免重复
             if (region.includes(local)) {
               placeName = region;
             } else if (local.includes(region)) {
               placeName = local;
             } else {
-              placeName = `${region} · ${local}`;
+              // 👉 中文模式用 " · " 隔开，英文模式用 ", " 隔开更符合习惯
+              const separator = currentLang === 'en' ? ", " : " · ";
+              placeName = `${region}${separator}${local}`;
             }
           } else {
-            placeName = local || region || "当前位置";
+            // 👉 兜底文本国际化
+            placeName = local || region || (currentLang === 'en' ? "Current Location" : "当前位置");
           }
 
           document.getElementById("place").value = placeName;
         } catch (error) {
           console.warn("解析地名失败:", error);
-          document.getElementById("place").value = "当前位置";
+          document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
         }
         generate();
       },
       (error) => {
         console.warn("未能获取定位:", error.message);
-        document.getElementById("place").value = "当前位置";
+        document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
         generate();
       }
     );
   } else {
-    document.getElementById("place").value = "当前位置";
+    document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
     generate();
   }
 }
