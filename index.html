@@ -561,7 +561,22 @@ function todayBazi(){
   document.getElementById("time").value=`${h}:${min}`;
   document.getElementById("sex").value="m";
   document.getElementById("place").value="此刻所在地";
-  generate();
+
+  // 获取实时地理位置经度
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        document.getElementById("lon").value = position.coords.longitude.toFixed(2);
+        generate();
+      },
+      (error) => {
+        console.warn("未能获取经度信息:", error.message);
+        generate();
+      }
+    );
+  } else {
+    generate();
+  }
 }
 
 // --- DeepSeek Expert Chat Integration (禅天僧大师) ---
