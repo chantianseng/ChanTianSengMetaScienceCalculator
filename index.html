@@ -575,9 +575,26 @@ async function todayBazi(){
           const data = await response.json();
           const addr = data.address || {};
           
-          // 优先解析：城市 > 城镇 > 县/区 > 省份
-          const cityName = addr.city || addr.town || addr.municipality || addr.county || addr.state || "当前位置";
-          document.getElementById("place").value = cityName;
+          // 获取上级地域（如：玻璃市、广东省、揭阳市）
+          const region = addr.state || addr.state_district || addr.city || "";
+          // 获取具体城镇/县区/乡村（如：柏斯里、普宁市、海淀区）
+          const local = addr.town || addr.suburb || addr.village || addr.county || addr.city_district || "";
+
+          let placeName = "";
+          if (region && local && region !== local) {
+            // 拼接地域名与具体地名，若两者相互包含则避免重复
+            if (region.includes(local)) {
+              placeName = region;
+            } else if (local.includes(region)) {
+              placeName = local;
+            } else {
+              placeName = `${region}${local}`;
+            }
+          } else {
+            placeName = local || region || "当前位置";
+          }
+
+          document.getElementById("place").value = placeName;
         } catch (error) {
           console.warn("解析地名失败:", error);
           document.getElementById("place").value = "当前位置";
@@ -595,7 +612,6 @@ async function todayBazi(){
     generate();
   }
 }
-
 // --- DeepSeek Expert Chat Integration (禅天僧大师) ---
 let chatHistory = [];
 
