@@ -550,7 +550,7 @@ function demo(){
   generate();
 }
 
-function todayBazi(){
+async function todayBazi(){
   let now = new Date();
   let y = now.getFullYear();
   let m = String(now.getMonth()+1).padStart(2,'0');
@@ -560,21 +560,38 @@ function todayBazi(){
   document.getElementById("date").value=`${y}-${m}-${d}`;
   document.getElementById("time").value=`${h}:${min}`;
   document.getElementById("sex").value="m";
-  document.getElementById("place").value="此刻所在地";
+  document.getElementById("place").value = "定位中...";
 
-  // 获取实时地理位置经度
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
-        document.getElementById("lon").value = position.coords.longitude.toFixed(2);
+      async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        document.getElementById("lon").value = lon.toFixed(2);
+
+        try {
+          // 通过反向地理编码 API 实时读取坐标对应的具体地名
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=zh-CN`);
+          const data = await response.json();
+          const addr = data.address || {};
+          
+          // 优先解析：城市 > 城镇 > 县/区 > 省份
+          const cityName = addr.city || addr.town || addr.municipality || addr.county || addr.state || "当前位置";
+          document.getElementById("place").value = cityName;
+        } catch (error) {
+          console.warn("解析地名失败:", error);
+          document.getElementById("place").value = "当前位置";
+        }
         generate();
       },
       (error) => {
-        console.warn("未能获取经度信息:", error.message);
+        console.warn("未能获取定位:", error.message);
+        document.getElementById("place").value = "当前位置";
         generate();
       }
     );
   } else {
+    document.getElementById("place").value = "当前位置";
     generate();
   }
 }
