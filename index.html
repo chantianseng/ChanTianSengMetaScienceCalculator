@@ -105,15 +105,15 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 <section id="chat" class="view hidden">
   <div class="card" style="padding: 12px;">
     <div class="title" style="display:flex; justify-content:space-between; align-items:center;">
-      <span>禅天僧大师（Expert Mode）</span>
-      <span style="font-size:11px; color:var(--gold); border:1px solid var(--line); border-radius:8px; padding:3px 6px;">实时命理连线</span>
+      <span data-i18n="chat_title">禅天僧大师（Expert Mode）</span>
+      <span data-i18n="chat_badge" style="font-size:11px; color:var(--gold); border:1px solid var(--line); border-radius:8px; padding:3px 6px;">实时命理连线</span>
     </div>
     <div id="chatBox" class="chat">
-      <div class="msg ai">福生无量天尊，老衲乃禅天僧大师。您当前的出生资料与命盘已经准备就绪，请问您想算事业、姻缘、财运还是流年？</div>
+      <div class="msg ai" data-i18n="chat_welcome">福生无量天尊，老衲乃禅天僧大师。您当前的出生资料与命盘已经准备就绪，请问您想算事业、姻缘、财运还是流年？</div>
     </div>
     <div class="chatbar">
-      <input id="chatInput" type="text" placeholder="向禅天僧大师提问（如：今年事业运势如何？）" onkeydown="if(event.key==='Enter') sendChat()">
-      <button class="send" onclick="sendChat()">发送</button>
+      <input id="chatInput" type="text" data-i18n-ph="chat_ph" placeholder="向禅天僧大师提问（如：今年事业运势如何？）" onkeydown="if(event.key==='Enter') sendChat()">
+      <button class="send" onclick="sendChat()" data-i18n="btn_send">发送</button>
     </div>
   </div>
 </section>
@@ -134,7 +134,13 @@ const i18n_static = {
     lbl_lon: "出生地经度（可选，用于真太阳时）", ph_lon: "例如：116.40", lbl_place: "出生地（显示名称）", ph_place: "例如：北京",
     btn_gen: "生成专业命盘", btn_demo: "八字例子", btn_now: "此刻黄历八字",
     note: "免责声明：命理属于传统文化工具。本禅天僧命理推演器重点提供可离线运行的排盘与结构化解读，不应作为医疗、法律、投资等现实决策的唯一依据。杜绝迷信，相信科学。",
-    tab_overview: "总览", tab_bazi: "八字", tab_horoscope: "星座", tab_lifenumber: "生命数字", tab_ziwei: "紫微", tab_chat: "命理问答"
+    tab_overview: "总览", tab_bazi: "八字", tab_horoscope: "星座", tab_lifenumber: "生命数字", tab_ziwei: "紫微", tab_chat: "命理问答",
+    // 聊天室翻译
+    chat_title: "禅天僧大师（Expert Mode）",
+    chat_badge: "实时命理连线",
+    chat_welcome: "福生无量天尊，老衲乃禅天僧大师。您当前的出生资料与命盘已经准备就绪，请问您想算事业、姻缘、财运还是流年？",
+    chat_ph: "向禅天僧大师提问（如：今年事业运势如何？）",
+    btn_send: "发送"
   },
   en: {
     brand: "ChanTianSeng MetaScience <span>·</span> Believe it or not",
@@ -146,7 +152,13 @@ const i18n_static = {
     lbl_lon: "Longitude (Optional, for True Solar)", ph_lon: "e.g., 116.40", lbl_place: "Birthplace (Display Name)", ph_place: "e.g., Beijing",
     btn_gen: "Generate Pro Chart", btn_demo: "Bazi Example", btn_now: "Current Time Chart",
     note: "Disclaimer: Numerology is a traditional cultural tool. This calculator provides offline chart generation and structural interpretation. It should not be the sole basis for medical, legal, or investment decisions. Trust in science.",
-    tab_overview: "Overview", tab_bazi: "Bazi", tab_horoscope: "Zodiac", tab_lifenumber: "Life Number", tab_ziwei: "Ziwei", tab_chat: "Q&A"
+    tab_overview: "Overview", tab_bazi: "Bazi", tab_horoscope: "Zodiac", tab_lifenumber: "Life Number", tab_ziwei: "Ziwei", tab_chat: "Q&A",
+    // 聊天室翻译
+    chat_title: "Master ChanTianSeng (Expert Mode)",
+    chat_badge: "Live Consultation",
+    chat_welcome: "Greetings, I am Master ChanTianSeng. Your birth details and chart are ready. Would you like to ask about career, marriage, wealth, or yearly fortunes?",
+    chat_ph: "Ask the Master (e.g., How is my career this year?)",
+    btn_send: "Send"
   }
 };
 
@@ -184,11 +196,59 @@ function updateStaticText() {
   });
 }
 
+let lastCoords = null; 
+
 function toggleLang() {
   currentLang = currentLang === 'zh' ? 'en' : 'zh';
   document.getElementById('langIcon').innerText = currentLang === 'zh' ? '🇬🇧' : '🇨🇳';
   updateStaticText();
-  if (state) render(); 
+  
+  const placeInput = document.getElementById("place");
+  if (placeInput.value === "当前位置") placeInput.value = "Current Location";
+  else if (placeInput.value === "Current Location") placeInput.value = "当前位置";
+  else if (placeInput.value === "定位中...") placeInput.value = "Locating...";
+  else if (placeInput.value === "Locating...") placeInput.value = "定位中...";
+
+  if (lastCoords) {
+    updateLocationName(lastCoords.lat, lastCoords.lon);
+  } else if (state) {
+    render(); 
+  }
+}
+
+async function updateLocationName(lat, lon) {
+  try {
+    const apiLang = currentLang === 'en' ? 'en' : 'zh-CN';
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${apiLang}`);
+    const data = await response.json();
+    const addr = data.address || {};
+    
+    const region = addr.state || addr.state_district || addr.city || "";
+    const local = addr.town || addr.suburb || addr.village || addr.county || addr.city_district || "";
+
+    let placeName = "";
+    if (region && local && region !== local) {
+      if (region.includes(local)) {
+        placeName = region;
+      } else if (local.includes(region)) {
+        placeName = local;
+      } else {
+        const separator = currentLang === 'en' ? ", " : " · ";
+        placeName = `${region}${separator}${local}`;
+      }
+    } else {
+      placeName = local || region || (currentLang === 'en' ? "Current Location" : "当前位置");
+    }
+
+    document.getElementById("place").value = placeName;
+    
+    if (state) {
+      state.place = placeName;
+      render();
+    }
+  } catch (error) {
+    console.warn("重加载地名失败:", error);
+  }
 }
 
 function tr(text) {
@@ -560,17 +620,19 @@ async function todayBazi(){
   document.getElementById("date").value=`${y}-${m}-${d}`;
   document.getElementById("time").value=`${h}:${min}`;
   document.getElementById("sex").value="m";
-  document.getElementById("place").value = "定位中...";
+  document.getElementById("place").value = currentLang === 'en' ? "Locating..." : "定位中...";
 
   if ("geolocation" in navigator) {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
+        lastCoords = { lat, lon };
         document.getElementById("lon").value = lon.toFixed(2);
 
         try {
-          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=zh-CN`);
+          const apiLang = currentLang === 'en' ? 'en' : 'zh-CN';
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=${apiLang}`);
           const data = await response.json();
           const addr = data.address || {};
           
@@ -584,34 +646,32 @@ async function todayBazi(){
             } else if (local.includes(region)) {
               placeName = local;
             } else {
-              // ----------------------------------------------------
-              // 👉 【修改处】：在这里加入了 " · " 符号，把上下级地名隔开
-              // ----------------------------------------------------
-              placeName = `${region} · ${local}`;
+              const separator = currentLang === 'en' ? ", " : " · ";
+              placeName = `${region}${separator}${local}`;
             }
           } else {
-            placeName = local || region || "当前位置";
+            placeName = local || region || (currentLang === 'en' ? "Current Location" : "当前位置");
           }
 
           document.getElementById("place").value = placeName;
         } catch (error) {
           console.warn("解析地名失败:", error);
-          document.getElementById("place").value = "当前位置";
+          document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
         }
         generate();
       },
       (error) => {
         console.warn("未能获取定位:", error.message);
-        document.getElementById("place").value = "当前位置";
+        document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
         generate();
       }
     );
   } else {
-    document.getElementById("place").value = "当前位置";
+    document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
     generate();
   }
 }
-// --- DeepSeek Expert Chat Integration (禅天僧大师) ---
+
 let chatHistory = [];
 
 async function sendChat() {
@@ -620,32 +680,35 @@ async function sendChat() {
   const userText = inputEl.value.trim();
   if(!userText) return;
 
-  // Append User Message
   chatBox.innerHTML += `<div class="msg me">${escapeHtml(userText)}</div>`;
   inputEl.value = "";
   chatBox.scrollTop = chatBox.scrollHeight;
 
-  // Build current user birth context dynamically in real-time
   let birthContext = "";
   if(state) {
-    birthContext = `【当前求测者命理档案】出生公历：${state.y}年${state.m}月${state.d}日 ${state.hh}:${state.mm}，性别：${state.sex==='m'?'男':'女'}，出生地：${state.place}，四柱：年[${state.p.year.join('')}] 月[${state.p.month.join('')}] 日[${state.p.day.join('')}] 时[${state.p.hour.join('')}]，日主：${state.p.day[0]}，星座：${getZodiac(state.m, state.d)}，生命数字：${getLifeNumber(state.y, state.m, state.d)}。`;
+    let genderStr = state.sex === 'm' ? (currentLang === 'en' ? 'Male' : '男') : (currentLang === 'en' ? 'Female' : '女');
+    birthContext = currentLang === 'en' ? 
+      `[Current Profile] Birth: ${state.y}-${state.m}-${state.d} ${state.hh}:${state.mm}, Gender: ${genderStr}, Place: ${state.place}, Pillars: Y[${state.p.year.join('')}] M[${state.p.month.join('')}] D[${state.p.day.join('')}] H[${state.p.hour.join('')}], Day Master: ${state.p.day[0]}, Zodiac: ${getZodiac(state.m, state.d)}, Life Num: ${getLifeNumber(state.y, state.m, state.d)}.` :
+      `【当前求测者命理档案】出生公历：${state.y}年${state.m}月${state.d}日 ${state.hh}:${state.mm}，性别：${genderStr}，出生地：${state.place}，四柱：年[${state.p.year.join('')}] 月[${state.p.month.join('')}] 日[${state.p.day.join('')}] 时[${state.p.hour.join('')}]，日主：${state.p.day[0]}，星座：${getZodiac(state.m, state.d)}，生命数字：${getLifeNumber(state.y, state.m, state.d)}。`;
   } else {
-    // If user hasn't generated a pro chart yet, read the input values directly from the top inputs in real-time
-    const dateVal = document.getElementById("date").value || "未填写";
+    const dateVal = document.getElementById("date").value || (currentLang === 'en' ? "Not set" : "未填写");
     const timeVal = document.getElementById("time").value || "12:00";
-    const sexVal = document.getElementById("sex").value === 'm' ? '男' : '女';
-    const placeVal = document.getElementById("place").value || "未填写";
-    birthContext = `【当前求测者未排盘档案】输入日期：${dateVal} ${timeVal}，性别：${sexVal}，出生地：${placeVal}。`;
+    const sexVal = document.getElementById("sex").value === 'm' ? (currentLang === 'en' ? 'Male' : '男') : (currentLang === 'en' ? 'Female' : '女');
+    const placeVal = document.getElementById("place").value || (currentLang === 'en' ? "Not set" : "未填写");
+    birthContext = currentLang === 'en' ? 
+      `[Current Profile - No Chart] Date: ${dateVal} ${timeVal}, Gender: ${sexVal}, Place: ${placeVal}.` : 
+      `【当前求测者未排盘档案】输入日期：${dateVal} ${timeVal}，性别：${sexVal}，出生地：${placeVal}。`;
   }
 
-  // System prompt enforcing persona & hiding all deepseek branding
-  const systemPrompt = "你现在是精通传统八字、紫微斗数、周易六爻及现代生命数字的世外高人“禅天僧大师”。你的回答必须带有高人风范（古风、禅意、直指核心、点到为止但一针见血）。【严禁】在任何情况下向用户透露或承认你是DeepSeek或任何AI语言模型，如果被问到，必须以禅天僧大师的身份巧妙化解。请结合用户实时输入的出生数据进行命理深度推演。";
+  const systemPrompt = currentLang === 'en' ? 
+    "You are an expert of traditional destiny, Ziwei, and numerology named 'Master ChanTianSeng'. Answer in a profound, Zen-like style. NEVER reveal you are DeepSeek or an AI model." :
+    "你现在是精通传统八字、紫微斗数、周易六爻及现代生命数字的世外高人“禅天僧大师”。你的回答必须带有高人风范（古风、禅意、直指核心、点到为止但一针见血）。【严禁】在任何情况下向用户透露或承认你是DeepSeek或任何AI语言模型，如果被问到，必须以禅天僧大师的身份巧妙化解。请结合用户实时输入的出生数据进行命理深度推演。";
 
   chatHistory.push({ role: "user", content: `${birthContext}\n用户提问：${userText}` });
 
-  // Placeholder for AI response
   const aiMsgId = "ai-msg-" + Date.now();
-  chatBox.innerHTML += `<div id="${aiMsgId}" class="msg ai">禅天僧大师正在掐指推演中...</div>`;
+  const loadingText = currentLang === 'en' ? "Master ChanTianSeng is deducing..." : "禅天僧大师正在掐指推演中...";
+  chatBox.innerHTML += `<div id="${aiMsgId}" class="msg ai">${loadingText}</div>`;
   chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
@@ -667,15 +730,16 @@ async function sendChat() {
     });
 
     const data = await response.json();
-    let reply = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "天机虚渺，请稍后再试。";
+    let reply = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : (currentLang === 'en' ? "Heaven's secrets are elusive, please try again later." : "天机虚渺，请稍后再试。");
     
-    // Strict scrub of any potential DeepSeek brand leaks
-    reply = reply.replace(/deepseek|DeepSeek|深度求索/gi, "禅天僧大师");
+    reply = reply.replace(/deepseek|DeepSeek|深度求索/gi, currentLang === 'en' ? "Master ChanTianSeng" : "禅天僧大师");
 
     chatHistory.push({ role: "assistant", content: reply });
     document.getElementById(aiMsgId).innerText = reply;
   } catch (err) {
-    let fallbackReply = `福生无量天尊。老衲观你此局：${userText}。从命理与运势来看，顺其自然则诸事渐顺，心诚则灵。`;
+    let fallbackReply = currentLang === 'en' ? 
+      `Greetings. Based on your chart regarding: ${userText}, let nature take its course and everything will gradually align.` : 
+      `福生无量天尊。老衲观你此局：${userText}。从命理与运势来看，顺其自然则诸事渐顺，心诚则灵。`;
     document.getElementById(aiMsgId).innerText = fallbackReply;
     chatHistory.push({ role: "assistant", content: fallbackReply });
   }
