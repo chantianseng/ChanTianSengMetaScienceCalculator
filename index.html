@@ -588,7 +588,7 @@ async function todayBazi(){
             } else if (local.includes(region)) {
               placeName = local;
             } else {
-              placeName = `${region}${local}`;
+              placeName = `${region} · ${local}`;
             }
           } else {
             placeName = local || region || "当前位置";
