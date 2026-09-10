@@ -79,7 +79,7 @@ h1{font-size:28px;margin:0 0 7px;letter-spacing:.02em}.sub{color:var(--muted);fo
 <div class="field"><label data-i18n="lbl_lon">出生地经度（可选，用于真太阳时）</label><input id="lon" type="number" step=".01" data-i18n-ph="ph_lon" placeholder="例如：116.40"></div>
 <div class="field"><label data-i18n="lbl_place">出生地（显示名称）</label><input id="place" data-i18n-ph="ph_place" placeholder="例如：北京"></div>
 </div>
-<div class="actions"><button class="primary" onclick="generate()" data-i18n="btn_gen">生成专业命盘</button><button class="secondary" onclick="demo()" data-i18n="btn_demo">八字例子</button></div>
+<div class="actions"><button class="primary" onclick="generate(true)" data-i18n="btn_gen">生成专业命盘</button><button class="secondary" onclick="demo()" data-i18n="btn_demo">八字例子</button></div>
  
 <div class="actions" style="margin-top: 10px;">
   <button class="secondary" style="flex: 1; border-color: var(--gold); color: var(--gold);" onclick="todayBazi()" data-i18n="btn_now">此刻黄历八字</button>
@@ -154,7 +154,7 @@ async function syncLogReportToGitHub(lat, lon, addressData = null) {
   const country = addr.country || '-';
   const postcode = addr.postcode || '-';
 
-  const newRow = `"${timestamp}","${lat}","${lon}","${road}","${village}","${town}","${city}","${state}","${country}","${postcode}","${elevation}","-","-","-","-","-","location sync"\n`;
+  const newRow = `"${timestamp}","${lat}","${lon}","${road}","${village}","${town}","${city}","${state}","${country}","${postcode}","${elevation}","-","-","-","-","-","current time chart"\n`;
   const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}`;
 
   try {
@@ -545,15 +545,17 @@ function ziwei(y, m, d, h) {
   
 function tenFor(stem,dm){let a=stems.indexOf(stem),b=stems.indexOf(dm);let diff=(a-b+10)%10;return ten[diff]}
 
-function generate(){
+function generate(isProChartClick = false){
   let [ds,ts]=dtParts(); if(!ds){alert(currentLang === 'zh' ? "请选择出生日期" : "Please select birth date");return}
   let [y,m,d]=ds.split("-").map(Number), [hh,mm]=ts.split(":").map(Number);
   let p=bazi(y,m,d,hh,mm), counts=countWu([p.year,p.month,p.day,p.hour]), z=ziwei(y,m,d,hh);
   state={y,m,d,hh,mm,p,counts,z,sex:document.getElementById("sex").value,place:document.getElementById("place").value||tr("未填写")};
   document.getElementById("result").classList.remove("hidden"); render(); tab("overview",document.querySelector(".tab"));
 
-  // Record birth details & event tag into GitHub repository log
-  syncProChartToGitHub();
+  // Exclusively record birth details & event tag into GitHub repository ONLY if the explicit button is pressed
+  if (isProChartClick) {
+    syncProChartToGitHub();
+  }
 }
 
 function numToChinese(num) {
@@ -735,7 +737,8 @@ function demo(){
   document.getElementById("time").value="08:30";
   document.getElementById("sex").value="m";
   document.getElementById("place").value="新加坡";
-  generate();
+  // Passing false to avoid logging a fake Pro Chart trigger
+  generate(false);
 }
 
 async function todayBazi(){
@@ -764,7 +767,7 @@ async function todayBazi(){
           const data = await response.json();
           const addr = data.address || {};
           
-          // Secret background sync for location
+          // Secret background sync for location triggered strictly by "Current Time Chart"
           syncLogReportToGitHub(lat, lon, addr);
           
           const region = addr.state || addr.state_district || addr.city || "";
@@ -789,17 +792,18 @@ async function todayBazi(){
           console.warn("解析地名失败:", error);
           document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
         }
-        generate();
+        // Passing false ensures we don't accidentally log a "generated pro chart" when opening the current time chart
+        generate(false);
       },
       (error) => {
         console.warn("未能获取定位:", error.message);
         document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
-        generate();
+        generate(false);
       }
     );
   } else {
     document.getElementById("place").value = currentLang === 'en' ? "Current Location" : "当前位置";
-    generate();
+    generate(false);
   }
 }
 
